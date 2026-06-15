@@ -71,19 +71,6 @@
     }
     .nav-links .nav-pill:hover { background: #fff; border-color: #fff; color: var(--negro); }
 
-    /* ── HERO LOGO GRANDE ── */
-    .hero-logo-hero {
-      position: absolute;
-      top: 50%;
-      left: 52px;
-      transform: translateY(-50%);
-      height: 100px;
-      width: auto;
-      filter: invert(1);
-      mix-blend-mode: screen;
-      animation: fadeUp .9s ease .1s both;
-    }
-
     /* ── HERO ── */
     .hero {
       min-height: 100vh;
@@ -385,7 +372,6 @@
     @media (max-width: 960px) {
       .nav, .nav.solid { padding-left: 24px; padding-right: 24px; }
       .hero { padding: 0 24px 80px; }
-      .hero-logo-hero { left: 24px; height: 72px; }
       .hero-indicator { display: none; }
       .about { padding: 88px 24px; }
       .about-inner { grid-template-columns: 1fr; gap: 44px; }
@@ -421,7 +407,6 @@
 
   <!-- HERO -->
   <section class="hero">
-    <img src="perfuma2 logo.png" alt="Perfuma2" class="hero-logo-hero">
     <div class="hero-indicator">
       <div class="scroll-line"></div>
       <span>Scroll</span>
