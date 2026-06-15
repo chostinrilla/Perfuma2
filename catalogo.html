@@ -183,13 +183,30 @@
       height: 220px;
       display: flex; align-items: center; justify-content: center;
       margin-bottom: 20px;
+      position: relative;
+    }
+    .card-img-wrap::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, var(--gris-50) 25%, var(--gris-100) 50%, var(--gris-50) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+      border-radius: 16px;
+    }
+    .card-img-wrap.loaded::before { display: none; }
+    @keyframes shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
     }
     .card-img-wrap img {
       width: 100%; height: 100%;
       object-fit: contain;
       padding: 16px;
-      transition: transform .4s ease;
+      transition: transform .4s ease, opacity .3s ease;
+      opacity: 0;
+      position: relative; z-index: 1;
     }
+    .card-img-wrap.loaded img { opacity: 1; }
     .card:hover .card-img-wrap img { transform: scale(1.04); }
 
     .card-top {
@@ -510,6 +527,8 @@
           <article class="card${agotado ? ' agotado' : ''}">
             <div class="card-img-wrap">
               <img src="Imagenes perfuma2/${p.nombre}.png" alt="${p.nombre}"
+                   loading="lazy" decoding="async"
+                   onload="this.closest('.card-img-wrap').classList.add('loaded')"
                    onerror="this.closest('.card-img-wrap').style.display='none'">
             </div>
             <div class="card-top">
