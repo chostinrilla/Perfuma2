@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Perfuma2 — Decants y perfumes sellados 100% originales. Diseñador, nicho y árabe en formatos de 10 ml.">
+  <title>Perfuma2 — Fragancias Originales</title>
+  <link rel="icon" type="image/png" href="perfuma2 logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --negro: #000;
+      --blanco: #FAFAFA;
+      --gris-50: #F6F6F6;
+      --gris-100: #EFEFEF;
+      --gris-200: #E0E0E0;
+      --gris-400: #9A9A9A;
+      --gris-600: #555;
+      --display: 'Cormorant Garamond', Georgia, serif;
+      --body: 'Inter', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+    body {
+      font-family: var(--body);
+      background: var(--blanco);
+      color: var(--negro);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    /* ── NAV ── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 28px 52px;
+      transition: padding .35s ease, background .35s ease, border-color .35s ease;
+      border-bottom: 1px solid transparent;
+    }
+    .nav.solid {
+      padding: 16px 52px;
+      background: var(--negro);
+      border-color: rgba(255,255,255,.07);
+    }
+    .nav-logo { height: 44px; filter: invert(1); mix-blend-mode: screen; }
+    .nav-links { display: flex; gap: 36px; list-style: none; align-items: center; }
+    .nav-links a {
+      font-size: .78rem; font-weight: 500; letter-spacing: .14em;
+      text-transform: uppercase; color: rgba(255,255,255,.65);
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-links .nav-pill {
+      color: rgba(255,255,255,.85);
+      padding: 10px 24px;
+      border: 1px solid rgba(255,255,255,.3);
+      border-radius: 999px;
+      transition: background .2s, border-color .2s, color .2s;
+    }
+    .nav-links .nav-pill:hover { background: #fff; border-color: #fff; color: var(--negro); }
+
+    /* ── HERO LOGO GRANDE ── */
+    .hero-logo-hero {
+      position: absolute;
+      top: 50%;
+      left: 52px;
+      transform: translateY(-50%);
+      height: 100px;
+      width: auto;
+      filter: invert(1);
+      mix-blend-mode: screen;
+      animation: fadeUp .9s ease .1s both;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--negro);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 52px 96px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent, transparent calc(16.666% - 1px),
+        rgba(255,255,255,.025) calc(16.666% - 1px), rgba(255,255,255,.025) 16.666%
+      );
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-size: .75rem; font-weight: 500; letter-spacing: .22em;
+      text-transform: uppercase; color: rgba(255,255,255,.35);
+      margin-bottom: 28px;
+      animation: fadeUp .9s ease .15s both;
+    }
+    .hero-title {
+      font-family: var(--display);
+      font-size: clamp(3.8rem, 8.5vw, 9rem);
+      font-weight: 300;
+      line-height: .98;
+      letter-spacing: -.025em;
+      color: #fff;
+      max-width: 820px;
+      animation: fadeUp .9s ease .3s both;
+    }
+    .hero-title em { font-style: italic; font-weight: 300; }
+    .hero-sub {
+      margin-top: 36px;
+      font-size: 1.05rem; font-weight: 300;
+      color: rgba(255,255,255,.45);
+      max-width: 400px; line-height: 1.75;
+      animation: fadeUp .9s ease .5s both;
+    }
+    .hero-actions {
+      margin-top: 52px;
+      display: flex; gap: 14px; flex-wrap: wrap;
+      animation: fadeUp .9s ease .65s both;
+    }
+    .hero-indicator {
+      position: absolute;
+      bottom: 44px; right: 52px;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 14px;
+      animation: fadeUp .9s ease .9s both;
+    }
+    .hero-indicator span {
+      font-size: .68rem; letter-spacing: .2em;
+      text-transform: uppercase; color: rgba(255,255,255,.28);
+      writing-mode: vertical-rl;
+    }
+    .scroll-line {
+      width: 1px; height: 56px;
+      background: linear-gradient(to bottom, rgba(255,255,255,.3), transparent);
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 13px 28px;
+      border-radius: 999px;
+      font-size: .84rem; font-weight: 600; letter-spacing: .04em;
+      cursor: pointer; border: 1px solid transparent;
+      transition: all .25s ease;
+    }
+    .btn-ghost-white {
+      background: transparent;
+      color: rgba(255,255,255,.82);
+      border-color: rgba(255,255,255,.28);
+    }
+    .btn-ghost-white:hover { background: #fff; color: var(--negro); border-color: #fff; }
+    .btn-dark {
+      background: var(--negro); color: #fff; border-color: var(--negro);
+    }
+    .btn-dark:hover { background: #2a2a2a; border-color: #2a2a2a; }
+    .btn-outline {
+      background: transparent; color: var(--negro); border-color: var(--negro);
+    }
+    .btn-outline:hover { background: var(--negro); color: #fff; }
+
+    /* ── SECTION: ABOUT ── */
+    .about {
+      padding: 130px 52px;
+      background: var(--blanco);
+    }
+    .about-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 88px; align-items: center;
+    }
+    .about-mark {
+      font-family: var(--display);
+      font-size: 9rem; line-height: .45;
+      color: var(--gris-200);
+      display: block; margin-bottom: 20px;
+      user-select: none;
+    }
+    .about-quote {
+      font-family: var(--display);
+      font-size: clamp(1.65rem, 2.6vw, 2.4rem);
+      font-weight: 300; font-style: italic;
+      line-height: 1.35; color: var(--negro);
+    }
+    .about-right {
+      border-left: 1px solid var(--gris-200);
+      padding-left: 52px;
+    }
+    .about-right p {
+      font-size: 1rem; line-height: 1.85;
+      color: var(--gris-600);
+    }
+    .about-right p + p { margin-top: 18px; }
+    .about-right .btn { margin-top: 32px; }
+
+    /* ── STATS ── */
+    .stats {
+      border-top: 1px solid var(--gris-200);
+      border-bottom: 1px solid var(--gris-200);
+    }
+    .stats-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+    }
+    .stat {
+      padding: 56px 0;
+      text-align: center;
+      position: relative;
+    }
+    .stat:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: 0; top: 22%; bottom: 22%;
+      width: 1px; background: var(--gris-200);
+    }
+    .stat-n {
+      display: block;
+      font-family: var(--display);
+      font-size: 3.2rem; font-weight: 300;
+      letter-spacing: -.02em; line-height: 1;
+    }
+    .stat-l {
+      display: block; margin-top: 10px;
+      font-size: .72rem; font-weight: 600;
+      letter-spacing: .16em; text-transform: uppercase;
+      color: var(--gris-400);
+    }
+
+    /* ── PILLARS ── */
+    .pillars {
+      padding: 130px 52px;
+      background: var(--gris-50);
+    }
+    .pillars-head {
+      max-width: 1100px; margin: 0 auto 72px;
+    }
+    .section-tag {
+      font-size: .72rem; font-weight: 600;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: var(--gris-400);
+      display: block; margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: var(--display);
+      font-size: clamp(2.2rem, 3.2vw, 3.4rem);
+      font-weight: 300; letter-spacing: -.01em;
+      line-height: 1.1;
+    }
+    .pillars-grid {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .pillar {
+      background: var(--blanco);
+      border: 1px solid var(--gris-200);
+      border-radius: 24px;
+      padding: 44px 40px;
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    .pillar:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 28px 56px rgba(0,0,0,.07);
+    }
+    .pillar-n {
+      display: block;
+      font-family: var(--display);
+      font-size: 4rem; font-weight: 300;
+      line-height: 1; color: var(--gris-200);
+      margin-bottom: 24px;
+    }
+    .pillar h3 {
+      font-size: 1.1rem; font-weight: 600;
+      margin-bottom: 14px;
+    }
+    .pillar p {
+      font-size: .95rem; color: var(--gris-600);
+      line-height: 1.75;
+    }
+
+    /* ── CTA BAND ── */
+    .cta-band {
+      background: var(--negro);
+      padding: 130px 52px;
+      text-align: center;
+    }
+    .cta-tag {
+      font-size: .72rem; font-weight: 600;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: rgba(255,255,255,.28);
+      display: block; margin-bottom: 24px;
+    }
+    .cta-title {
+      font-family: var(--display);
+      font-size: clamp(2.8rem, 5.5vw, 5.5rem);
+      font-weight: 300; letter-spacing: -.025em;
+      line-height: 1.06; color: #fff;
+      margin-bottom: 52px;
+    }
+    .cta-title em { font-style: italic; }
+    .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: #000;
+      padding: 80px 52px 44px;
+    }
+    .footer-top {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 52px;
+      padding-bottom: 52px;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+    .footer-logo {
+      height: 34px;
+      filter: invert(1); mix-blend-mode: screen;
+      margin-bottom: 20px;
+    }
+    .footer-brand p {
+      font-size: .88rem; line-height: 1.75;
+      color: rgba(255,255,255,.35);
+      max-width: 250px;
+    }
+    .footer-col h5 {
+      font-size: .7rem; font-weight: 700;
+      letter-spacing: .18em; text-transform: uppercase;
+      color: rgba(255,255,255,.25);
+      margin-bottom: 20px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-col a {
+      font-size: .9rem;
+      color: rgba(255,255,255,.45);
+      transition: color .2s;
+    }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom {
+      max-width: 1100px; margin: 36px auto 0;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: .75rem;
+      color: rgba(255,255,255,.2);
+    }
+    .footer-bottom a {
+      color: rgba(255,255,255,.15);
+      font-size: .7rem;
+      transition: color .2s;
+    }
+    .footer-bottom a:hover { color: rgba(255,255,255,.4); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: .6; transform: scaleY(1); }
+      50%       { opacity: .2; transform: scaleY(.6); }
+    }
+    .fade-up {
+      opacity: 0; transform: translateY(36px);
+      transition: opacity .75s ease, transform .75s ease;
+    }
+    .fade-up.in { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      .nav, .nav.solid { padding-left: 24px; padding-right: 24px; }
+      .hero { padding: 0 24px 80px; }
+      .hero-logo-hero { left: 24px; height: 72px; }
+      .hero-indicator { display: none; }
+      .about { padding: 88px 24px; }
+      .about-inner { grid-template-columns: 1fr; gap: 44px; }
+      .about-right { border-left: none; padding-left: 0; border-top: 1px solid var(--gris-200); padding-top: 44px; }
+      .stats-inner { grid-template-columns: repeat(2, 1fr); }
+      .stat:nth-child(2)::after { display: none; }
+      .pillars { padding: 88px 24px; }
+      .pillars-grid { grid-template-columns: 1fr; }
+      .cta-band { padding: 88px 24px; }
+      .footer { padding: 64px 24px 36px; }
+      .footer-top { grid-template-columns: 1fr; gap: 40px; }
+      .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+    }
+    @media (max-width: 600px) {
+      .nav-links li:first-child { display: none; }
+      .hero { padding: 0 20px 72px; }
+      .hero-title { font-size: clamp(3rem, 11vw, 4.5rem); }
+      .stat { padding: 40px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="mainNav">
+    <a href="index.html">
+      <img src="perfuma2 logo.png" alt="Perfuma2" class="nav-logo">
+    </a>
+    <ul class="nav-links">
+      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="catalogo.html" class="nav-pill">Ver Catálogo →</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <img src="perfuma2 logo.png" alt="Perfuma2" class="hero-logo-hero">
+    <div class="hero-indicator">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+    <p class="hero-eyebrow">Decants · Sellados · 100% Originales</p>
+    <h1 class="hero-title">
+      Huele a lujo<br>
+      <em>sin gastar</em><br>
+      una fortuna.
+    </h1>
+    <p class="hero-sub">
+      Explora, prueba y decide. Fragancias de diseñador, nicho y tendencias árabes en formatos de 3, 5 y 10&nbsp;ml.
+    </p>
+    <div class="hero-actions">
+      <a href="catalogo.html" class="btn btn-ghost-white">Ver Catálogo →</a>
+      <a href="https://wa.me/529903415523" target="_blank" rel="noopener" class="btn btn-ghost-white">WhatsApp</a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="nosotros">
+    <div class="about-inner">
+      <div class="about-left fade-up">
+        <span class="about-mark">"</span>
+        <p class="about-quote">
+          En Perfuma2 creemos que oler excelente no debería costar miles de pesos.
+        </p>
+      </div>
+      <div class="about-right fade-up">
+        <p>Nos dedicamos a decantar perfumería original de diseñador, nicho y tendencias árabes en formatos de 3, 5 y 10&nbsp;ml.</p>
+        <p>Nuestro objetivo es que encuentres tu aroma ideal, probándolo directamente en tu piel antes de invertir en una botella completa.</p>
+        <a href="catalogo.html" class="btn btn-outline">Explorar Catálogo →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stats-inner">
+      <div class="stat fade-up">
+        <span class="stat-n">100%</span>
+        <span class="stat-l">Originales</span>
+      </div>
+      <div class="stat fade-up">
+        <span class="stat-n">3–10</span>
+        <span class="stat-l">ml por decant</span>
+      </div>
+      <div class="stat fade-up">
+        <span class="stat-n">+50</span>
+        <span class="stat-l">Fragancias</span>
+      </div>
+      <div class="stat fade-up">
+        <span class="stat-n">3</span>
+        <span class="stat-l">Familias Olfativas</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PILLARS -->
+  <section class="pillars">
+    <div class="pillars-head fade-up">
+      <span class="section-tag">Por qué elegirnos</span>
+      <h2 class="section-title">Lo que nos hace<br>diferentes.</h2>
+    </div>
+    <div class="pillars-grid">
+      <div class="pillar fade-up">
+        <span class="pillar-n">01</span>
+        <h3>Perfumería Original</h3>
+        <p>Cada decant proviene de frascos 100% originales, sin adulteraciones. Lo que hueles es exactamente el perfume del diseñador o casa nicho.</p>
+      </div>
+      <div class="pillar fade-up">
+        <span class="pillar-n">02</span>
+        <h3>Prueba Antes de Invertir</h3>
+        <p>Con 3, 5 o 10&nbsp;ml tienes suficiente para probar días en tu piel. Descubre si realmente es tuyo antes de gastar en el frasco completo.</p>
+      </div>
+      <div class="pillar fade-up">
+        <span class="pillar-n">03</span>
+        <h3>Precios Accesibles</h3>
+        <p>De diseñador a nicho, de nicho a árabe. Una selección curada con precios pensados para que puedas explorar sin límites.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <section class="cta-band">
+    <span class="cta-tag fade-up">Catálogo disponible</span>
+    <h2 class="cta-title fade-up">
+      Encuentra tu próxima<br>
+      <em>fragancia favorita.</em>
+    </h2>
+    <div class="cta-btns fade-up">
+      <a href="catalogo.html" class="btn btn-ghost-white">Explorar Catálogo →</a>
+      <a href="https://wa.me/529903415523" target="_blank" rel="noopener" class="btn btn-ghost-white">Contactar por WhatsApp</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="perfuma2 logo.png" alt="Perfuma2" class="footer-logo">
+        <p>Decants y perfumes sellados 100% originales.<br>Diseñador, nicho y árabe.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Navegación</h5>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="#nosotros">Nosotros</a></li>
+          <li><a href="catalogo.html">Catálogo</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Contacto</h5>
+        <ul>
+          <li><a href="https://wa.me/529903415523" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="https://www.facebook.com/share/1CzhU5ccKz/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Perfuma2. Todos los derechos reservados.</span>
+      <a href="admin.html">Admin</a>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('solid', window.scrollY > 60);
+    }, { passive: true });
+
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('in'), i * 90);
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+  </script>
+</body>
+</html>

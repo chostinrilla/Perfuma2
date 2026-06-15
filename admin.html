@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Perfuma2</title>
+  <link rel="icon" type="image/png" href="perfuma2 logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --negro: #000;
+      --blanco: #FAFAFA;
+      --gris-50: #F6F6F6;
+      --gris-100: #EFEFEF;
+      --gris-200: #E0E0E0;
+      --gris-400: #9A9A9A;
+      --gris-600: #555;
+      --display: 'Cormorant Garamond', Georgia, serif;
+      --body: 'Inter', system-ui, sans-serif;
+    }
+    html { -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--body);
+      background: var(--blanco);
+      color: var(--negro);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── LOGIN OVERLAY ── */
+    #loginOverlay {
+      position: fixed; inset: 0; z-index: 200;
+      background: var(--negro);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 0;
+    }
+    .login-box {
+      width: 100%; max-width: 400px;
+      padding: 0 24px;
+      animation: fadeUp .6s ease both;
+    }
+    .login-logo {
+      height: 48px;
+      filter: invert(1); mix-blend-mode: screen;
+      margin: 0 auto 48px;
+    }
+    .login-title {
+      font-family: var(--display);
+      font-size: 2.2rem; font-weight: 300; font-style: italic;
+      color: #fff; text-align: center; margin-bottom: 8px;
+    }
+    .login-sub {
+      font-size: .82rem; color: rgba(255,255,255,.35);
+      text-align: center; letter-spacing: .08em;
+      text-transform: uppercase; margin-bottom: 40px;
+    }
+    .login-field {
+      width: 100%; padding: 14px 20px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 14px;
+      font-family: var(--body); font-size: 1rem;
+      color: #fff; outline: none;
+      transition: border-color .2s;
+      letter-spacing: .05em;
+    }
+    .login-field:focus { border-color: rgba(255,255,255,.4); }
+    .login-field::placeholder { color: rgba(255,255,255,.25); }
+    .login-btn {
+      width: 100%; margin-top: 14px;
+      padding: 14px 20px;
+      background: #fff; color: var(--negro);
+      border: none; border-radius: 14px;
+      font-family: var(--body); font-size: .9rem; font-weight: 700;
+      letter-spacing: .06em; cursor: pointer;
+      transition: background .2s, color .2s;
+    }
+    .login-btn:hover { background: rgba(255,255,255,.85); }
+    .login-err {
+      margin-top: 14px; text-align: center;
+      font-size: .82rem; color: #ff6b6b;
+      min-height: 20px;
+    }
+    .login-back {
+      display: block; margin-top: 28px; text-align: center;
+      font-size: .78rem; color: rgba(255,255,255,.25);
+      letter-spacing: .08em; text-transform: uppercase;
+      transition: color .2s;
+    }
+    .login-back:hover { color: rgba(255,255,255,.5); }
+
+    /* ── ADMIN LAYOUT ── */
+    #dashboard { display: none; }
+
+    .admin-nav {
+      background: var(--negro);
+      padding: 16px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      position: sticky; top: 0; z-index: 90;
+    }
+    .admin-nav-logo { height: 36px; filter: invert(1); mix-blend-mode: screen; }
+    .admin-nav-right { display: flex; align-items: center; gap: 20px; }
+    .admin-nav-right span {
+      font-size: .78rem; letter-spacing: .1em; text-transform: uppercase;
+      color: rgba(255,255,255,.3);
+    }
+    .btn-sm {
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: .76rem; font-weight: 600; letter-spacing: .06em;
+      cursor: pointer; border: 1px solid transparent;
+      transition: all .2s;
+    }
+    .btn-sm-ghost {
+      background: transparent;
+      color: rgba(255,255,255,.5);
+      border-color: rgba(255,255,255,.15);
+    }
+    .btn-sm-ghost:hover { color: #fff; border-color: rgba(255,255,255,.4); }
+    .btn-sm-white { background: #fff; color: var(--negro); border-color: #fff; }
+    .btn-sm-white:hover { background: rgba(255,255,255,.85); }
+
+    .admin-main {
+      max-width: 1100px; margin: 0 auto;
+      padding: 48px 40px 96px;
+    }
+
+    /* ── STATS STRIP ── */
+    .stats-strip {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 16px; margin-bottom: 48px;
+    }
+    .stat-card {
+      background: var(--gris-50);
+      border: 1px solid var(--gris-200);
+      border-radius: 18px;
+      padding: 24px 28px;
+    }
+    .stat-card .n {
+      font-family: var(--display);
+      font-size: 2.6rem; font-weight: 300;
+      letter-spacing: -.02em; line-height: 1;
+    }
+    .stat-card .l {
+      font-size: .72rem; font-weight: 600;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--gris-400); margin-top: 8px;
+    }
+
+    /* ── SECTION HEADER ── */
+    .sec-head {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 24px;
+    }
+    .sec-title {
+      font-family: var(--display);
+      font-size: 1.8rem; font-weight: 300; font-style: italic;
+    }
+
+    /* ── FORM ── */
+    .form-card {
+      background: var(--gris-50);
+      border: 1px solid var(--gris-200);
+      border-radius: 24px;
+      padding: 36px;
+      margin-bottom: 48px;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-group { display: flex; flex-direction: column; gap: 7px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-label {
+      font-size: .7rem; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--gris-400);
+    }
+    .form-input {
+      padding: 12px 16px;
+      border: 1px solid var(--gris-200);
+      border-radius: 12px;
+      font-family: var(--body); font-size: .9rem;
+      color: var(--negro); background: #fff;
+      outline: none; transition: border-color .2s;
+    }
+    .form-input:focus { border-color: var(--negro); }
+    .form-input::placeholder { color: var(--gris-400); }
+    .radio-row { display: flex; gap: 12px; flex-wrap: wrap; }
+    .radio-opt {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 16px;
+      border: 1px solid var(--gris-200);
+      border-radius: 999px;
+      cursor: pointer; transition: all .2s;
+      font-size: .84rem;
+    }
+    .radio-opt input[type="radio"] { accent-color: var(--negro); }
+    .radio-opt:has(input:checked) {
+      border-color: var(--negro);
+      background: var(--negro);
+      color: #fff;
+    }
+    .form-actions {
+      margin-top: 24px;
+      display: flex; gap: 12px; align-items: center;
+    }
+    .btn-submit {
+      padding: 13px 28px;
+      background: var(--negro); color: #fff;
+      border: none; border-radius: 999px;
+      font-family: var(--body); font-size: .85rem; font-weight: 700;
+      letter-spacing: .05em; cursor: pointer;
+      transition: background .2s;
+    }
+    .btn-submit:hover { background: #2a2a2a; }
+    .btn-cancel {
+      padding: 13px 28px;
+      background: transparent; color: var(--gris-400);
+      border: 1px solid var(--gris-200); border-radius: 999px;
+      font-family: var(--body); font-size: .85rem; font-weight: 600;
+      cursor: pointer; transition: all .2s;
+    }
+    .btn-cancel:hover { border-color: var(--negro); color: var(--negro); }
+
+    /* ── TABLE ── */
+    .table-wrap {
+      background: #fff;
+      border: 1px solid var(--gris-200);
+      border-radius: 24px;
+      overflow: hidden;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    thead th {
+      padding: 14px 20px;
+      text-align: left;
+      font-size: .68rem; font-weight: 700;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--gris-400);
+      background: var(--gris-50);
+      border-bottom: 1px solid var(--gris-200);
+    }
+    tbody tr {
+      border-bottom: 1px solid var(--gris-100);
+      transition: background .15s;
+    }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--gris-50); }
+    td {
+      padding: 16px 20px;
+      font-size: .88rem; vertical-align: middle;
+    }
+    .td-name { font-weight: 600; }
+    .td-brand { color: var(--gris-600); font-size: .82rem; }
+    .td-price { font-family: var(--display); font-size: 1.1rem; font-weight: 400; }
+    .t-badge {
+      display: inline-flex; padding: 3px 10px;
+      border-radius: 999px; font-size: .66rem;
+      font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    }
+    .t-badge-disponible { background: var(--negro); color: #fff; }
+    .t-badge-pocas { border: 1px solid var(--negro); color: var(--negro); }
+    .t-badge-agotado { background: var(--gris-100); color: var(--gris-400); }
+    .td-actions { display: flex; gap: 8px; }
+    .btn-edit {
+      padding: 7px 14px;
+      border: 1px solid var(--gris-200);
+      border-radius: 999px;
+      font-size: .74rem; font-weight: 600;
+      cursor: pointer; background: #fff;
+      transition: all .2s;
+    }
+    .btn-edit:hover { border-color: var(--negro); }
+    .btn-del {
+      padding: 7px 14px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      font-size: .74rem; font-weight: 600;
+      cursor: pointer; background: transparent;
+      color: #cc3333;
+      transition: all .2s;
+    }
+    .btn-del:hover { border-color: #cc3333; background: #fff5f5; }
+    .empty-row td {
+      text-align: center; padding: 56px;
+      color: var(--gris-400); font-style: italic;
+      font-family: var(--display); font-size: 1.2rem;
+    }
+
+    /* ── TOAST ── */
+    #toast {
+      position: fixed; bottom: 32px; left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--negro); color: #fff;
+      padding: 12px 24px; border-radius: 999px;
+      font-size: .84rem; font-weight: 600;
+      opacity: 0; pointer-events: none;
+      transition: opacity .3s ease, transform .3s ease;
+      z-index: 300; white-space: nowrap;
+    }
+    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ── MODAL ── */
+    #editModal {
+      display: none;
+      position: fixed; inset: 0; z-index: 200;
+      background: rgba(0,0,0,.6);
+      align-items: center; justify-content: center;
+      padding: 24px;
+    }
+    #editModal.open { display: flex; }
+    .modal-box {
+      background: #fff;
+      border-radius: 28px;
+      padding: 40px;
+      width: 100%; max-width: 680px;
+      max-height: 90vh; overflow-y: auto;
+      animation: fadeUp .3s ease both;
+    }
+    .modal-title {
+      font-family: var(--display);
+      font-size: 1.8rem; font-weight: 300; font-style: italic;
+      margin-bottom: 28px;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 760px) {
+      .admin-main { padding: 32px 20px 80px; }
+      .admin-nav { padding: 14px 20px; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-group.full { grid-column: 1; }
+      .stats-strip { grid-template-columns: 1fr 1fr; }
+      .table-wrap { overflow-x: auto; }
+      table { min-width: 600px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN -->
+  <div id="loginOverlay">
+    <div class="login-box">
+      <img src="perfuma2 logo.png" alt="Perfuma2" class="login-logo">
+      <p class="login-title">Panel Admin</p>
+      <p class="login-sub">Ingresa tu contraseña</p>
+      <input type="password" class="login-field" id="loginPass" placeholder="Contraseña" autocomplete="current-password">
+      <button class="login-btn" id="loginBtn">Ingresar →</button>
+      <p class="login-err" id="loginErr"></p>
+      <a href="index.html" class="login-back">← Volver al sitio</a>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="dashboard">
+    <nav class="admin-nav">
+      <a href="index.html"><img src="perfuma2 logo.png" alt="Perfuma2" class="admin-nav-logo"></a>
+      <div class="admin-nav-right">
+        <span>Panel de Admin</span>
+        <a href="catalogo.html" class="btn-sm btn-sm-ghost">Ver Catálogo</a>
+        <button class="btn-sm btn-sm-white" id="logoutBtn">Cerrar Sesión</button>
+      </div>
+    </nav>
+
+    <div class="admin-main">
+      <!-- Stats -->
+      <div class="stats-strip" id="statsStrip">
+        <div class="stat-card"><div class="n" id="st-total">0</div><div class="l">Perfumes en catálogo</div></div>
+        <div class="stat-card"><div class="n" id="st-disp">0</div><div class="l">Disponibles</div></div>
+        <div class="stat-card"><div class="n" id="st-agot">0</div><div class="l">Agotados</div></div>
+      </div>
+
+      <!-- Add form -->
+      <div class="sec-head">
+        <h2 class="sec-title" id="formTitle">Agregar nuevo perfume</h2>
+      </div>
+      <div class="form-card">
+        <input type="hidden" id="editId">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Nombre de la fragancia</label>
+            <input class="form-input" id="fNombre" placeholder="Ej: Le Male Elixir" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Marca</label>
+            <input class="form-input" id="fMarca" placeholder="Ej: Jean Paul Gaultier" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Familia olfativa</label>
+            <input class="form-input" id="fFamilia" placeholder="Ej: Dulce / Especiado">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Ocasión ideal</label>
+            <input class="form-input" id="fOcasion" placeholder="Ej: Citas · Fiesta · Clima Frío">
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Notas clave (separadas por coma)</label>
+            <input class="form-input" id="fNotas" placeholder="Ej: Vainilla, Miel, Tabaco">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Precio 3 ml (MXN)</label>
+            <input class="form-input" id="fPrecio3" type="number" placeholder="Ej: 100" min="0">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Precio 5 ml (MXN)</label>
+            <input class="form-input" id="fPrecio5" type="number" placeholder="Ej: 160" min="0">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Precio 10 ml (MXN)</label>
+            <input class="form-input" id="fPrecio10" type="number" placeholder="Ej: 240" min="0">
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Disponibilidad</label>
+            <div class="radio-row">
+              <label class="radio-opt">
+                <input type="radio" name="disp" value="disponible" checked> Disponible
+              </label>
+              <label class="radio-opt">
+                <input type="radio" name="disp" value="pocas"> Pocas Piezas
+              </label>
+              <label class="radio-opt">
+                <input type="radio" name="disp" value="agotado"> Agotado
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn-submit" id="saveBtn">Guardar Perfume</button>
+          <button class="btn-cancel" id="cancelBtn" style="display:none">Cancelar</button>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="sec-head">
+        <h2 class="sec-title">Catálogo actual</h2>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Fragancia</th>
+              <th>Familia</th>
+              <th>Precios (3 / 5 / 10 ml)</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="perfumeTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script>
+    // ─── Config ───
+    // Para cambiar la contraseña, edita solo esta línea:
+    const ADMIN_PASS = 'Perfuma2Admin';
+    const STORAGE_KEY = 'p2_catalog';
+
+    // ─── Default data ───
+    const DEFAULT = [
+      { id: 'p1', nombre: 'Le Male Elixir', marca: 'Jean Paul Gaultier', familia: 'Dulce / Especiado', notas: 'Vainilla, Miel, Tabaco', ocasion: 'Citas · Fiesta · Clima Frío', precio3: 100, precio5: 160, precio10: 240, disponibilidad: 'disponible' },
+      { id: 'p2', nombre: 'Sauvage Elixir', marca: 'Dior', familia: 'Amaderado / Especiado', notas: 'Pimienta Negra, Sándalo, Patchouli', ocasion: 'Trabajo · Casual · Todo Momento', precio3: 90, precio5: 140, precio10: 220, disponibilidad: 'disponible' },
+      { id: 'p3', nombre: 'Oud Wood', marca: 'Tom Ford', familia: 'Oriental / Amaderado', notas: 'Oud, Cedro, Vainilla', ocasion: 'Citas · Noche · Formal', precio3: 120, precio5: 200, precio10: 300, disponibilidad: 'disponible' },
+      { id: 'p4', nombre: 'Black Afgano', marca: 'Nasomatto', familia: 'Oriental / Amaderado', notas: 'Hachís, Café, Madera', ocasion: 'Noche · Invierno', precio3: 130, precio5: 210, precio10: 320, disponibilidad: 'pocas' },
+      { id: 'p5', nombre: 'Good Girl', marca: 'Carolina Herrera', familia: 'Floral / Dulce', notas: 'Tuberosa, Cacao, Almendra', ocasion: 'Citas · Fiesta · Noche', precio3: 80, precio5: 130, precio10: 200, disponibilidad: 'disponible' },
+      { id: 'p6', nombre: 'Aventus', marca: 'Creed', familia: 'Frutal / Amaderado', notas: 'Piña, Abedul, Musgo de Roble', ocasion: 'Trabajo · Formal · Todo Momento', precio3: 110, precio5: 170, precio10: 260, disponibilidad: 'agotado' },
+      { id: 'p7', nombre: 'La Yuqawam', marca: 'Swiss Arabian', familia: 'Oriental / Árabe', notas: 'Rosa, Oud, Ámbar', ocasion: 'Citas · Noche · Especial', precio3: 70, precio5: 120, precio10: 180, disponibilidad: 'disponible' },
+      { id: 'p8', nombre: 'Boss Bottled', marca: 'Hugo Boss', familia: 'Frutal / Especiado', notas: 'Manzana, Canela, Sándalo', ocasion: 'Trabajo · Casual · Diario', precio3: 60, precio5: 100, precio10: 150, disponibilidad: 'disponible' },
+    ];
+
+    // ─── Storage helpers ───
+    function load() {
+      try {
+        const d = localStorage.getItem(STORAGE_KEY);
+        return d ? JSON.parse(d) : [...DEFAULT];
+      } catch { return [...DEFAULT]; }
+    }
+    function save(data) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+    function uid() {
+      return 'p' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
+    }
+
+    let catalog = load();
+
+    // ─── Auth ───
+    const loginOverlay = document.getElementById('loginOverlay');
+    const dashboard = document.getElementById('dashboard');
+    const loginPass = document.getElementById('loginPass');
+    const loginErr = document.getElementById('loginErr');
+
+    function checkAuth() {
+      if (sessionStorage.getItem('p2_admin') === '1') showDashboard();
+    }
+    function showDashboard() {
+      loginOverlay.style.display = 'none';
+      dashboard.style.display = 'block';
+      refreshAll();
+    }
+    function doLogin() {
+      if (loginPass.value === ADMIN_PASS) {
+        sessionStorage.setItem('p2_admin', '1');
+        loginErr.textContent = '';
+        showDashboard();
+      } else {
+        loginErr.textContent = 'Contraseña incorrecta.';
+        loginPass.value = '';
+        loginPass.focus();
+      }
+    }
+    document.getElementById('loginBtn').addEventListener('click', doLogin);
+    loginPass.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      sessionStorage.removeItem('p2_admin');
+      location.reload();
+    });
+
+    // ─── Stats ───
+    function updateStats() {
+      document.getElementById('st-total').textContent = catalog.length;
+      document.getElementById('st-disp').textContent = catalog.filter(p => p.disponibilidad === 'disponible').length;
+      document.getElementById('st-agot').textContent = catalog.filter(p => p.disponibilidad === 'agotado').length;
+    }
+
+    // ─── Table ───
+    function renderTable() {
+      const tbody = document.getElementById('perfumeTable');
+      if (catalog.length === 0) {
+        tbody.innerHTML = `<tr class="empty-row"><td colspan="6">Sin perfumes aún. Agrega el primero arriba.</td></tr>`;
+        return;
+      }
+      const labels = { disponible: 'Disponible', pocas: 'Pocas Piezas', agotado: 'Agotado' };
+      tbody.innerHTML = catalog.map(p => `
+        <tr>
+          <td>
+            <div class="td-name">${p.nombre}</div>
+            <div class="td-brand">${p.marca}</div>
+          </td>
+          <td style="color:var(--gris-600);font-size:.82rem">${p.familia || '—'}</td>
+          <td style="font-size:.82rem;color:var(--gris-600)">$${p.precio3||'—'} · $${p.precio5||'—'} · $${p.precio10||'—'}</td>
+          <td><span class="t-badge t-badge-${p.disponibilidad}">${labels[p.disponibilidad]}</span></td>
+          <td>
+            <div class="td-actions">
+              <button class="btn-edit" onclick="startEdit('${p.id}')">Editar</button>
+              <button class="btn-del" onclick="deletePerfume('${p.id}')">Eliminar</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function refreshAll() {
+      updateStats();
+      renderTable();
+    }
+
+    // ─── Form helpers ───
+    function getFormValues() {
+      return {
+        nombre: document.getElementById('fNombre').value.trim(),
+        marca: document.getElementById('fMarca').value.trim(),
+        familia: document.getElementById('fFamilia').value.trim(),
+        ocasion: document.getElementById('fOcasion').value.trim(),
+        notas: document.getElementById('fNotas').value.trim(),
+        precio3: parseInt(document.getElementById('fPrecio3').value) || 0,
+        precio5: parseInt(document.getElementById('fPrecio5').value) || 0,
+        precio10: parseInt(document.getElementById('fPrecio10').value) || 0,
+        disponibilidad: document.querySelector('input[name="disp"]:checked').value,
+      };
+    }
+
+    function setFormValues(p) {
+      document.getElementById('fNombre').value = p.nombre;
+      document.getElementById('fMarca').value = p.marca;
+      document.getElementById('fFamilia').value = p.familia || '';
+      document.getElementById('fOcasion').value = p.ocasion || '';
+      document.getElementById('fNotas').value = p.notas || '';
+      document.getElementById('fPrecio3').value = p.precio3 || '';
+      document.getElementById('fPrecio5').value = p.precio5 || '';
+      document.getElementById('fPrecio10').value = p.precio10 || '';
+      document.querySelector(`input[name="disp"][value="${p.disponibilidad}"]`).checked = true;
+    }
+
+    function resetForm() {
+      document.getElementById('editId').value = '';
+      document.getElementById('fNombre').value = '';
+      document.getElementById('fMarca').value = '';
+      document.getElementById('fFamilia').value = '';
+      document.getElementById('fOcasion').value = '';
+      document.getElementById('fNotas').value = '';
+      document.getElementById('fPrecio3').value = '';
+      document.getElementById('fPrecio5').value = '';
+      document.getElementById('fPrecio10').value = '';
+      document.querySelector('input[name="disp"][value="disponible"]').checked = true;
+      document.getElementById('formTitle').textContent = 'Agregar nuevo perfume';
+      document.getElementById('saveBtn').textContent = 'Guardar Perfume';
+      document.getElementById('cancelBtn').style.display = 'none';
+    }
+
+    // ─── Add / Edit / Delete ───
+    document.getElementById('saveBtn').addEventListener('click', () => {
+      const vals = getFormValues();
+      if (!vals.nombre || !vals.marca) {
+        toast('Nombre y marca son obligatorios.');
+        return;
+      }
+      const editId = document.getElementById('editId').value;
+      if (editId) {
+        const idx = catalog.findIndex(p => p.id === editId);
+        if (idx > -1) catalog[idx] = { ...catalog[idx], ...vals };
+        toast('Perfume actualizado ✓');
+      } else {
+        catalog.unshift({ id: uid(), ...vals });
+        toast('Perfume agregado ✓');
+      }
+      save(catalog);
+      resetForm();
+      refreshAll();
+    });
+
+    document.getElementById('cancelBtn').addEventListener('click', resetForm);
+
+    function startEdit(id) {
+      const p = catalog.find(x => x.id === id);
+      if (!p) return;
+      document.getElementById('editId').value = id;
+      setFormValues(p);
+      document.getElementById('formTitle').textContent = 'Editar perfume';
+      document.getElementById('saveBtn').textContent = 'Actualizar Perfume';
+      document.getElementById('cancelBtn').style.display = 'inline-flex';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function deletePerfume(id) {
+      if (!confirm('¿Eliminar este perfume del catálogo?')) return;
+      catalog = catalog.filter(p => p.id !== id);
+      save(catalog);
+      refreshAll();
+      toast('Perfume eliminado.');
+    }
+
+    // ─── Toast ───
+    function toast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2800);
+    }
+
+    // ─── Init ───
+    checkAuth();
+  </script>
+</body>
+</html>

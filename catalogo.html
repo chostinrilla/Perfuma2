@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Catálogo de decants y perfumes sellados — Perfuma2. Diseñador, nicho y árabe.">
+  <title>Catálogo — Perfuma2</title>
+  <link rel="icon" type="image/png" href="perfuma2 logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --negro: #000;
+      --blanco: #FAFAFA;
+      --gris-50: #F6F6F6;
+      --gris-100: #EFEFEF;
+      --gris-200: #E0E0E0;
+      --gris-400: #9A9A9A;
+      --gris-600: #555;
+      --display: 'Cormorant Garamond', Georgia, serif;
+      --body: 'Inter', system-ui, sans-serif;
+    }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--body);
+      background: var(--blanco);
+      color: var(--negro);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    /* ── NAV ── */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--negro);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 52px;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+    .nav-logo { height: 40px; filter: invert(1); mix-blend-mode: screen; }
+    .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
+    .nav-links a {
+      font-size: .78rem; font-weight: 500; letter-spacing: .14em;
+      text-transform: uppercase; color: rgba(255,255,255,.5);
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-links .nav-pill {
+      color: rgba(255,255,255,.8);
+      padding: 8px 20px;
+      border: 1px solid rgba(255,255,255,.25);
+      border-radius: 999px;
+      transition: background .2s, border-color .2s, color .2s;
+    }
+    .nav-links .nav-pill:hover { background: #fff; border-color: #fff; color: var(--negro); }
+
+    /* ── PAGE HEADER ── */
+    .page-header {
+      padding: 72px 52px 56px;
+      border-bottom: 1px solid var(--gris-200);
+    }
+    .page-header-inner { max-width: 1100px; margin: 0 auto; }
+    .page-eyebrow {
+      font-size: .72rem; font-weight: 600; letter-spacing: .22em;
+      text-transform: uppercase; color: var(--gris-400);
+      display: block; margin-bottom: 14px;
+    }
+    .page-title {
+      font-family: var(--display);
+      font-size: clamp(2.4rem, 4vw, 4rem);
+      font-weight: 300; letter-spacing: -.02em; line-height: 1.05;
+    }
+    .page-sub {
+      margin-top: 16px;
+      font-size: .95rem; color: var(--gris-600); max-width: 480px; line-height: 1.7;
+    }
+    .result-count {
+      margin-top: 20px;
+      font-size: .8rem; font-weight: 500; color: var(--gris-400);
+      letter-spacing: .06em;
+    }
+
+    /* ── FILTERS ── */
+    .filter-bar {
+      padding: 24px 52px;
+      background: var(--blanco);
+      border-bottom: 1px solid var(--gris-200);
+      position: sticky; top: 69px; z-index: 90;
+    }
+    .filter-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; gap: 16px; flex-wrap: wrap; align-items: center;
+    }
+    .search-wrap {
+      flex: 1; min-width: 220px; position: relative;
+    }
+    .search-icon {
+      position: absolute; left: 16px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--gris-400); font-size: .9rem; pointer-events: none;
+    }
+    .search-input {
+      width: 100%;
+      padding: 11px 16px 11px 42px;
+      border: 1px solid var(--gris-200);
+      border-radius: 999px;
+      font-family: var(--body); font-size: .88rem;
+      color: var(--negro); background: #fff;
+      transition: border-color .2s;
+      outline: none;
+    }
+    .search-input:focus { border-color: var(--negro); }
+    .search-input::placeholder { color: var(--gris-400); }
+    .filter-select {
+      padding: 10px 36px 10px 16px;
+      border: 1px solid var(--gris-200);
+      border-radius: 999px;
+      font-family: var(--body); font-size: .84rem;
+      color: var(--negro); background: #fff;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239A9A9A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      cursor: pointer; outline: none;
+      transition: border-color .2s;
+    }
+    .filter-select:focus { border-color: var(--negro); }
+    .pills { display: flex; gap: 8px; flex-wrap: wrap; }
+    .pill {
+      padding: 9px 18px;
+      border: 1px solid var(--gris-200);
+      border-radius: 999px;
+      font-size: .78rem; font-weight: 600; letter-spacing: .06em;
+      cursor: pointer; transition: all .2s;
+      background: #fff; color: var(--gris-600);
+      white-space: nowrap;
+    }
+    .pill:hover { border-color: var(--negro); color: var(--negro); }
+    .pill.active { background: var(--negro); border-color: var(--negro); color: #fff; }
+
+    /* ── CATALOG GRID ── */
+    .catalog-section { padding: 48px 52px 96px; }
+    .catalog-inner { max-width: 1100px; margin: 0 auto; }
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center; padding: 80px 0;
+    }
+    .empty-state p {
+      font-family: var(--display);
+      font-size: 1.6rem; font-style: italic; font-weight: 300;
+      color: var(--gris-400);
+    }
+
+    /* ── PRODUCT CARD ── */
+    .card {
+      background: #fff;
+      border: 1px solid var(--gris-200);
+      border-radius: 24px;
+      padding: 28px;
+      display: flex; flex-direction: column;
+      transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 48px rgba(0,0,0,.08);
+      border-color: transparent;
+    }
+    .card.agotado { opacity: .6; }
+
+    .card-top {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      gap: 10px; margin-bottom: 20px;
+    }
+    .badge {
+      display: inline-flex; align-items: center;
+      padding: 4px 11px;
+      border-radius: 999px;
+      font-size: .68rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; white-space: nowrap;
+    }
+    .badge-disponible { background: var(--negro); color: #fff; }
+    .badge-pocas      { border: 1px solid var(--negro); color: var(--negro); background: transparent; }
+    .badge-agotado    { background: var(--gris-100); color: var(--gris-400); }
+    .badge-familia    {
+      background: var(--gris-50);
+      color: var(--gris-600);
+      border: 1px solid var(--gris-200);
+      text-align: right;
+    }
+
+    .card-name {
+      font-family: var(--display);
+      font-size: 1.55rem; font-weight: 400;
+      line-height: 1.15; letter-spacing: -.01em;
+    }
+    .card-brand {
+      margin-top: 4px;
+      font-size: .82rem; color: var(--gris-400); font-weight: 500;
+      letter-spacing: .05em;
+    }
+    .card-divider {
+      border: none; border-top: 1px solid var(--gris-200);
+      margin: 20px 0;
+    }
+    .card-detail-label {
+      font-size: .65rem; font-weight: 700; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--gris-400);
+      margin-bottom: 5px;
+    }
+    .card-detail-val {
+      font-size: .88rem; color: var(--gris-600); line-height: 1.5;
+    }
+    .card-detail + .card-detail { margin-top: 14px; }
+
+    .card-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: auto; padding-top: 20px;
+      border-top: 1px solid var(--gris-200);
+    }
+    .card-size {
+      font-size: .8rem; font-weight: 600; color: var(--gris-400);
+      letter-spacing: .06em;
+    }
+    .card-price {
+      font-family: var(--display);
+      font-size: 1.5rem; font-weight: 400; letter-spacing: -.01em;
+    }
+    .card-cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 16px;
+      padding: 11px 20px;
+      border: 1px solid var(--negro);
+      border-radius: 999px;
+      font-size: .8rem; font-weight: 600; letter-spacing: .05em;
+      transition: all .2s;
+      cursor: pointer;
+      width: 100%; justify-content: center;
+    }
+    .card-cta:hover { background: var(--negro); color: #fff; }
+    .card-cta.disabled {
+      border-color: var(--gris-200); color: var(--gris-400); cursor: default;
+    }
+    .card-cta.disabled:hover { background: transparent; color: var(--gris-400); }
+
+    /* ── SIZE SELECTOR ── */
+    .size-selector {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 8px; margin-bottom: 14px;
+    }
+    .size-btn {
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      padding: 10px 6px;
+      border: 1px solid var(--gris-200); border-radius: 12px;
+      cursor: pointer; background: #fff; font-family: var(--body);
+      transition: all .2s;
+    }
+    .size-btn:hover:not(:disabled) { border-color: var(--negro); }
+    .size-btn.active { background: var(--negro); border-color: var(--negro); color: #fff; }
+    .size-btn:disabled { opacity: .4; cursor: default; }
+    .s-ml { font-size: .78rem; font-weight: 700; }
+    .s-px { font-size: .73rem; font-weight: 500; }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: #000;
+      padding: 64px 52px 40px;
+    }
+    .footer-top {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 52px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+    .footer-logo { height: 32px; filter: invert(1); mix-blend-mode: screen; margin-bottom: 18px; }
+    .footer-brand p { font-size: .86rem; line-height: 1.75; color: rgba(255,255,255,.35); max-width: 240px; }
+    .footer-col h5 {
+      font-size: .68rem; font-weight: 700; letter-spacing: .18em;
+      text-transform: uppercase; color: rgba(255,255,255,.22); margin-bottom: 18px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .footer-col a { font-size: .88rem; color: rgba(255,255,255,.4); transition: color .2s; }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom {
+      max-width: 1100px; margin: 32px auto 0;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: .73rem; color: rgba(255,255,255,.18);
+    }
+    .footer-bottom a { color: rgba(255,255,255,.14); font-size: .68rem; transition: color .2s; }
+    .footer-bottom a:hover { color: rgba(255,255,255,.4); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .nav, .filter-bar, .page-header, .catalog-section, .footer { padding-left: 20px; padding-right: 20px; }
+      .filter-bar { top: 61px; }
+      .footer-top { grid-template-columns: 1fr; gap: 36px; }
+      .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+    }
+    @media (max-width: 600px) {
+      .nav-links li:first-child { display: none; }
+      .page-header { padding-top: 48px; padding-bottom: 40px; }
+      .catalog-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html">
+      <img src="perfuma2 logo.png" alt="Perfuma2" class="nav-logo">
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#nosotros">Nosotros</a></li>
+      <li><a href="https://wa.me/529903415523" target="_blank" rel="noopener" class="nav-pill">WhatsApp</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-header">
+    <div class="page-header-inner">
+      <span class="page-eyebrow">Catálogo completo</span>
+      <h1 class="page-title">Fragancias<br><em style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300">originales.</em></h1>
+      <p class="page-sub">Decants de 3, 5 y 10&nbsp;ml, y perfumes sellados de casas de diseñador, nicho y árabe. Todos 100% originales.</p>
+      <p class="result-count" id="resultCount"></p>
+    </div>
+  </div>
+
+  <div class="filter-bar">
+    <div class="filter-inner">
+      <div class="search-wrap">
+        <span class="search-icon">⌕</span>
+        <input type="search" class="search-input" id="searchInput" placeholder="Buscar fragancia o marca…" autocomplete="off">
+      </div>
+      <select class="filter-select" id="familiaFilter">
+        <option value="">Todas las familias</option>
+      </select>
+      <div class="pills" id="dispPills">
+        <button class="pill active" data-disp="">Todos</button>
+        <button class="pill" data-disp="disponible">Disponible</button>
+        <button class="pill" data-disp="pocas">Pocas Piezas</button>
+        <button class="pill" data-disp="agotado">Agotado</button>
+      </div>
+    </div>
+  </div>
+
+  <section class="catalog-section">
+    <div class="catalog-inner">
+      <div class="catalog-grid" id="catalogGrid"></div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="perfuma2 logo.png" alt="Perfuma2" class="footer-logo">
+        <p>Decants y perfumes sellados 100% originales.<br>Diseñador, nicho y árabe.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Navegación</h5>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="index.html#nosotros">Nosotros</a></li>
+          <li><a href="catalogo.html">Catálogo</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Contacto</h5>
+        <ul>
+          <li><a href="https://wa.me/529903415523" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="https://www.facebook.com/share/1CzhU5ccKz/?mibextid=wwXIfr" target="_blank" rel="noopener">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Perfuma2. Todos los derechos reservados.</span>
+      <a href="admin.html">Admin</a>
+    </div>
+  </footer>
+
+  <script>
+    const DEFAULT_PERFUMES = [
+      { id: 'p1', nombre: 'Le Male Elixir', marca: 'Jean Paul Gaultier', familia: 'Dulce / Especiado', notas: 'Vainilla, Miel, Tabaco', ocasion: 'Citas · Fiesta · Clima Frío', precio3: 100, precio5: 160, precio10: 240, disponibilidad: 'disponible' },
+      { id: 'p2', nombre: 'Sauvage Elixir', marca: 'Dior', familia: 'Amaderado / Especiado', notas: 'Pimienta Negra, Sándalo, Patchouli', ocasion: 'Trabajo · Casual · Todo Momento', precio3: 90, precio5: 140, precio10: 220, disponibilidad: 'disponible' },
+      { id: 'p3', nombre: 'Oud Wood', marca: 'Tom Ford', familia: 'Oriental / Amaderado', notas: 'Oud, Cedro, Vainilla', ocasion: 'Citas · Noche · Formal', precio3: 120, precio5: 200, precio10: 300, disponibilidad: 'disponible' },
+      { id: 'p4', nombre: 'Black Afgano', marca: 'Nasomatto', familia: 'Oriental / Amaderado', notas: 'Hachís, Café, Madera', ocasion: 'Noche · Invierno', precio3: 130, precio5: 210, precio10: 320, disponibilidad: 'pocas' },
+      { id: 'p5', nombre: 'Good Girl', marca: 'Carolina Herrera', familia: 'Floral / Dulce', notas: 'Tuberosa, Cacao, Almendra', ocasion: 'Citas · Fiesta · Noche', precio3: 80, precio5: 130, precio10: 200, disponibilidad: 'disponible' },
+      { id: 'p6', nombre: 'Aventus', marca: 'Creed', familia: 'Frutal / Amaderado', notas: 'Piña, Abedul, Musgo de Roble', ocasion: 'Trabajo · Formal · Todo Momento', precio3: 110, precio5: 170, precio10: 260, disponibilidad: 'agotado' },
+      { id: 'p7', nombre: 'La Yuqawam', marca: 'Swiss Arabian', familia: 'Oriental / Árabe', notas: 'Rosa, Oud, Ámbar', ocasion: 'Citas · Noche · Especial', precio3: 70, precio5: 120, precio10: 180, disponibilidad: 'disponible' },
+      { id: 'p8', nombre: 'Boss Bottled', marca: 'Hugo Boss', familia: 'Frutal / Especiado', notas: 'Manzana, Canela, Sándalo', ocasion: 'Trabajo · Casual · Diario', precio3: 60, precio5: 100, precio10: 150, disponibilidad: 'disponible' },
+    ];
+
+    function loadPerfumes() {
+      try {
+        const stored = localStorage.getItem('p2_catalog');
+        return stored ? JSON.parse(stored) : DEFAULT_PERFUMES;
+      } catch { return DEFAULT_PERFUMES; }
+    }
+
+    let all = loadPerfumes();
+    let filterText = '', filterFamilia = '', filterDisp = '';
+
+    function buildFamiliaOptions() {
+      const sel = document.getElementById('familiaFilter');
+      [...new Set(all.map(p => p.familia))].sort().forEach(f => {
+        const opt = document.createElement('option');
+        opt.value = f; opt.textContent = f;
+        sel.appendChild(opt);
+      });
+    }
+
+    function waLink(p, ml) {
+      const msg = encodeURIComponent(`Hola! Me interesa el decant de ${p.nombre} - ${p.marca} de ${ml}ml. ¿Está disponible?`);
+      return `https://wa.me/529903415523?text=${msg}`;
+    }
+
+    function selSize(id, ml) {
+      const wrap = document.querySelector(`.size-selector[data-card="${id}"]`);
+      wrap.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+      wrap.querySelector(`[data-size="${ml}"]`).classList.add('active');
+      const cta = document.querySelector(`.card-cta[data-wa="${id}"]`);
+      if (cta) {
+        const p = all.find(x => x.id === id);
+        if (p) cta.href = waLink(p, ml);
+      }
+    }
+
+    function render() {
+      const grid = document.getElementById('catalogGrid');
+      const count = document.getElementById('resultCount');
+      const q = filterText.toLowerCase();
+
+      const filtered = all.filter(p => {
+        const matchText = !q ||
+          p.nombre.toLowerCase().includes(q) ||
+          p.marca.toLowerCase().includes(q) ||
+          p.notas.toLowerCase().includes(q) ||
+          p.familia.toLowerCase().includes(q);
+        return matchText &&
+          (!filterFamilia || p.familia === filterFamilia) &&
+          (!filterDisp    || p.disponibilidad === filterDisp);
+      });
+
+      count.textContent = `${filtered.length} ${filtered.length === 1 ? 'fragancia encontrada' : 'fragancias encontradas'}`;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div class="empty-state"><p>Sin resultados para tu búsqueda.</p></div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(p => {
+        const disp = { disponible: 'Disponible', pocas: 'Pocas Piezas', agotado: 'Agotado' }[p.disponibilidad] || p.disponibilidad;
+        const agotado = p.disponibilidad === 'agotado';
+        const sizeBtns = [3, 5, 10].map((ml, i) => {
+          const px = p[`precio${ml}`];
+          return `<button class="size-btn${i === 0 ? ' active' : ''}" data-size="${ml}"
+            onclick="selSize('${p.id}',${ml})" ${agotado ? 'disabled' : ''}>
+            <span class="s-ml">${ml} ml</span>
+            <span class="s-px">${px ? '$' + px : '—'}</span>
+          </button>`;
+        }).join('');
+
+        return `
+          <article class="card${agotado ? ' agotado' : ''}">
+            <div class="card-top">
+              <span class="badge badge-${p.disponibilidad}">${disp}</span>
+              <span class="badge badge-familia">${p.familia}</span>
+            </div>
+            <div class="card-name">${p.nombre}</div>
+            <div class="card-brand">${p.marca}</div>
+            <hr class="card-divider">
+            <div class="card-detail">
+              <div class="card-detail-label">Notas clave</div>
+              <div class="card-detail-val">${p.notas}</div>
+            </div>
+            <div class="card-detail">
+              <div class="card-detail-label">Ocasión ideal</div>
+              <div class="card-detail-val">${p.ocasion}</div>
+            </div>
+            <hr class="card-divider">
+            <div class="size-selector" data-card="${p.id}">${sizeBtns}</div>
+            ${agotado
+              ? `<div class="card-cta disabled">Agotado</div>`
+              : `<a href="${waLink(p, 3)}" target="_blank" rel="noopener" class="card-cta" data-wa="${p.id}">Consultar en WhatsApp →</a>`
+            }
+          </article>`;
+      }).join('');
+    }
+
+    document.getElementById('searchInput').addEventListener('input', e => { filterText = e.target.value; render(); });
+    document.getElementById('familiaFilter').addEventListener('change', e => { filterFamilia = e.target.value; render(); });
+    document.getElementById('dispPills').addEventListener('click', e => {
+      const pill = e.target.closest('[data-disp]');
+      if (!pill) return;
+      filterDisp = pill.dataset.disp;
+      document.querySelectorAll('#dispPills .pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      render();
+    });
+
+    buildFamiliaOptions();
+    render();
+  </script>
+</body>
+</html>
