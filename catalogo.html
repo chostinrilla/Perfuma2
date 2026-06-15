@@ -176,6 +176,22 @@
     }
     .card.agotado { opacity: .6; }
 
+    .card-img-wrap {
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--gris-50);
+      height: 220px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+    }
+    .card-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: contain;
+      padding: 16px;
+      transition: transform .4s ease;
+    }
+    .card:hover .card-img-wrap img { transform: scale(1.04); }
+
     .card-top {
       display: flex; justify-content: space-between; align-items: flex-start;
       gap: 10px; margin-bottom: 20px;
@@ -492,6 +508,10 @@
 
         return `
           <article class="card${agotado ? ' agotado' : ''}">
+            <div class="card-img-wrap">
+              <img src="Imagenes perfuma2/${p.nombre}.png" alt="${p.nombre}"
+                   onerror="this.closest('.card-img-wrap').style.display='none'">
+            </div>
             <div class="card-top">
               <span class="badge badge-${p.disponibilidad}">${disp}</span>
               <span class="badge badge-familia">${p.familia}</span>
