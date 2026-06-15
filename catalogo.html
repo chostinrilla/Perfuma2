@@ -268,6 +268,8 @@
     .size-btn:disabled { opacity: .4; cursor: default; }
     .s-ml { font-size: .78rem; font-weight: 700; }
     .s-px { font-size: .73rem; font-weight: 500; }
+    .stars { letter-spacing: 1px; color: var(--negro); }
+    .stars-empty { color: var(--gris-200); }
 
     /* ── FOOTER ── */
     .footer {
@@ -387,14 +389,29 @@
 
   <script>
     const DEFAULT_PERFUMES = [
-      { id: 'p1', nombre: 'Le Male Elixir', marca: 'Jean Paul Gaultier', familia: 'Dulce / Especiado', notas: 'Vainilla, Miel, Tabaco', ocasion: 'Citas · Fiesta · Clima Frío', precio3: 100, precio5: 160, precio10: 240, disponibilidad: 'disponible' },
-      { id: 'p2', nombre: 'Sauvage Elixir', marca: 'Dior', familia: 'Amaderado / Especiado', notas: 'Pimienta Negra, Sándalo, Patchouli', ocasion: 'Trabajo · Casual · Todo Momento', precio3: 90, precio5: 140, precio10: 220, disponibilidad: 'disponible' },
-      { id: 'p3', nombre: 'Oud Wood', marca: 'Tom Ford', familia: 'Oriental / Amaderado', notas: 'Oud, Cedro, Vainilla', ocasion: 'Citas · Noche · Formal', precio3: 120, precio5: 200, precio10: 300, disponibilidad: 'disponible' },
-      { id: 'p4', nombre: 'Black Afgano', marca: 'Nasomatto', familia: 'Oriental / Amaderado', notas: 'Hachís, Café, Madera', ocasion: 'Noche · Invierno', precio3: 130, precio5: 210, precio10: 320, disponibilidad: 'pocas' },
-      { id: 'p5', nombre: 'Good Girl', marca: 'Carolina Herrera', familia: 'Floral / Dulce', notas: 'Tuberosa, Cacao, Almendra', ocasion: 'Citas · Fiesta · Noche', precio3: 80, precio5: 130, precio10: 200, disponibilidad: 'disponible' },
-      { id: 'p6', nombre: 'Aventus', marca: 'Creed', familia: 'Frutal / Amaderado', notas: 'Piña, Abedul, Musgo de Roble', ocasion: 'Trabajo · Formal · Todo Momento', precio3: 110, precio5: 170, precio10: 260, disponibilidad: 'agotado' },
-      { id: 'p7', nombre: 'La Yuqawam', marca: 'Swiss Arabian', familia: 'Oriental / Árabe', notas: 'Rosa, Oud, Ámbar', ocasion: 'Citas · Noche · Especial', precio3: 70, precio5: 120, precio10: 180, disponibilidad: 'disponible' },
-      { id: 'p8', nombre: 'Boss Bottled', marca: 'Hugo Boss', familia: 'Frutal / Especiado', notas: 'Manzana, Canela, Sándalo', ocasion: 'Trabajo · Casual · Diario', precio3: 60, precio5: 100, precio10: 150, disponibilidad: 'disponible' },
+      { id: 'p01', nombre: 'Born In Roma Coral Fantasy', marca: 'Valentino', familia: 'Floral / Frutal', concentracion: 'EDT', notas: 'Jazmín, Frambuesa, Sándalo, Vainilla', ocasion: 'Citas · Día · Primavera', duracion: '6h+', precio3: 110, precio5: 175, precio10: 350, disponibilidad: 'disponible' },
+      { id: 'p02', nombre: 'Invictus Parfum', marca: 'Paco Rabanne', familia: 'Amaderado / Aromático', concentracion: 'Parfum', notas: 'Cardamomo, Vetiver, Musgo de Roble, Ámbar', ocasion: 'Noche · Citas · Clima Frío', duracion: '10h+', precio3: 80, precio5: 140, precio10: 280, disponibilidad: 'disponible' },
+      { id: 'p03', nombre: 'Scandal Le Parfum', marca: 'Jean Paul Gaultier', familia: 'Floral / Oriental', concentracion: 'Parfum', notas: 'Jengibre, Miel, Pachulí, Vainilla', ocasion: 'Noche · Citas · Otoño-Invierno', duracion: '10h+', precio3: 110, precio5: 165, precio10: 330, disponibilidad: 'disponible' },
+      { id: 'p04', nombre: 'Le Male Elixir', marca: 'Jean Paul Gaultier', familia: 'Dulce / Especiado', concentracion: 'Parfum', notas: 'Vainilla, Miel, Tabaco, Lavanda', ocasion: 'Citas · Noche · Clima Frío', duracion: '10h+', precio3: 110, precio5: 170, precio10: 340, disponibilidad: 'disponible' },
+      { id: 'p05', nombre: 'Le Male Le Parfum', marca: 'Jean Paul Gaultier', familia: 'Aromático / Amaderado', concentracion: 'EDP Intense', notas: 'Lavanda, Menta, Cedro, Ámbar Gris', ocasion: 'Trabajo · Casual · Todo Momento', duracion: '8h+', precio3: 110, precio5: 150, precio10: 300, disponibilidad: 'disponible' },
+      { id: 'p06', nombre: 'Le Beau Le Parfum', marca: 'Jean Paul Gaultier', familia: 'Amaderado / Tropical', concentracion: 'EDP Intense', notas: 'Coco, Bergamota, Sándalo, Vainilla', ocasion: 'Casual · Verano · Playa', duracion: '8h+', precio3: 110, precio5: 170, precio10: 340, disponibilidad: 'disponible' },
+      { id: 'p07', nombre: '212 Vip Black', marca: 'Carolina Herrera', familia: 'Oriental / Amaderado', concentracion: 'EDP', notas: 'Vainilla, Cedro, Ámbar, Pachulí', ocasion: 'Noche · Fiesta · Invierno', duracion: '6h+', precio3: 70, precio5: 120, precio10: 240, disponibilidad: 'disponible' },
+      { id: 'p08', nombre: 'Pour Homme Dylan Blue', marca: 'Versace', familia: 'Aromático / Acuático', concentracion: 'EDT', notas: 'Pomelo, Higo, Pachulí, Ámbar', ocasion: 'Trabajo · Casual · Verano', duracion: '6h+', precio3: 70, precio5: 100, precio10: 200, disponibilidad: 'disponible' },
+      { id: 'p09', nombre: 'Eros Parfum', marca: 'Versace', familia: 'Oriental / Amaderado', concentracion: 'Parfum', notas: 'Menta, Manzana Verde, Vainilla, Vetiver', ocasion: 'Noche · Citas · Todo Momento', duracion: '10h+', precio3: 80, precio5: 125, precio10: 250, disponibilidad: 'disponible' },
+      { id: 'p10', nombre: 'Light Blue Pour Homme', marca: 'Dolce&Gabbana', familia: 'Aromático / Acuático', concentracion: 'EDT', notas: 'Toronja, Cedro, Musgo, Ámbar', ocasion: 'Verano · Día · Casual', duracion: '4h+', precio3: 80, precio5: 120, precio10: 200, disponibilidad: 'disponible' },
+      { id: 'p11', nombre: 'The Most Wanted Intense', marca: 'Azzaro', familia: 'Oriental / Especiado', concentracion: 'EDP', notas: 'Cardamomo, Lavanda, Vainilla, Ámbar', ocasion: 'Noche · Citas · Invierno', duracion: '8h+', precio3: 70, precio5: 100, precio10: 200, disponibilidad: 'disponible' },
+      { id: 'p12', nombre: 'Homme Marine', marca: 'Kenzo', familia: 'Aromático / Acuático', concentracion: 'EDT', notas: 'Cedro, Almizcle, Sal Marina, Bergamota', ocasion: 'Casual · Día · Verano', duracion: '8h+', precio3: 70, precio5: 120, precio10: 240, disponibilidad: 'disponible' },
+      { id: 'p13', nombre: 'Nautica Voyage', marca: 'Nautica', familia: 'Aromático / Acuático', concentracion: 'EDT', notas: 'Manzana, Loto, Cedro, Musgo', ocasion: 'Diario · Trabajo · Verano', duracion: '4h+', precio3: 35, precio5: 45, precio10: 60, disponibilidad: 'disponible' },
+      { id: 'p14', nombre: 'Liquid Brun', marca: 'French Avenue Parfum', familia: 'Oriental / Amaderado', concentracion: 'EDP', notas: 'Oud, Ámbar, Sándalo, Vainilla', ocasion: 'Noche · Citas · Clima Frío', duracion: '10h+', precio3: 70, precio5: 100, precio10: 200, disponibilidad: 'disponible' },
+      { id: 'p15', nombre: 'Aqua Dubai', marca: 'Al Haramain', familia: 'Amaderado / Acuático', concentracion: 'Extrait De Parfum', notas: 'Bergamota, Sándalo, Cedro, Almizcle', ocasion: 'Todo Momento · Casual · Trabajo', duracion: '6h+', precio3: 70, precio5: 110, precio10: 220, disponibilidad: 'disponible' },
+      { id: 'p16', nombre: '9 PM Rebel', marca: 'Afnan', familia: 'Oriental / Especiado', concentracion: 'EDP', notas: 'Pimienta Negra, Pachulí, Ámbar, Incienso', ocasion: 'Noche · Fiesta · Invierno', duracion: '12h+', precio3: 50, precio5: 75, precio10: 150, disponibilidad: 'disponible' },
+      { id: 'p17', nombre: '9 PM', marca: 'Afnan', familia: 'Oriental / Amaderado', concentracion: 'EDP', notas: 'Pimienta Rosa, Canela, Vainilla, Ámbar', ocasion: 'Noche · Citas · Otoño', duracion: '8h+', precio3: 50, precio5: 70, precio10: 140, disponibilidad: 'disponible' },
+      { id: 'p18', nombre: 'Turathi Blue', marca: 'Afnan', familia: 'Aromático / Amaderado', concentracion: 'EDP', notas: 'Bergamota, Lavanda, Almizcle, Cedro', ocasion: 'Diario · Trabajo · Casual', duracion: '6h+', precio3: 50, precio5: 75, precio10: 150, disponibilidad: 'disponible' },
+      { id: 'p19', nombre: 'Odyssey Mandarin Sky', marca: 'Armaf', familia: 'Cítrico / Aromático', concentracion: 'EDP', notas: 'Mandarina, Bergamota, Almizcle, Cedro', ocasion: 'Casual · Diario · Verano', duracion: '8h+', precio3: 40, precio5: 60, precio10: 120, disponibilidad: 'disponible' },
+      { id: 'p20', nombre: 'Odyssey Homme Black', marca: 'Armaf', familia: 'Oriental / Amaderado', concentracion: 'EDP', notas: 'Pimienta Negra, Oud, Ámbar, Pachulí', ocasion: 'Noche · Formal · Invierno', duracion: '6h+', precio3: 40, precio5: 60, precio10: 120, disponibilidad: 'disponible' },
+      { id: 'p21', nombre: 'Vintage Radio', marca: 'Lattafa', familia: 'Oriental / Especiado', concentracion: 'EDP', notas: 'Canela, Ámbar, Vainilla, Almizcle', ocasion: 'Noche · Citas · Clima Frío', duracion: '8h+', precio3: 50, precio5: 70, precio10: 140, disponibilidad: 'disponible' },
+      { id: 'p22', nombre: 'Khamrah Qahwa', marca: 'Lattafa', familia: 'Oriental / Gourmand', concentracion: 'EDP', notas: 'Café, Cardamomo, Oud, Vainilla', ocasion: 'Noche · Invierno · Especial', duracion: '12h+', precio3: 50, precio5: 70, precio10: 140, disponibilidad: 'disponible' },
+      { id: 'p23', nombre: 'Fakhar Black', marca: 'Lattafa', familia: 'Oriental / Amaderado', concentracion: 'EDP', notas: 'Oud, Pachulí, Ámbar, Almizcle', ocasion: 'Noche · Formal · Invierno', duracion: '4h+', precio3: 40, precio5: 60, precio10: 120, disponibilidad: 'disponible' },
     ];
 
     function loadPerfumes() {
@@ -414,6 +431,12 @@
         opt.value = f; opt.textContent = f;
         sel.appendChild(opt);
       });
+    }
+
+    function stars(dur) {
+      const h = parseInt(dur) || 0;
+      const n = h >= 10 ? 5 : h >= 8 ? 4 : 3;
+      return `<span class="stars">${'★'.repeat(n)}</span><span class="stars-empty">${'★'.repeat(5 - n)}</span>`;
     }
 
     function waLink(p, ml) {
@@ -483,6 +506,10 @@
             <div class="card-detail">
               <div class="card-detail-label">Ocasión ideal</div>
               <div class="card-detail-val">${p.ocasion}</div>
+            </div>
+            <div class="card-detail">
+              <div class="card-detail-label">Concentración · Duración</div>
+              <div class="card-detail-val">${p.concentracion} &nbsp;·&nbsp; ${stars(p.duracion)} ${p.duracion}</div>
             </div>
             <hr class="card-divider">
             <div class="size-selector" data-card="${p.id}">${sizeBtns}</div>
