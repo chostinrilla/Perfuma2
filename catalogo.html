@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="description" content="Catálogo de decants y perfumes sellados — Perfuma2. Diseñador y árabe.">
   <title>Catálogo — Perfuma2</title>
   <link rel="icon" type="image/png" href="perfuma2 logo.png">
@@ -108,7 +108,8 @@
       padding: 11px 16px 11px 42px;
       border: 1px solid var(--gris-200);
       border-radius: 999px;
-      font-family: var(--body); font-size: .88rem;
+      font-family: var(--body);
+      font-size: 16px; /* Evita zoom automático en navegadores móviles */
       color: var(--negro); background: #fff;
       transition: border-color .2s;
       outline: none;
@@ -119,7 +120,8 @@
       padding: 10px 36px 10px 16px;
       border: 1px solid var(--gris-200);
       border-radius: 999px;
-      font-family: var(--body); font-size: .84rem;
+      font-family: var(--body);
+      font-size: 16px; /* Evita zoom automático en Safari móvil */
       color: var(--negro); background: #fff;
       appearance: none;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239A9A9A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
@@ -254,36 +256,6 @@
     }
     .card-detail + .card-detail { margin-top: 14px; }
 
-    .card-footer {
-      display: flex; justify-content: space-between; align-items: center;
-      margin-top: auto; padding-top: 20px;
-      border-top: 1px solid var(--gris-200);
-    }
-    .card-size {
-      font-size: .8rem; font-weight: 600; color: var(--gris-400);
-      letter-spacing: .06em;
-    }
-    .card-price {
-      font-family: var(--display);
-      font-size: 1.5rem; font-weight: 400; letter-spacing: -.01em;
-    }
-    .card-cta {
-      display: inline-flex; align-items: center; gap: 6px;
-      margin-top: 16px;
-      padding: 11px 20px;
-      border: 1px solid var(--negro);
-      border-radius: 999px;
-      font-size: .8rem; font-weight: 600; letter-spacing: .05em;
-      transition: all .2s;
-      cursor: pointer;
-      width: 100%; justify-content: center;
-    }
-    .card-cta:hover { background: var(--negro); color: #fff; }
-    .card-cta.disabled {
-      border-color: var(--gris-200); color: var(--gris-400); cursor: default;
-    }
-    .card-cta.disabled:hover { background: transparent; color: var(--gris-400); }
-
     /* ── SIZE SELECTOR ── */
     .size-selector {
       display: grid; grid-template-columns: repeat(3, 1fr);
@@ -294,15 +266,75 @@
       padding: 10px 6px;
       border: 1px solid var(--gris-200); border-radius: 12px;
       cursor: pointer; background: #fff; font-family: var(--body);
-      transition: all .2s;
+      transition: all .15s ease;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
     .size-btn:hover:not(:disabled) { border-color: var(--negro); }
     .size-btn.active { background: var(--negro); border-color: var(--negro); color: #fff; }
+    .size-btn:active:not(:disabled) {
+      transform: scale(0.94);
+    }
     .size-btn:disabled { opacity: .4; cursor: default; }
     .s-ml { font-size: .78rem; font-weight: 700; }
     .s-px { font-size: .73rem; font-weight: 500; }
     .stars { letter-spacing: 1px; color: var(--negro); }
     .stars-empty { color: var(--gris-200); }
+
+    .card-cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 16px;
+      padding: 11px 20px;
+      border: 1px solid var(--negro);
+      border-radius: 999px;
+      font-size: .8rem; font-weight: 600; letter-spacing: .05em;
+      transition: all .2s;
+      cursor: pointer;
+      width: 100%; justify-content: center;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .card-cta:hover { background: var(--negro); color: #fff; }
+    .card-cta:active:not(.disabled) { transform: scale(0.97); }
+    .card-cta.disabled {
+      border-color: var(--gris-200); color: var(--gris-400); cursor: default;
+    }
+    .card-cta.disabled:hover { background: transparent; color: var(--gris-400); }
+
+    /* ── BOTÓN FLOTANTE WHATSAPP ── */
+    .wa-float {
+      position: fixed;
+      bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+      right: 24px;
+      z-index: 150;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--negro);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 999px;
+      font-size: .82rem;
+      font-weight: 600;
+      letter-spacing: .03em;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      transition: transform .25s ease, box-shadow .25s ease, background .2s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .wa-float:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.3);
+      background: #1a1a1a;
+      color: #fff;
+    }
+    .wa-float:active {
+      transform: translateY(0) scale(0.96);
+    }
+    .wa-float svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
 
     /* ── FOOTER ── */
     .footer {
@@ -333,17 +365,49 @@
     .footer-bottom a { color: rgba(255,255,255,.14); font-size: .68rem; transition: color .2s; }
     .footer-bottom a:hover { color: rgba(255,255,255,.4); }
 
-    /* ── RESPONSIVE ── */
+    /* ── RESPONSIVE TABLETS ── */
     @media (max-width: 900px) {
       .nav, .filter-bar, .page-header, .catalog-section, .footer { padding-left: 20px; padding-right: 20px; }
       .filter-bar { top: 61px; }
       .footer-top { grid-template-columns: 1fr; gap: 36px; }
       .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
     }
+
+    /* ── RESPONSIVE MÓVILES (Optimización Táctil y Visual) ── */
     @media (max-width: 600px) {
       .nav-links li:first-child { display: none; }
-      .page-header { padding-top: 48px; padding-bottom: 40px; }
-      .catalog-grid { grid-template-columns: 1fr; }
+      .page-header { padding-top: 40px; padding-bottom: 32px; }
+      .page-title { font-size: 2.3rem; }
+      .filter-bar { padding: 16px 20px; }
+      .filter-inner { gap: 12px; }
+
+      /* Carrusel horizontal sin scrollbar para filtros */
+      .pills {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        width: 100%;
+        padding-bottom: 4px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .pills::-webkit-scrollbar { display: none; }
+      .pill { flex-shrink: 0; }
+
+      .catalog-section { padding: 24px 16px 80px; }
+      .catalog-grid { grid-template-columns: 1fr; gap: 16px; }
+      .card { padding: 20px 18px; border-radius: 20px; }
+      .card-img-wrap { height: 190px; }
+      .card-name { font-size: 1.35rem; }
+
+      /* Botón de WhatsApp colapsable a círculo con Safe Area */
+      .wa-float {
+        bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+        right: 18px;
+        padding: 14px;
+        border-radius: 50%;
+      }
+      .wa-float span { display: none; }
+      .wa-float svg { width: 22px; height: 22px; }
     }
   </style>
 </head>
@@ -420,6 +484,18 @@
     </div>
   </footer>
 
+  <!-- BOTÓN FLOTANTE WHATSAPP -->
+  <a href="https://wa.me/529903415523?text=Hola!%20Tengo%20una%20duda%20sobre%20el%20cat%C3%A1logo%20de%20Perfuma2" 
+     class="wa-float" 
+     target="_blank" 
+     rel="noopener" 
+     aria-label="Contactar por WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+    </svg>
+    <span>¿Dudas? Escríbenos</span>
+  </a>
+
   <script>
     const DEFAULT_PERFUMES = [
       { id: 'p01', nombre: 'Born In Roma Coral Fantasy', marca: 'Valentino', familia: 'Floral / Frutal', concentracion: 'EDT', notas: 'Bergamota, Manzana, Lavanda, Tabaco', ocasion: 'Citas · Día · Primavera', duracion: '6h+', precio3: 110, precio5: 175, precio10: 350, disponibilidad: 'disponible' },
@@ -427,8 +503,8 @@
       { id: 'p03', nombre: 'Scandal Le Parfum', marca: 'Jean Paul Gaultier', familia: 'Floral / Oriental', concentracion: 'Parfum', notas: 'Jazmín, Caramelo, Sal Marina, Vainilla', ocasion: 'Noche · Citas · Otoño-Invierno', duracion: '10h+', precio3: 110, precio5: 165, precio10: 330, disponibilidad: 'disponible' },
       { id: 'p04', nombre: 'Le Male Elixir', marca: 'Jean Paul Gaultier', familia: 'Dulce / Especiado', concentracion: 'Parfum', notas: 'Lavanda, Miel, Haba Tonka, Tabaco', ocasion: 'Citas · Noche · Clima Frío', duracion: '10h+', precio3: 110, precio5: 170, precio10: 340, disponibilidad: 'disponible' },
       { id: 'p05', nombre: 'Le Male Le Parfum', marca: 'Jean Paul Gaultier', familia: 'Aromático / Amaderado', concentracion: 'EDP Intense', notas: 'Cardamomo, Lavanda, Vainilla, Iris', ocasion: 'Trabajo · Casual · Todo Momento', duracion: '8h+', precio3: 110, precio5: 150, precio10: 300, disponibilidad: 'disponible' },
-      { id: 'p06', nombre: 'Le Beau Le Parfum', marca: 'Jean Paul Gaultier', familia: 'Amaderado / Tropical', concentracion: 'EDP Intense', notas: 'Coco, Piña, Haba Tonka, Sándalo', ocasion: 'Casual · Verano · Playa', duracion: '8h+', precio3: 110, precio5: 170, precio10: 340, disponibilidad: 'disponible' },
-      { id: 'p07', nombre: '212 Vip Black', marca: 'Carolina Herrera', familia: 'Oriental / Amaderado', concentracion: 'EDP', notas: 'Absenta, Anís, Lavanda, Vainilla Negra', ocasion: 'Noche · Fiesta · Invierno', duracion: '6h+', precio3: 70, precio5: 120, precio10: 240, disponibilidad: 'disponible' },
+      { id: 'p06', nombre: 'Le Beau Le Parfum', marca: 'Jean Paul Gaultier', familia: 'Amaderado / Tropical', concentracion: 'EDP Intense', notas: 'Coco, Piña, Haba Tonka, Sándalo', ocasion: 'Casual · Verano · Playa', duracion: '8h+', precio3: 110, precio5: 170, precio10: 340, disponibilidad: 'agotado' },
+      { id: 'p07', nombre: '212 Vip Black', marca: 'Carolina Herrera', familia: 'Oriental / Amaderado', concentracion: 'EDP', notas: 'Absenta, Anís, Lavanda, Vainilla Negra', ocasion: 'Noche · Fiesta · Invierno', duracion: '6h+', precio3: 70, precio5: 120, precio10: 240, disponibilidad: 'agotado' },
       { id: 'p08', nombre: 'Pour Homme Dylan Blue', marca: 'Versace', familia: 'Aromático / Acuático', concentracion: 'EDT', notas: 'Bergamota, Hoja de Higo, Pachulí, Ambrox', ocasion: 'Trabajo · Casual · Verano', duracion: '6h+', precio3: 70, precio5: 100, precio10: 200, disponibilidad: 'disponible' },
       { id: 'p09', nombre: 'Eros Parfum', marca: 'Versace', familia: 'Oriental / Amaderado', concentracion: 'Parfum', notas: 'Menta, Manzana Verde, Haba Tonka, Ámbar', ocasion: 'Noche · Citas · Todo Momento', duracion: '10h+', precio3: 80, precio5: 125, precio10: 250, disponibilidad: 'disponible' },
       { id: 'p10', nombre: 'Light Blue Pour Homme', marca: 'Dolce&Gabbana', familia: 'Aromático / Acuático', concentracion: 'EDT', notas: 'Pomelo, Enebro, Romero, Musgo de Roble', ocasion: 'Verano · Día · Casual', duracion: '4h+', precio3: 80, precio5: 120, precio10: 200, disponibilidad: 'disponible' },
@@ -439,13 +515,13 @@
       { id: 'p15', nombre: 'Aqua Dubai', marca: 'Al Haramain', familia: 'Amaderado / Acuático', concentracion: 'Extrait De Parfum', notas: 'Bergamota, Sándalo, Cedro, Almizcle', ocasion: 'Todo Momento · Casual · Trabajo', duracion: '6h+', precio3: 70, precio5: 110, precio10: 220, disponibilidad: 'disponible' },
       { id: 'p16', nombre: '9 PM Rebel', marca: 'Afnan', familia: 'Oriental / Especiado', concentracion: 'EDP', notas: 'Piña, Manzana Verde, Cedro, Caramelo', ocasion: 'Noche · Fiesta · Invierno', duracion: '12h+', precio3: 50, precio5: 75, precio10: 150, disponibilidad: 'disponible' },
       { id: 'p17', nombre: '9 PM', marca: 'Afnan', familia: 'Oriental / Amaderado', concentracion: 'EDP', notas: 'Manzana, Canela, Vainilla, Haba Tonka', ocasion: 'Noche · Citas · Otoño', duracion: '8h+', precio3: 50, precio5: 70, precio10: 140, disponibilidad: 'disponible' },
-      { id: 'p18', nombre: 'Turathi Blue', marca: 'Afnan', familia: 'Aromático / Amaderado', concentracion: 'EDP', notas: 'Cítricos, Bergamota, Almizcle, Notas Amaderadas', ocasion: 'Diario · Trabajo · Casual', duracion: '6h+', precio3: 50, precio5: 75, precio10: 150, disponibilidad: 'disponible' },
-      { id: 'p19', nombre: 'Odyssey Mandarin Sky', marca: 'Armaf', familia: 'Cítrico / Aromático', concentracion: 'EDP', notas: 'Mandarina, Azafrán, Caramelo, Cedro', ocasion: 'Casual · Diario · Verano', duracion: '8h+', precio3: 40, precio5: 60, precio10: 120, disponibilidad: 'disponible' },
+      { id: 'p18', nombre: 'Turathi Blue', marca: 'Afnan', familia: 'Aromático / Amaderado', concentracion: 'EDP', notas: 'Cítricos, Bergamota, Almizcle, Notas Amaderadas', ocasion: 'Diario · Trabajo · Casual', duracion: '6h+', precio3: 50, precio5: 75, precio10: 150, disponibilidad: 'pocas' },
+      { id: 'p19', nombre: 'Odyssey Mandarin Sky', marca: 'Armaf', familia: 'Cítrico / Aromático', concentracion: 'EDP', notas: 'Mandarina, Azafrán, Caramelo, Cedro', ocasion: 'Casual · Diario · Verano', duracion: '8h+', precio3: 40, precio5: 60, precio10: 120, disponibilidad: 'pocas' },
       { id: 'p20', nombre: 'Odyssey Homme Black', marca: 'Armaf', familia: 'Oriental / Amaderado', concentracion: 'EDP', notas: 'Cardamomo, Naranja, Rosa, Sándalo', ocasion: 'Noche · Formal · Invierno', duracion: '6h+', precio3: 40, precio5: 60, precio10: 120, disponibilidad: 'disponible' },
       { id: 'p21', nombre: 'Vintage Radio', marca: 'Lattafa', familia: 'Oriental / Especiado', concentracion: 'EDP', notas: 'Lavanda, Ciruela, Palo Santo, Sándalo', ocasion: 'Noche · Citas · Clima Frío', duracion: '8h+', precio3: 50, precio5: 70, precio10: 140, disponibilidad: 'disponible' },
       { id: 'p22', nombre: 'Khamrah Qahwa', marca: 'Lattafa', familia: 'Oriental / Gourmand', concentracion: 'EDP', notas: 'Café, Pralinés, Cardamomo, Vainilla', ocasion: 'Noche · Invierno · Especial', duracion: '12h+', precio3: 50, precio5: 70, precio10: 140, disponibilidad: 'agotado' },
       { id: 'p23', nombre: 'Fakhar Black', marca: 'Lattafa', familia: 'Oriental / Amaderado', concentracion: 'EDP', notas: 'Bergamota, Lavanda, Enebro, Haba Tonka', ocasion: 'Noche · Formal · Invierno', duracion: '4h+', precio3: 40, precio5: 60, precio10: 120, disponibilidad: 'pocas' },
-      { id: 'p24', nombre: 'Hawas Ice', marca: 'Rasasi', familia: 'Aromática para Hombres', concentracion: 'EDP', notas: 'Manzana, Limón Italiano, Bergamota de Sicilia', ocasion: 'Día a Día · Trabajo · Versátil', duracion: '8h+', precio3: 45, precio5: 90, precio10: 170, disponibilidad: 'disponible' },
+      { id: 'p24', nombre: 'Hawas Ice', marca: 'Rasasi', familia: 'Aromático / Cítrico', concentracion: 'EDP', notas: 'Manzana, Limón Italiano, Bergamota de Sicilia', ocasion: 'Día a Día · Trabajo · Versátil', duracion: '8h+', precio3: 45, precio5: 90, precio10: 170, disponibilidad: 'disponible' },
     ];
 
     function loadPerfumes() {
@@ -512,9 +588,12 @@
         return;
       }
 
-      grid.innerHTML = filtered.map(p => {
+      grid.innerHTML = filtered.map((p, index) => {
         const disp = { disponible: 'Disponible', pocas: 'Pocas Piezas', agotado: 'Agotado' }[p.disponibilidad] || p.disponibilidad;
         const agotado = p.disponibilidad === 'agotado';
+        const isFirstBatch = index < 4;
+        const loadMode = isFirstBatch ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"';
+
         const sizeBtns = [3, 5, 10].map((ml, i) => {
           const px = p[`precio${ml}`];
           return `<button class="size-btn${i === 0 ? ' active' : ''}" data-size="${ml}"
@@ -527,8 +606,9 @@
         return `
           <article class="card${agotado ? ' agotado' : ''}">
             <div class="card-img-wrap">
-              <img src="Imagenes perfuma2/${p.nombre}.png" alt="${p.nombre}"
-                   loading="lazy" decoding="async"
+              <img src="Imagenes perfuma2/${encodeURIComponent(p.nombre)}.webp" alt="${p.nombre}"
+                   width="300" height="220"
+                   ${loadMode} decoding="async"
                    onload="this.closest('.card-img-wrap').classList.add('loaded')"
                    onerror="this.closest('.card-img-wrap').style.display='none'">
             </div>
