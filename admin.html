@@ -2,24 +2,26 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
   <title>Admin — Perfuma2</title>
   <link rel="icon" type="image/png" href="perfuma2 logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --negro: #000;
-      --blanco: #FAFAFA;
-      --gris-50: #F6F6F6;
-      --gris-100: #EFEFEF;
-      --gris-200: #E0E0E0;
+      --negro: #0D0D0D;
+      --blanco: #F8F8F8;
+      --acento: #E10600;
+      --gris-50: #F1F1F1;
+      --gris-100: #E8E8E8;
+      --gris-200: #DCDCDC;
       --gris-400: #9A9A9A;
-      --gris-600: #555;
-      --display: 'Cormorant Garamond', Georgia, serif;
-      --body: 'Inter', system-ui, sans-serif;
+      --gris-600: #4A4A4A;
+      --display: 'Bebas Neue', Impact, sans-serif;
+      --body: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
     }
     html { -webkit-font-smoothing: antialiased; }
     body {
@@ -30,344 +32,292 @@
       line-height: 1.5;
     }
     a { color: inherit; text-decoration: none; }
+    button, input, select { font-family: inherit; }
+    [hidden] { display: none !important; }
 
-    /* ── LOGIN OVERLAY ── */
-    #loginOverlay {
-      position: fixed; inset: 0; z-index: 200;
+    /* ── LOGIN VIEW ── */
+    #login-view {
+      min-height: 100vh;
       background: var(--negro);
       display: flex; align-items: center; justify-content: center;
-      flex-direction: column; gap: 0;
+      padding: 24px;
     }
     .login-box {
-      width: 100%; max-width: 400px;
-      padding: 0 24px;
-      animation: fadeUp .6s ease both;
+      width: 100%; max-width: 380px;
+      animation: fadeUp .5s ease both;
     }
-    .login-logo {
-      height: 48px;
-      filter: invert(1); mix-blend-mode: screen;
-      margin: 0 auto 48px;
-    }
+    .login-logo { height: 46px; filter: invert(1); mix-blend-mode: screen; margin: 0 auto 40px; display: block; }
     .login-title {
       font-family: var(--display);
-      font-size: 2.2rem; font-weight: 300; font-style: italic;
-      color: #fff; text-align: center; margin-bottom: 8px;
+      text-transform: uppercase;
+      font-size: 2rem; letter-spacing: .02em;
+      color: #fff; text-align: center; margin-bottom: 6px;
     }
     .login-sub {
-      font-size: .82rem; color: rgba(255,255,255,.35);
-      text-align: center; letter-spacing: .08em;
-      text-transform: uppercase; margin-bottom: 40px;
+      font-size: .78rem; color: rgba(255,255,255,.35);
+      text-align: center; letter-spacing: .1em;
+      text-transform: uppercase; margin-bottom: 36px;
     }
     .login-field {
-      width: 100%; padding: 14px 20px;
+      width: 100%; min-height: 50px;
+      padding: 14px 18px; margin-bottom: 12px;
       background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 14px;
-      font-family: var(--body); font-size: 1rem;
-      color: #fff; outline: none;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 12px;
+      font-size: 1rem; color: #fff; outline: none;
       transition: border-color .2s;
-      letter-spacing: .05em;
     }
-    .login-field:focus { border-color: rgba(255,255,255,.4); }
-    .login-field::placeholder { color: rgba(255,255,255,.25); }
+    .login-field:focus { border-color: rgba(255,255,255,.5); }
+    .login-field::placeholder { color: rgba(255,255,255,.28); }
     .login-btn {
-      width: 100%; margin-top: 14px;
+      width: 100%; min-height: 50px; margin-top: 6px;
       padding: 14px 20px;
       background: #fff; color: var(--negro);
-      border: none; border-radius: 14px;
-      font-family: var(--body); font-size: .9rem; font-weight: 700;
-      letter-spacing: .06em; cursor: pointer;
-      transition: background .2s, color .2s;
+      border: none; border-radius: 12px;
+      font-size: .85rem; font-weight: 800;
+      letter-spacing: .08em; text-transform: uppercase; cursor: pointer;
+      transition: background .2s, opacity .2s;
     }
-    .login-btn:hover { background: rgba(255,255,255,.85); }
+    .login-btn:hover:not(:disabled) { background: rgba(255,255,255,.85); }
+    .login-btn:disabled { opacity: .5; cursor: default; }
     .login-err {
       margin-top: 14px; text-align: center;
       font-size: .82rem; color: #ff6b6b;
-      min-height: 20px;
+      min-height: 20px; line-height: 1.5;
     }
     .login-back {
       display: block; margin-top: 28px; text-align: center;
-      font-size: .78rem; color: rgba(255,255,255,.25);
+      font-size: .74rem; color: rgba(255,255,255,.25);
       letter-spacing: .08em; text-transform: uppercase;
       transition: color .2s;
     }
     .login-back:hover { color: rgba(255,255,255,.5); }
 
-    /* ── ADMIN LAYOUT ── */
-    #dashboard { display: none; }
-
+    /* ── DASHBOARD LAYOUT ── */
     .admin-nav {
       background: var(--negro);
-      padding: 16px 40px;
+      padding: 14px 20px;
       display: flex; align-items: center; justify-content: space-between;
       border-bottom: 1px solid rgba(255,255,255,.07);
       position: sticky; top: 0; z-index: 90;
     }
-    .admin-nav-logo { height: 36px; filter: invert(1); mix-blend-mode: screen; }
-    .admin-nav-right { display: flex; align-items: center; gap: 20px; }
-    .admin-nav-right span {
-      font-size: .78rem; letter-spacing: .1em; text-transform: uppercase;
-      color: rgba(255,255,255,.3);
-    }
+    .admin-nav-logo { height: 32px; filter: invert(1); mix-blend-mode: screen; }
+    .admin-nav-right { display: flex; align-items: center; gap: 10px; }
     .btn-sm {
-      padding: 8px 18px;
+      min-height: 40px;
+      padding: 8px 16px;
       border-radius: 999px;
-      font-size: .76rem; font-weight: 600; letter-spacing: .06em;
+      font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
       cursor: pointer; border: 1px solid transparent;
       transition: all .2s;
+      -webkit-tap-highlight-color: transparent;
     }
-    .btn-sm-ghost {
-      background: transparent;
-      color: rgba(255,255,255,.5);
-      border-color: rgba(255,255,255,.15);
-    }
+    .btn-sm-ghost { background: transparent; color: rgba(255,255,255,.55); border-color: rgba(255,255,255,.18); }
     .btn-sm-ghost:hover { color: #fff; border-color: rgba(255,255,255,.4); }
     .btn-sm-white { background: #fff; color: var(--negro); border-color: #fff; }
-    .btn-sm-white:hover { background: rgba(255,255,255,.85); }
+    .btn-sm-white:hover:not(:disabled) { background: rgba(255,255,255,.85); }
+    .btn-sm-white:disabled { opacity: .5; cursor: default; }
 
-    .admin-main {
-      max-width: 1100px; margin: 0 auto;
-      padding: 48px 40px 96px;
-    }
+    .admin-main { max-width: 900px; margin: 0 auto; padding: 24px 16px 100px; }
 
-    /* ── STATS STRIP ── */
-    .stats-strip {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 16px; margin-bottom: 48px;
-    }
-    .stat-card {
-      background: var(--gris-50);
-      border: 1px solid var(--gris-200);
-      border-radius: 18px;
-      padding: 24px 28px;
-    }
-    .stat-card .n {
-      font-family: var(--display);
-      font-size: 2.6rem; font-weight: 300;
-      letter-spacing: -.02em; line-height: 1;
-    }
-    .stat-card .l {
-      font-size: .72rem; font-weight: 600;
-      letter-spacing: .14em; text-transform: uppercase;
-      color: var(--gris-400); margin-top: 8px;
-    }
+    /* ── STATS ── */
+    .stats-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 32px; }
+    .stat-card { background: var(--gris-50); border: 1px solid var(--gris-200); border-radius: 14px; padding: 16px; }
+    .stat-card .n { font-family: var(--display); font-size: 2.1rem; letter-spacing: .01em; line-height: 1; }
+    .stat-card .l { font-size: .62rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--gris-400); margin-top: 6px; }
 
     /* ── SECTION HEADER ── */
-    .sec-head {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 24px;
-    }
-    .sec-title {
-      font-family: var(--display);
-      font-size: 1.8rem; font-weight: 300; font-style: italic;
-    }
+    .sec-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .sec-title { font-family: var(--display); text-transform: uppercase; font-size: 1.4rem; letter-spacing: .01em; }
 
     /* ── FORM ── */
-    .form-card {
-      background: var(--gris-50);
-      border: 1px solid var(--gris-200);
-      border-radius: 24px;
-      padding: 36px;
-      margin-bottom: 48px;
-    }
-    .form-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-    .form-group { display: flex; flex-direction: column; gap: 7px; }
+    .form-card { background: var(--gris-50); border: 1px solid var(--gris-200); border-radius: 18px; padding: 20px; margin-bottom: 36px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
     .form-group.full { grid-column: 1 / -1; }
-    .form-label {
-      font-size: .7rem; font-weight: 700;
-      letter-spacing: .14em; text-transform: uppercase;
-      color: var(--gris-400);
-    }
-    .form-input {
-      padding: 12px 16px;
+    .form-label { font-size: .66rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gris-400); }
+    .form-input, .form-select {
+      min-height: 46px;
+      padding: 11px 14px;
       border: 1px solid var(--gris-200);
-      border-radius: 12px;
-      font-family: var(--body); font-size: .9rem;
+      border-radius: 10px;
+      font-size: 16px; /* evita zoom automático en iOS */
       color: var(--negro); background: #fff;
       outline: none; transition: border-color .2s;
+      appearance: none;
     }
-    .form-input:focus { border-color: var(--negro); }
+    .form-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230D0D0D' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 14px center;
+      padding-right: 36px; cursor: pointer;
+    }
+    .form-input:focus, .form-select:focus { border-color: var(--negro); }
     .form-input::placeholder { color: var(--gris-400); }
-    .radio-row { display: flex; gap: 12px; flex-wrap: wrap; }
-    .radio-opt {
-      display: flex; align-items: center; gap: 8px;
-      padding: 10px 16px;
-      border: 1px solid var(--gris-200);
-      border-radius: 999px;
-      cursor: pointer; transition: all .2s;
-      font-size: .84rem;
+    .form-hint { font-size: .72rem; color: var(--gris-400); margin-top: 2px; }
+
+    .img-picker { display: flex; align-items: center; gap: 12px; }
+    .img-preview {
+      width: 56px; height: 56px; flex-shrink: 0;
+      border-radius: 10px; border: 1px solid var(--gris-200);
+      background: #fff; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
     }
-    .radio-opt input[type="radio"] { accent-color: var(--negro); }
-    .radio-opt:has(input:checked) {
-      border-color: var(--negro);
-      background: var(--negro);
-      color: #fff;
+    .img-preview img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    .img-preview span { font-size: .6rem; color: var(--gris-400); text-align: center; }
+    .file-btn {
+      min-height: 46px; flex: 1;
+      display: flex; align-items: center; justify-content: center;
+      border: 1.5px dashed var(--gris-400); border-radius: 10px;
+      font-size: .78rem; font-weight: 600; color: var(--gris-600);
+      cursor: pointer; background: #fff; text-align: center; padding: 8px;
     }
-    .form-actions {
-      margin-top: 24px;
-      display: flex; gap: 12px; align-items: center;
+    .file-btn input[type="file"] { display: none; }
+
+    .switch-row { display: flex; align-items: center; gap: 12px; padding: 4px 0; }
+    .switch { position: relative; width: 46px; height: 26px; flex-shrink: 0; }
+    .switch input { opacity: 0; width: 100%; height: 100%; position: absolute; cursor: pointer; margin: 0; z-index: 1; }
+    .switch-track {
+      position: absolute; inset: 0; background: var(--gris-200);
+      border-radius: 999px; transition: background .2s;
     }
+    .switch-track::before {
+      content: ''; position: absolute; top: 3px; left: 3px;
+      width: 20px; height: 20px; background: #fff; border-radius: 50%;
+      box-shadow: 0 1px 3px rgba(0,0,0,.3);
+      transition: transform .2s;
+    }
+    .switch input:checked ~ .switch-track { background: var(--negro); }
+    .switch input:checked ~ .switch-track::before { transform: translateX(20px); }
+    .switch-label { font-size: .84rem; font-weight: 600; }
+
+    .form-actions { margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap; }
     .btn-submit {
-      padding: 13px 28px;
+      min-height: 48px; flex: 1;
+      padding: 13px 24px;
       background: var(--negro); color: #fff;
       border: none; border-radius: 999px;
-      font-family: var(--body); font-size: .85rem; font-weight: 700;
-      letter-spacing: .05em; cursor: pointer;
-      transition: background .2s;
+      font-size: .82rem; font-weight: 800;
+      letter-spacing: .06em; text-transform: uppercase; cursor: pointer;
+      transition: background .2s, opacity .2s;
+      -webkit-tap-highlight-color: transparent;
     }
-    .btn-submit:hover { background: #2a2a2a; }
+    .btn-submit:hover:not(:disabled) { background: #2a2a2a; }
+    .btn-submit:disabled { opacity: .55; cursor: default; }
     .btn-cancel {
-      padding: 13px 28px;
-      background: transparent; color: var(--gris-400);
+      min-height: 48px;
+      padding: 13px 24px;
+      background: transparent; color: var(--gris-600);
       border: 1px solid var(--gris-200); border-radius: 999px;
-      font-family: var(--body); font-size: .85rem; font-weight: 600;
-      cursor: pointer; transition: all .2s;
+      font-size: .82rem; font-weight: 700; cursor: pointer;
+      transition: all .2s;
     }
     .btn-cancel:hover { border-color: var(--negro); color: var(--negro); }
+    .form-msg { font-size: .78rem; margin-top: 10px; min-height: 18px; }
+    .form-msg.err { color: #cc3333; }
+    .form-msg.ok { color: #1a7a3c; }
 
-    /* ── TABLE ── */
-    .table-wrap {
-      background: #fff;
-      border: 1px solid var(--gris-200);
-      border-radius: 24px;
-      overflow: hidden;
+    /* ── LISTA DE PERFUMES (cards, mobile-first) ── */
+    .perfume-list { display: flex; flex-direction: column; gap: 10px; }
+    .p-card {
+      background: #fff; border: 1px solid var(--gris-200); border-radius: 16px;
+      padding: 12px; display: flex; gap: 12px; align-items: flex-start;
     }
-    table { width: 100%; border-collapse: collapse; }
-    thead th {
-      padding: 14px 20px;
-      text-align: left;
-      font-size: .68rem; font-weight: 700;
-      letter-spacing: .14em; text-transform: uppercase;
-      color: var(--gris-400);
-      background: var(--gris-50);
-      border-bottom: 1px solid var(--gris-200);
+    .p-card.inactivo { opacity: .55; }
+    .p-thumb {
+      width: 58px; height: 58px; flex-shrink: 0;
+      border-radius: 10px; background: var(--gris-50); border: 1px solid var(--gris-200);
+      display: flex; align-items: center; justify-content: center; overflow: hidden;
     }
-    tbody tr {
-      border-bottom: 1px solid var(--gris-100);
-      transition: background .15s;
+    .p-thumb img { max-width: 82%; max-height: 82%; object-fit: contain; }
+    .p-thumb span { font-size: .55rem; color: var(--gris-400); }
+    .p-info { flex: 1; min-width: 0; }
+    .p-name { font-weight: 700; font-size: .92rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .p-brand { font-size: .74rem; color: var(--gris-400); margin-top: 1px; }
+    .p-prices { font-size: .74rem; color: var(--gris-600); margin-top: 5px; }
+    .p-controls { display: flex; align-items: center; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+    .p-status-select {
+      min-height: 36px;
+      padding: 6px 28px 6px 10px;
+      border: 1.5px solid var(--negro); border-radius: 999px;
+      font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .03em;
+      background: #fff; cursor: pointer; outline: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230D0D0D' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 10px center;
+      transition: opacity .15s;
     }
-    tbody tr:last-child { border-bottom: none; }
-    tbody tr:hover { background: var(--gris-50); }
-    td {
-      padding: 16px 20px;
-      font-size: .88rem; vertical-align: middle;
-    }
-    .td-name { font-weight: 600; }
-    .td-brand { color: var(--gris-600); font-size: .82rem; }
-    .td-price { font-family: var(--display); font-size: 1.1rem; font-weight: 400; }
-    .t-badge {
-      display: inline-flex; padding: 3px 10px;
-      border-radius: 999px; font-size: .66rem;
-      font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
-    }
-    .t-badge-disponible { background: var(--negro); color: #fff; }
-    .t-badge-pocas { border: 1px solid var(--negro); color: var(--negro); }
-    .t-badge-agotado { background: var(--gris-100); color: var(--gris-400); }
-    .td-actions { display: flex; gap: 8px; }
-    .btn-edit {
-      padding: 7px 14px;
-      border: 1px solid var(--gris-200);
-      border-radius: 999px;
-      font-size: .74rem; font-weight: 600;
-      cursor: pointer; background: #fff;
+    .p-status-select:disabled { opacity: .5; }
+    .p-actions { display: flex; gap: 6px; margin-left: auto; }
+    .btn-icon {
+      min-height: 36px; min-width: 36px;
+      padding: 6px 12px;
+      border: 1px solid var(--gris-200); border-radius: 999px;
+      font-size: .7rem; font-weight: 700;
+      cursor: pointer; background: #fff; color: var(--negro);
       transition: all .2s;
     }
-    .btn-edit:hover { border-color: var(--negro); }
-    .btn-del {
-      padding: 7px 14px;
-      border: 1px solid transparent;
-      border-radius: 999px;
-      font-size: .74rem; font-weight: 600;
-      cursor: pointer; background: transparent;
-      color: #cc3333;
-      transition: all .2s;
-    }
-    .btn-del:hover { border-color: #cc3333; background: #fff5f5; }
-    .empty-row td {
-      text-align: center; padding: 56px;
-      color: var(--gris-400); font-style: italic;
-      font-family: var(--display); font-size: 1.2rem;
-    }
+    .btn-icon:hover { border-color: var(--negro); }
+    .btn-icon.danger { color: var(--acento); }
+    .btn-icon.danger:hover { border-color: var(--acento); background: #fff5f4; }
+    .empty-list { text-align: center; padding: 56px 20px; color: var(--gris-400); }
+    .empty-list p { font-family: var(--display); text-transform: uppercase; font-size: 1.3rem; }
 
     /* ── TOAST ── */
     #toast {
-      position: fixed; bottom: 32px; left: 50%;
+      position: fixed; bottom: 24px; left: 50%;
       transform: translateX(-50%) translateY(20px);
+      max-width: calc(100% - 32px);
       background: var(--negro); color: #fff;
-      padding: 12px 24px; border-radius: 999px;
-      font-size: .84rem; font-weight: 600;
+      padding: 12px 22px; border-radius: 999px;
+      font-size: .82rem; font-weight: 600; text-align: center;
       opacity: 0; pointer-events: none;
       transition: opacity .3s ease, transform .3s ease;
-      z-index: 300; white-space: nowrap;
+      z-index: 300;
     }
     #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    #toast.err { background: var(--acento); }
 
-    /* ── MODAL ── */
-    #editModal {
-      display: none;
-      position: fixed; inset: 0; z-index: 200;
-      background: rgba(0,0,0,.6);
-      align-items: center; justify-content: center;
-      padding: 24px;
-    }
-    #editModal.open { display: flex; }
-    .modal-box {
-      background: #fff;
-      border-radius: 28px;
-      padding: 40px;
-      width: 100%; max-width: 680px;
-      max-height: 90vh; overflow-y: auto;
-      animation: fadeUp .3s ease both;
-    }
-    .modal-title {
-      font-family: var(--display);
-      font-size: 1.8rem; font-weight: 300; font-style: italic;
-      margin-bottom: 28px;
-    }
-
-    /* ── ANIMATIONS ── */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 760px) {
-      .admin-main { padding: 32px 20px 80px; }
-      .admin-nav { padding: 14px 20px; }
-      .form-grid { grid-template-columns: 1fr; }
-      .form-group.full { grid-column: 1; }
-      .stats-strip { grid-template-columns: 1fr 1fr; }
-      .table-wrap { overflow-x: auto; }
-      table { min-width: 600px; }
+    /* ── RESPONSIVE (tablet / desktop) ── */
+    @media (min-width: 640px) {
+      .admin-nav { padding: 16px 40px; }
+      .admin-main { padding: 40px 40px 100px; }
+      .stats-strip { gap: 16px; margin-bottom: 44px; }
+      .stat-card { padding: 22px 26px; }
+      .stat-card .n { font-size: 2.6rem; }
+      .form-card { padding: 32px; }
+      .p-card { align-items: center; }
+      .p-controls { margin-top: 0; }
     }
   </style>
 </head>
 <body>
 
   <!-- LOGIN -->
-  <div id="loginOverlay">
+  <div id="login-view">
     <div class="login-box">
       <img src="perfuma2 logo.png" alt="Perfuma2" class="login-logo">
       <p class="login-title">Panel Admin</p>
-      <p class="login-sub">Ingresa tu contraseña</p>
-      <input type="password" class="login-field" id="loginPass" placeholder="Contraseña" autocomplete="current-password">
-      <button class="login-btn" id="loginBtn">Ingresar →</button>
-      <p class="login-err" id="loginErr"></p>
+      <p class="login-sub">Inicia sesión para continuar</p>
+      <form id="loginForm" autocomplete="on">
+        <input type="email" class="login-field" id="loginEmail" placeholder="Correo electrónico" autocomplete="username" required>
+        <input type="password" class="login-field" id="loginPassword" placeholder="Contraseña" autocomplete="current-password" required>
+        <button type="submit" class="login-btn" id="loginBtn">Ingresar →</button>
+        <p class="login-err" id="loginErr"></p>
+      </form>
       <a href="index.html" class="login-back">← Volver al sitio</a>
     </div>
   </div>
 
   <!-- DASHBOARD -->
-  <div id="dashboard">
+  <div id="dashboard-view" hidden>
     <nav class="admin-nav">
       <a href="index.html"><img src="perfuma2 logo.png" alt="Perfuma2" class="admin-nav-logo"></a>
       <div class="admin-nav-right">
-        <span>Panel de Admin</span>
         <a href="catalogo.html" class="btn-sm btn-sm-ghost">Ver Catálogo</a>
         <button class="btn-sm btn-sm-white" id="logoutBtn">Cerrar Sesión</button>
       </div>
@@ -375,325 +325,480 @@
 
     <div class="admin-main">
       <!-- Stats -->
-      <div class="stats-strip" id="statsStrip">
-        <div class="stat-card"><div class="n" id="st-total">0</div><div class="l">Perfumes en catálogo</div></div>
-        <div class="stat-card"><div class="n" id="st-disp">0</div><div class="l">Disponibles</div></div>
-        <div class="stat-card"><div class="n" id="st-agot">0</div><div class="l">Agotados</div></div>
+      <div class="stats-strip">
+        <div class="stat-card"><div class="n" id="stTotal">0</div><div class="l">En catálogo</div></div>
+        <div class="stat-card"><div class="n" id="stDisp">0</div><div class="l">Disponibles</div></div>
+        <div class="stat-card"><div class="n" id="stAgot">0</div><div class="l">Agotados</div></div>
       </div>
 
-      <!-- Add form -->
-      <div class="sec-head">
-        <h2 class="sec-title" id="formTitle">Agregar nuevo perfume</h2>
-      </div>
-      <div class="form-card">
-        <input type="hidden" id="editId">
+      <!-- Form -->
+      <div class="sec-head"><h2 class="sec-title" id="formTitle">Agregar perfume</h2></div>
+      <form class="form-card" id="perfumeForm">
+        <input type="hidden" id="fEditId">
         <div class="form-grid">
           <div class="form-group">
-            <label class="form-label">Nombre de la fragancia</label>
+            <label class="form-label" for="fNombre">Nombre</label>
             <input class="form-input" id="fNombre" placeholder="Ej: Le Male Elixir" required>
           </div>
           <div class="form-group">
-            <label class="form-label">Marca</label>
+            <label class="form-label" for="fMarca">Marca</label>
             <input class="form-input" id="fMarca" placeholder="Ej: Jean Paul Gaultier" required>
           </div>
           <div class="form-group">
-            <label class="form-label">Familia olfativa</label>
+            <label class="form-label" for="fFamilia">Familia olfativa</label>
             <input class="form-input" id="fFamilia" placeholder="Ej: Dulce / Especiado">
           </div>
           <div class="form-group">
-            <label class="form-label">Concentración</label>
-            <input class="form-input" id="fConc" placeholder="Ej: Parfum, EDP, EDT">
+            <label class="form-label" for="fEstatus">Estatus</label>
+            <select class="form-select" id="fEstatus">
+              <option value="disponible">Disponible</option>
+              <option value="pocas">Pocas piezas</option>
+              <option value="agotado">Agotado</option>
+            </select>
           </div>
           <div class="form-group">
-            <label class="form-label">Duración estimada</label>
-            <input class="form-input" id="fDur" placeholder="Ej: 8h+, 10h+, 12h+">
+            <label class="form-label" for="fPrecio3">Precio 3 ml (MXN)</label>
+            <input class="form-input" id="fPrecio3" type="number" min="0" step="0.5" placeholder="Ej: 100">
           </div>
           <div class="form-group">
-            <label class="form-label">Ocasión ideal</label>
-            <input class="form-input" id="fOcasion" placeholder="Ej: Citas · Fiesta · Clima Frío">
+            <label class="form-label" for="fPrecio5">Precio 5 ml (MXN)</label>
+            <input class="form-input" id="fPrecio5" type="number" min="0" step="0.5" placeholder="Ej: 160">
           </div>
+          <div class="form-group">
+            <label class="form-label" for="fPrecio10">Precio 10 ml (MXN)</label>
+            <input class="form-input" id="fPrecio10" type="number" min="0" step="0.5" placeholder="Ej: 240">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="fPrecioBotella">Precio botella (MXN)</label>
+            <input class="form-input" id="fPrecioBotella" type="number" min="0" step="0.5" placeholder="Opcional">
+          </div>
+
           <div class="form-group full">
-            <label class="form-label">Notas clave (separadas por coma)</label>
-            <input class="form-input" id="fNotas" placeholder="Ej: Vainilla, Miel, Tabaco">
+            <label class="form-label">Foto del perfume</label>
+            <div class="img-picker">
+              <div class="img-preview" id="imgPreview"><span>Sin foto</span></div>
+              <label class="file-btn">
+                <span id="fileBtnLabel">Elegir / tomar foto…</span>
+                <input type="file" id="fImagenFile" accept="image/*">
+              </label>
+            </div>
+            <input class="form-input" id="fImagenUrl" placeholder="…o pega una URL de imagen externa" style="margin-top:8px">
+            <span class="form-hint">Si subes un archivo, tiene prioridad sobre la URL de texto.</span>
           </div>
-          <div class="form-group">
-            <label class="form-label">Precio 3 ml (MXN)</label>
-            <input class="form-input" id="fPrecio3" type="number" placeholder="Ej: 100" min="0">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Precio 5 ml (MXN)</label>
-            <input class="form-input" id="fPrecio5" type="number" placeholder="Ej: 160" min="0">
-          </div>
-          <div class="form-group">
-            <label class="form-label">Precio 10 ml (MXN)</label>
-            <input class="form-input" id="fPrecio10" type="number" placeholder="Ej: 240" min="0">
-          </div>
+
           <div class="form-group full">
-            <label class="form-label">Disponibilidad</label>
-            <div class="radio-row">
-              <label class="radio-opt">
-                <input type="radio" name="disp" value="disponible" checked> Disponible
+            <div class="switch-row">
+              <label class="switch">
+                <input type="checkbox" id="fActivo" checked>
+                <span class="switch-track"></span>
               </label>
-              <label class="radio-opt">
-                <input type="radio" name="disp" value="pocas"> Pocas Piezas
-              </label>
-              <label class="radio-opt">
-                <input type="radio" name="disp" value="agotado"> Agotado
-              </label>
+              <span class="switch-label">Visible en el catálogo público (activo)</span>
             </div>
           </div>
         </div>
-        <div class="form-actions">
-          <button class="btn-submit" id="saveBtn">Guardar Perfume</button>
-          <button class="btn-cancel" id="cancelBtn" style="display:none">Cancelar</button>
-        </div>
-      </div>
 
-      <!-- Table -->
-      <div class="sec-head">
-        <h2 class="sec-title">Catálogo actual</h2>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Fragancia</th>
-              <th>Familia</th>
-              <th>Precios (3 / 5 / 10 ml)</th>
-              <th>Estado</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody id="perfumeTable"></tbody>
-        </table>
-      </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-submit" id="saveBtn">Guardar Perfume</button>
+          <button type="button" class="btn-cancel" id="cancelEditBtn" hidden>Cancelar</button>
+        </div>
+        <p class="form-msg" id="formMsg"></p>
+      </form>
+
+      <!-- List -->
+      <div class="sec-head"><h2 class="sec-title">Catálogo actual</h2></div>
+      <div class="perfume-list" id="perfumeList"></div>
     </div>
   </div>
 
   <div id="toast"></div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
-    // ─── Config ───
-    // Para cambiar la contraseña, edita solo esta línea:
-    const ADMIN_PASS = 'Perfuma2Admin';
-    const STORAGE_KEY = 'p2_catalog';
+    const SUPABASE_URL = 'https://zlgzdmenngfnrtbkrdoa.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_bWkZADDuNmjG2I28SdtwMQ_z7cTDIme';
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // ─── Default data ───
-    const DEFAULT = [
-      { id: 'p01', nombre: 'Born In Roma Coral Fantasy', marca: 'Valentino', familia: 'Floral / Frutal', concentracion: 'EDT', notas: 'Bergamota, Manzana, Lavanda, Tabaco', ocasion: 'Citas · Día · Primavera', duracion: '6h+', precio3: 110, precio5: 175, precio10: 350, disponibilidad: 'disponible' },
-      { id: 'p02', nombre: 'Invictus Parfum', marca: 'Paco Rabanne', familia: 'Amaderado / Aromático', concentracion: 'Parfum', notas: 'Notas Marinas, Lavanda, Pimienta Rosa, Sándalo', ocasion: 'Noche · Citas · Clima Frío', duracion: '10h+', precio3: 80, precio5: 140, precio10: 280, disponibilidad: 'disponible' },
-      { id: 'p03', nombre: 'Scandal Le Parfum', marca: 'Jean Paul Gaultier', familia: 'Floral / Oriental', concentracion: 'Parfum', notas: 'Jazmín, Caramelo, Sal Marina, Vainilla', ocasion: 'Noche · Citas · Otoño-Invierno', duracion: '10h+', precio3: 110, precio5: 165, precio10: 330, disponibilidad: 'disponible' },
-      { id: 'p04', nombre: 'Le Male Elixir', marca: 'Jean Paul Gaultier', familia: 'Dulce / Especiado', concentracion: 'Parfum', notas: 'Lavanda, Miel, Haba Tonka, Tabaco', ocasion: 'Citas · Noche · Clima Frío', duracion: '10h+', precio3: 110, precio5: 170, precio10: 340, disponibilidad: 'disponible' },
-      { id: 'p05', nombre: 'Le Male Le Parfum', marca: 'Jean Paul Gaultier', familia: 'Aromático / Amaderado', concentracion: 'EDP Intense', notas: 'Cardamomo, Lavanda, Vainilla, Iris', ocasion: 'Trabajo · Casual · Todo Momento', duracion: '8h+', precio3: 110, precio5: 150, precio10: 300, disponibilidad: 'disponible' },
-      { id: 'p06', nombre: 'Le Beau Le Parfum', marca: 'Jean Paul Gaultier', familia: 'Amaderado / Tropical', concentracion: 'EDP Intense', notas: 'Coco, Piña, Haba Tonka, Sándalo', ocasion: 'Casual · Verano · Playa', duracion: '8h+', precio3: 110, precio5: 170, precio10: 340, disponibilidad: 'disponible' },
-      { id: 'p07', nombre: '212 Vip Black', marca: 'Carolina Herrera', familia: 'Oriental / Amaderado', concentracion: 'EDP', notas: 'Absenta, Anís, Lavanda, Vainilla Negra', ocasion: 'Noche · Fiesta · Invierno', duracion: '6h+', precio3: 70, precio5: 120, precio10: 240, disponibilidad: 'agotado' },
-      { id: 'p08', nombre: 'Pour Homme Dylan Blue', marca: 'Versace', familia: 'Aromático / Acuático', concentracion: 'EDT', notas: 'Bergamota, Hoja de Higo, Pachulí, Ambrox', ocasion: 'Trabajo · Casual · Verano', duracion: '6h+', precio3: 70, precio5: 100, precio10: 200, disponibilidad: 'disponible' },
-      { id: 'p09', nombre: 'Eros Parfum', marca: 'Versace', familia: 'Oriental / Amaderado', concentracion: 'Parfum', notas: 'Menta, Manzana Verde, Haba Tonka, Ámbar', ocasion: 'Noche · Citas · Todo Momento', duracion: '10h+', precio3: 80, precio5: 125, precio10: 250, disponibilidad: 'disponible' },
-      { id: 'p10', nombre: 'Light Blue Pour Homme', marca: 'Dolce&Gabbana', familia: 'Aromático / Acuático', concentracion: 'EDT', notas: 'Pomelo, Enebro, Romero, Musgo de Roble', ocasion: 'Verano · Día · Casual', duracion: '4h+', precio3: 80, precio5: 120, precio10: 200, disponibilidad: 'disponible' },
-      { id: 'p11', nombre: 'The Most Wanted Intense', marca: 'Azzaro', familia: 'Oriental / Especiado', concentracion: 'EDP', notas: 'Bergamota, Lavanda, Licor, Musgo', ocasion: 'Noche · Citas · Invierno', duracion: '8h+', precio3: 70, precio5: 100, precio10: 200, disponibilidad: 'disponible' },
-      { id: 'p12', nombre: 'Homme Marine', marca: 'Kenzo', familia: 'Aromático / Acuático', concentracion: 'EDT', notas: 'Notas Marinas, Ylang-Ylang, Sándalo, Almizcle', ocasion: 'Casual · Día · Verano', duracion: '8h+', precio3: 70, precio5: 120, precio10: 240, disponibilidad: 'disponible' },
-      { id: 'p13', nombre: 'Nautica Voyage', marca: 'Nautica', familia: 'Aromático / Acuático', concentracion: 'EDT', notas: 'Manzana, Loto, Cedro, Musgo de Roble', ocasion: 'Diario · Trabajo · Verano', duracion: '4h+', precio3: 35, precio5: 45, precio10: 60, disponibilidad: 'disponible' },
-      { id: 'p14', nombre: 'Liquid Brun', marca: 'French Avenue Parfum', familia: 'Oriental / Amaderado', concentracion: 'EDP', notas: 'Cardamomo, Vainilla Bourbon, Pralinés, Ambrox', ocasion: 'Noche · Citas · Clima Frío', duracion: '10h+', precio3: 70, precio5: 100, precio10: 200, disponibilidad: 'disponible' },
-      { id: 'p15', nombre: 'Aqua Dubai', marca: 'Al Haramain', familia: 'Amaderado / Acuático', concentracion: 'Extrait De Parfum', notas: 'Bergamota, Sándalo, Cedro, Almizcle', ocasion: 'Todo Momento · Casual · Trabajo', duracion: '6h+', precio3: 70, precio5: 110, precio10: 220, disponibilidad: 'disponible' },
-      { id: 'p16', nombre: '9 PM Rebel', marca: 'Afnan', familia: 'Oriental / Especiado', concentracion: 'EDP', notas: 'Piña, Manzana Verde, Cedro, Caramelo', ocasion: 'Noche · Fiesta · Invierno', duracion: '12h+', precio3: 50, precio5: 75, precio10: 150, disponibilidad: 'disponible' },
-      { id: 'p17', nombre: '9 PM', marca: 'Afnan', familia: 'Oriental / Amaderado', concentracion: 'EDP', notas: 'Manzana, Canela, Vainilla, Haba Tonka', ocasion: 'Noche · Citas · Otoño', duracion: '8h+', precio3: 50, precio5: 70, precio10: 140, disponibilidad: 'disponible' },
-      { id: 'p18', nombre: 'Turathi Blue', marca: 'Afnan', familia: 'Aromático / Amaderado', concentracion: 'EDP', notas: 'Cítricos, Bergamota, Almizcle, Notas Amaderadas', ocasion: 'Diario · Trabajo · Casual', duracion: '6h+', precio3: 50, precio5: 75, precio10: 150, disponibilidad: 'disponible' },
-      { id: 'p19', nombre: 'Odyssey Mandarin Sky', marca: 'Armaf', familia: 'Cítrico / Aromático', concentracion: 'EDP', notas: 'Mandarina, Azafrán, Caramelo, Cedro', ocasion: 'Casual · Diario · Verano', duracion: '8h+', precio3: 40, precio5: 60, precio10: 120, disponibilidad: 'disponible' },
-      { id: 'p20', nombre: 'Odyssey Homme Black', marca: 'Armaf', familia: 'Oriental / Amaderado', concentracion: 'EDP', notas: 'Cardamomo, Naranja, Rosa, Sándalo', ocasion: 'Noche · Formal · Invierno', duracion: '6h+', precio3: 40, precio5: 60, precio10: 120, disponibilidad: 'disponible' },
-      { id: 'p21', nombre: 'Vintage Radio', marca: 'Lattafa', familia: 'Oriental / Especiado', concentracion: 'EDP', notas: 'Lavanda, Ciruela, Palo Santo, Sándalo', ocasion: 'Noche · Citas · Clima Frío', duracion: '8h+', precio3: 50, precio5: 70, precio10: 140, disponibilidad: 'disponible' },
-      { id: 'p22', nombre: 'Khamrah Qahwa', marca: 'Lattafa', familia: 'Oriental / Gourmand', concentracion: 'EDP', notas: 'Café, Pralinés, Cardamomo, Vainilla', ocasion: 'Noche · Invierno · Especial', duracion: '12h+', precio3: 50, precio5: 70, precio10: 140, disponibilidad: 'agotado' },
-      { id: 'p23', nombre: 'Fakhar Black', marca: 'Lattafa', familia: 'Oriental / Amaderado', concentracion: 'EDP', notas: 'Bergamota, Lavanda, Enebro, Haba Tonka', ocasion: 'Noche · Formal · Invierno', duracion: '4h+', precio3: 40, precio5: 60, precio10: 120, disponibilidad: 'pocas' },
-      { id: 'p24', nombre: 'Hawas Ice', marca: 'Rasasi', familia: 'Aromática para Hombres', concentracion: 'EDP', notas: 'Manzana, Limón Italiano, Bergamota de Sicilia', ocasion: 'Día a Día · Trabajo · Versátil', duracion: '8h+', precio3: 45, precio5: 90, precio10: 170, disponibilidad: 'disponible' },
-    ];
+    const BUCKET = 'perfumes-images';
+    const STATUS_LABELS = { disponible: 'Disponible', pocas: 'Pocas piezas', agotado: 'Agotado' };
 
-    // ─── Storage helpers ───
-    function load() {
-      try {
-        const d = localStorage.getItem(STORAGE_KEY);
-        return d ? JSON.parse(d) : [...DEFAULT];
-      } catch { return [...DEFAULT]; }
+    let items = [];
+    let editingId = null;
+    let currentImageUrl = '';
+
+    function esc(str) {
+      return String(str ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c]));
     }
-    function save(data) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    }
-    function uid() {
-      return 'p' + Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
+    function fmtMoney(n) { return n == null ? '—' : '$' + Number(n).toLocaleString('es-MX'); }
+
+    // ── TOAST ─────────────────────────────────────────────────────
+    function toast(msg, isError) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.toggle('err', !!isError);
+      t.classList.add('show');
+      clearTimeout(toast._t);
+      toast._t = setTimeout(() => t.classList.remove('show'), 3200);
     }
 
-    let catalog = load();
-
-    // ─── Auth ───
-    const loginOverlay = document.getElementById('loginOverlay');
-    const dashboard = document.getElementById('dashboard');
-    const loginPass = document.getElementById('loginPass');
+    // ── AUTENTICACIÓN ────────────────────────────────────────────
+    const loginView = document.getElementById('login-view');
+    const dashboardView = document.getElementById('dashboard-view');
+    const loginForm = document.getElementById('loginForm');
+    const loginBtn = document.getElementById('loginBtn');
     const loginErr = document.getElementById('loginErr');
 
-    function checkAuth() {
-      if (sessionStorage.getItem('p2_admin') === '1') showDashboard();
-    }
-    function showDashboard() {
-      loginOverlay.style.display = 'none';
-      dashboard.style.display = 'block';
-      refreshAll();
-    }
-    function doLogin() {
-      if (loginPass.value === ADMIN_PASS) {
-        sessionStorage.setItem('p2_admin', '1');
-        loginErr.textContent = '';
-        showDashboard();
-      } else {
-        loginErr.textContent = 'Contraseña incorrecta.';
-        loginPass.value = '';
-        loginPass.focus();
-      }
-    }
-    document.getElementById('loginBtn').addEventListener('click', doLogin);
-    loginPass.addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-      sessionStorage.removeItem('p2_admin');
-      location.reload();
-    });
+    const MAX_ATTEMPTS = 5;
+    const LOCKOUT_MS = 60000;
+    let failedAttempts = 0;
+    let lockedUntil = 0;
 
-    // ─── Stats ───
-    function updateStats() {
-      document.getElementById('st-total').textContent = catalog.length;
-      document.getElementById('st-disp').textContent = catalog.filter(p => p.disponibilidad === 'disponible').length;
-      document.getElementById('st-agot').textContent = catalog.filter(p => p.disponibilidad === 'agotado').length;
+    function showLogin() {
+      dashboardView.hidden = true;
+      loginView.hidden = false;
     }
 
-    // ─── Table ───
-    function renderTable() {
-      const tbody = document.getElementById('perfumeTable');
-      if (catalog.length === 0) {
-        tbody.innerHTML = `<tr class="empty-row"><td colspan="6">Sin perfumes aún. Agrega el primero arriba.</td></tr>`;
+    async function showDashboard() {
+      loginView.hidden = true;
+      dashboardView.hidden = false;
+      await loadItems();
+    }
+
+    async function checkSession() {
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      if (session) showDashboard(); else showLogin();
+    }
+
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const now = Date.now();
+      if (now < lockedUntil) {
+        const secs = Math.ceil((lockedUntil - now) / 1000);
+        loginErr.textContent = `Demasiados intentos fallidos. Espera ${secs}s e intenta de nuevo.`;
         return;
       }
-      const labels = { disponible: 'Disponible', pocas: 'Pocas Piezas', agotado: 'Agotado' };
-      tbody.innerHTML = catalog.map(p => `
-        <tr>
-          <td>
-            <div class="td-name">${p.nombre}</div>
-            <div class="td-brand">${p.marca}</div>
-          </td>
-          <td style="color:var(--gris-600);font-size:.82rem">${p.familia || '—'}<br><span style="color:var(--gris-400)">${p.concentracion||''} ${p.duracion ? '· '+p.duracion : ''}</span></td>
-          <td style="font-size:.82rem;color:var(--gris-600)">$${p.precio3||'—'} · $${p.precio5||'—'} · $${p.precio10||'—'}</td>
-          <td><span class="t-badge t-badge-${p.disponibilidad}">${labels[p.disponibilidad]}</span></td>
-          <td>
-            <div class="td-actions">
-              <button class="btn-edit" onclick="startEdit('${p.id}')">Editar</button>
-              <button class="btn-del" onclick="deletePerfume('${p.id}')">Eliminar</button>
-            </div>
-          </td>
-        </tr>
-      `).join('');
-    }
 
-    function refreshAll() {
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      loginErr.textContent = '';
+      loginBtn.disabled = true;
+      loginBtn.textContent = 'Ingresando…';
+
+      const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+
+      loginBtn.disabled = false;
+      loginBtn.textContent = 'Ingresar →';
+
+      if (error) {
+        failedAttempts++;
+        document.getElementById('loginPassword').value = '';
+        if (failedAttempts >= MAX_ATTEMPTS) {
+          lockedUntil = Date.now() + LOCKOUT_MS;
+          loginErr.textContent = `Demasiados intentos fallidos. Espera ${Math.ceil(LOCKOUT_MS/1000)}s e intenta de nuevo.`;
+          failedAttempts = 0;
+        } else {
+          loginErr.textContent = 'Correo o contraseña incorrectos.';
+        }
+        return;
+      }
+
+      failedAttempts = 0;
+      showDashboard();
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      await supabaseClient.auth.signOut();
+    });
+
+    supabaseClient.auth.onAuthStateChange((event) => {
+      if (event === 'SIGNED_OUT') showLogin();
+    });
+
+    // ── CARGA DE INVENTARIO ─────────────────────────────────────
+    async function loadItems() {
+      const { data, error } = await supabaseClient
+        .from('perfumes')
+        .select('*')
+        .order('marca', { ascending: true });
+
+      if (error) {
+        toast('Error cargando el catálogo: ' + error.message, true);
+        return;
+      }
+      items = data || [];
       updateStats();
-      renderTable();
+      renderList();
     }
 
-    // ─── Form helpers ───
-    function getFormValues() {
-      return {
-        nombre: document.getElementById('fNombre').value.trim(),
-        marca: document.getElementById('fMarca').value.trim(),
-        familia: document.getElementById('fFamilia').value.trim(),
-        concentracion: document.getElementById('fConc').value.trim(),
-        duracion: document.getElementById('fDur').value.trim(),
-        ocasion: document.getElementById('fOcasion').value.trim(),
-        notas: document.getElementById('fNotas').value.trim(),
-        precio3: parseInt(document.getElementById('fPrecio3').value) || 0,
-        precio5: parseInt(document.getElementById('fPrecio5').value) || 0,
-        precio10: parseInt(document.getElementById('fPrecio10').value) || 0,
-        disponibilidad: document.querySelector('input[name="disp"]:checked').value,
-      };
+    function updateStats() {
+      document.getElementById('stTotal').textContent = items.length;
+      document.getElementById('stDisp').textContent = items.filter(p => p.estatus === 'disponible').length;
+      document.getElementById('stAgot').textContent = items.filter(p => p.estatus === 'agotado').length;
     }
 
-    function setFormValues(p) {
-      document.getElementById('fNombre').value = p.nombre;
-      document.getElementById('fMarca').value = p.marca;
-      document.getElementById('fFamilia').value = p.familia || '';
-      document.getElementById('fConc').value = p.concentracion || '';
-      document.getElementById('fDur').value = p.duracion || '';
-      document.getElementById('fOcasion').value = p.ocasion || '';
-      document.getElementById('fNotas').value = p.notas || '';
-      document.getElementById('fPrecio3').value = p.precio3 || '';
-      document.getElementById('fPrecio5').value = p.precio5 || '';
-      document.getElementById('fPrecio10').value = p.precio10 || '';
-      document.querySelector(`input[name="disp"][value="${p.disponibilidad}"]`).checked = true;
-    }
-
-    function resetForm() {
-      document.getElementById('editId').value = '';
-      document.getElementById('fNombre').value = '';
-      document.getElementById('fMarca').value = '';
-      document.getElementById('fFamilia').value = '';
-      document.getElementById('fConc').value = '';
-      document.getElementById('fDur').value = '';
-      document.getElementById('fOcasion').value = '';
-      document.getElementById('fNotas').value = '';
-      document.getElementById('fPrecio3').value = '';
-      document.getElementById('fPrecio5').value = '';
-      document.getElementById('fPrecio10').value = '';
-      document.querySelector('input[name="disp"][value="disponible"]').checked = true;
-      document.getElementById('formTitle').textContent = 'Agregar nuevo perfume';
-      document.getElementById('saveBtn').textContent = 'Guardar Perfume';
-      document.getElementById('cancelBtn').style.display = 'none';
-    }
-
-    // ─── Add / Edit / Delete ───
-    document.getElementById('saveBtn').addEventListener('click', () => {
-      const vals = getFormValues();
-      if (!vals.nombre || !vals.marca) {
-        toast('Nombre y marca son obligatorios.');
+    // ── LISTA ────────────────────────────────────────────────────
+    function renderList() {
+      const wrap = document.getElementById('perfumeList');
+      if (items.length === 0) {
+        wrap.innerHTML = `<div class="empty-list"><p>Sin perfumes aún.</p></div>`;
         return;
       }
-      const editId = document.getElementById('editId').value;
-      if (editId) {
-        const idx = catalog.findIndex(p => p.id === editId);
-        if (idx > -1) catalog[idx] = { ...catalog[idx], ...vals };
-        toast('Perfume actualizado ✓');
-      } else {
-        catalog.unshift({ id: uid(), ...vals });
-        toast('Perfume agregado ✓');
-      }
-      save(catalog);
-      resetForm();
-      refreshAll();
-    });
 
-    document.getElementById('cancelBtn').addEventListener('click', resetForm);
+      wrap.innerHTML = items.map(p => {
+        const precios = [
+          p.precio_3ml != null ? `3ml ${fmtMoney(p.precio_3ml)}` : null,
+          p.precio_5ml != null ? `5ml ${fmtMoney(p.precio_5ml)}` : null,
+          p.precio_10ml != null ? `10ml ${fmtMoney(p.precio_10ml)}` : null,
+          p.precio_botella != null ? `Botella ${fmtMoney(p.precio_botella)}` : null,
+        ].filter(Boolean).join(' · ') || 'Sin precios';
 
-    function startEdit(id) {
-      const p = catalog.find(x => x.id === id);
-      if (!p) return;
-      document.getElementById('editId').value = id;
-      setFormValues(p);
-      document.getElementById('formTitle').textContent = 'Editar perfume';
-      document.getElementById('saveBtn').textContent = 'Actualizar Perfume';
-      document.getElementById('cancelBtn').style.display = 'inline-flex';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+        return `
+        <div class="p-card${p.activo ? '' : ' inactivo'}" data-id="${p.id}">
+          <div class="p-thumb">
+            ${p.imagen_url ? `<img src="${esc(p.imagen_url)}" alt="" loading="lazy" onerror="this.parentElement.innerHTML='<span>Sin foto</span>'">` : '<span>Sin foto</span>'}
+          </div>
+          <div class="p-info">
+            <div class="p-name">${esc(p.nombre)}</div>
+            <div class="p-brand">${esc(p.marca)}${p.activo ? '' : ' · inactivo'}</div>
+            <div class="p-prices">${precios}</div>
+            <div class="p-controls">
+              <select class="p-status-select" data-action="status" data-id="${p.id}">
+                <option value="disponible"${p.estatus === 'disponible' ? ' selected' : ''}>Disponible</option>
+                <option value="pocas"${p.estatus === 'pocas' ? ' selected' : ''}>Pocas piezas</option>
+                <option value="agotado"${p.estatus === 'agotado' ? ' selected' : ''}>Agotado</option>
+              </select>
+              <div class="p-actions">
+                <button type="button" class="btn-icon" data-action="edit" data-id="${p.id}">Editar</button>
+                <button type="button" class="btn-icon" data-action="toggle-activo" data-id="${p.id}">${p.activo ? 'Desactivar' : 'Activar'}</button>
+                <button type="button" class="btn-icon danger" data-action="delete" data-id="${p.id}">Eliminar</button>
+              </div>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
     }
 
-    function deletePerfume(id) {
-      if (!confirm('¿Eliminar este perfume del catálogo?')) return;
-      catalog = catalog.filter(p => p.id !== id);
-      save(catalog);
-      refreshAll();
+    document.getElementById('perfumeList').addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-action]');
+      if (!btn || btn.tagName !== 'BUTTON') return;
+      const id = btn.dataset.id;
+      if (btn.dataset.action === 'edit') startEdit(id);
+      if (btn.dataset.action === 'toggle-activo') toggleActivo(id, btn);
+      if (btn.dataset.action === 'delete') deleteItem(id, btn);
+    });
+
+    document.getElementById('perfumeList').addEventListener('change', (e) => {
+      const sel = e.target.closest('[data-action="status"]');
+      if (sel) quickStatusChange(sel.dataset.id, sel.value, sel);
+    });
+
+    async function quickStatusChange(id, newEstatus, selectEl) {
+      selectEl.disabled = true;
+      const { error } = await supabaseClient.from('perfumes').update({ estatus: newEstatus }).eq('id', id);
+      selectEl.disabled = false;
+      if (error) {
+        toast('No se pudo actualizar el estatus: ' + error.message, true);
+        return;
+      }
+      const item = items.find(p => String(p.id) === String(id));
+      if (item) item.estatus = newEstatus;
+      updateStats();
+      toast(`Estatus actualizado a "${STATUS_LABELS[newEstatus]}" ✓`);
+    }
+
+    async function toggleActivo(id, btnEl) {
+      const item = items.find(p => String(p.id) === String(id));
+      if (!item) return;
+      const nuevoActivo = !item.activo;
+      const confirmMsg = nuevoActivo
+        ? `¿Reactivar "${item.nombre}" y volver a mostrarlo en el catálogo público?`
+        : `¿Desactivar "${item.nombre}"? Dejará de verse en el catálogo público (no se borra).`;
+      if (!confirm(confirmMsg)) return;
+
+      btnEl.disabled = true;
+      const { error } = await supabaseClient.from('perfumes').update({ activo: nuevoActivo }).eq('id', id);
+      btnEl.disabled = false;
+      if (error) {
+        toast('No se pudo actualizar: ' + error.message, true);
+        return;
+      }
+      item.activo = nuevoActivo;
+      renderList();
+      toast(nuevoActivo ? 'Perfume reactivado ✓' : 'Perfume desactivado ✓');
+    }
+
+    async function deleteItem(id, btnEl) {
+      const item = items.find(p => String(p.id) === String(id));
+      if (!item) return;
+      if (!confirm(`¿Eliminar "${item.nombre}" permanentemente? Esta acción no se puede deshacer.`)) return;
+
+      btnEl.disabled = true;
+      const { error } = await supabaseClient.from('perfumes').delete().eq('id', id);
+      btnEl.disabled = false;
+      if (error) {
+        toast('No se pudo eliminar: ' + error.message, true);
+        return;
+      }
+      items = items.filter(p => String(p.id) !== String(id));
+      updateStats();
+      renderList();
       toast('Perfume eliminado.');
     }
 
-    // ─── Toast ───
-    function toast(msg) {
-      const t = document.getElementById('toast');
-      t.textContent = msg;
-      t.classList.add('show');
-      setTimeout(() => t.classList.remove('show'), 2800);
+    // ── FORMULARIO (crear / editar) ─────────────────────────────
+    const form = document.getElementById('perfumeForm');
+    const saveBtn = document.getElementById('saveBtn');
+    const cancelEditBtn = document.getElementById('cancelEditBtn');
+    const formMsg = document.getElementById('formMsg');
+    const fileInput = document.getElementById('fImagenFile');
+    const urlInput = document.getElementById('fImagenUrl');
+    const imgPreview = document.getElementById('imgPreview');
+
+    fileInput.addEventListener('change', () => {
+      const file = fileInput.files[0];
+      document.getElementById('fileBtnLabel').textContent = file ? file.name : 'Elegir / tomar foto…';
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = ev => { imgPreview.innerHTML = `<img src="${ev.target.result}" alt="">`; };
+      reader.readAsDataURL(file);
+    });
+
+    urlInput.addEventListener('input', () => {
+      if (fileInput.files[0]) return; // el archivo tiene prioridad visual
+      const url = urlInput.value.trim();
+      imgPreview.innerHTML = url ? `<img src="${esc(url)}" alt="" onerror="this.parentElement.innerHTML='<span>URL inválida</span>'">` : '<span>Sin foto</span>';
+    });
+
+    function sanitizeFilename(name) {
+      return name
+        .normalize('NFD').replace(/[̀-ͯ]/g, '')
+        .replace(/[^a-zA-Z0-9.]+/g, '-')
+        .toLowerCase();
     }
 
-    // ─── Init ───
-    checkAuth();
+    function setFormValues(p) {
+      document.getElementById('fEditId').value = p.id;
+      document.getElementById('fNombre').value = p.nombre || '';
+      document.getElementById('fMarca').value = p.marca || '';
+      document.getElementById('fFamilia').value = p.familia_olfativa || '';
+      document.getElementById('fEstatus').value = p.estatus || 'disponible';
+      document.getElementById('fPrecio3').value = p.precio_3ml ?? '';
+      document.getElementById('fPrecio5').value = p.precio_5ml ?? '';
+      document.getElementById('fPrecio10').value = p.precio_10ml ?? '';
+      document.getElementById('fPrecioBotella').value = p.precio_botella ?? '';
+      document.getElementById('fActivo').checked = p.activo !== false;
+      urlInput.value = p.imagen_url || '';
+      currentImageUrl = p.imagen_url || '';
+      fileInput.value = '';
+      document.getElementById('fileBtnLabel').textContent = 'Elegir / tomar foto…';
+      imgPreview.innerHTML = p.imagen_url ? `<img src="${esc(p.imagen_url)}" alt="" onerror="this.parentElement.innerHTML='<span>Sin foto</span>'">` : '<span>Sin foto</span>';
+    }
+
+    function resetForm() {
+      editingId = null;
+      currentImageUrl = '';
+      form.reset();
+      document.getElementById('fEditId').value = '';
+      document.getElementById('fEstatus').value = 'disponible';
+      document.getElementById('fActivo').checked = true;
+      document.getElementById('fileBtnLabel').textContent = 'Elegir / tomar foto…';
+      imgPreview.innerHTML = '<span>Sin foto</span>';
+      document.getElementById('formTitle').textContent = 'Agregar perfume';
+      saveBtn.textContent = 'Guardar Perfume';
+      cancelEditBtn.hidden = true;
+      formMsg.textContent = '';
+      formMsg.className = 'form-msg';
+    }
+
+    function startEdit(id) {
+      const p = items.find(x => String(x.id) === String(id));
+      if (!p) return;
+      editingId = id;
+      setFormValues(p);
+      document.getElementById('formTitle').textContent = 'Editar perfume';
+      saveBtn.textContent = 'Actualizar Perfume';
+      cancelEditBtn.hidden = false;
+      formMsg.textContent = '';
+      formMsg.className = 'form-msg';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    cancelEditBtn.addEventListener('click', resetForm);
+
+    function numOrNull(id) {
+      const v = document.getElementById(id).value.trim();
+      return v === '' ? null : Number(v);
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const nombre = document.getElementById('fNombre').value.trim();
+      const marca = document.getElementById('fMarca').value.trim();
+      if (!nombre || !marca) {
+        formMsg.textContent = 'Nombre y marca son obligatorios.';
+        formMsg.className = 'form-msg err';
+        return;
+      }
+
+      saveBtn.disabled = true;
+      cancelEditBtn.disabled = true;
+      saveBtn.textContent = 'Guardando…';
+      formMsg.textContent = '';
+      formMsg.className = 'form-msg';
+
+      try {
+        let imagen_url = currentImageUrl || null;
+        const file = fileInput.files[0];
+
+        if (file) {
+          const path = `${Date.now()}-${sanitizeFilename(file.name)}`;
+          const { error: upErr } = await supabaseClient.storage.from(BUCKET).upload(path, file, { upsert: false });
+          if (upErr) throw upErr;
+          const { data: pub } = supabaseClient.storage.from(BUCKET).getPublicUrl(path);
+          imagen_url = pub.publicUrl;
+        } else if (urlInput.value.trim()) {
+          imagen_url = urlInput.value.trim();
+        }
+
+        const payload = {
+          nombre,
+          marca,
+          familia_olfativa: document.getElementById('fFamilia').value.trim() || null,
+          estatus: document.getElementById('fEstatus').value,
+          precio_3ml: numOrNull('fPrecio3'),
+          precio_5ml: numOrNull('fPrecio5'),
+          precio_10ml: numOrNull('fPrecio10'),
+          precio_botella: numOrNull('fPrecioBotella'),
+          activo: document.getElementById('fActivo').checked,
+          imagen_url,
+        };
+
+        if (editingId) {
+          const { error } = await supabaseClient.from('perfumes').update(payload).eq('id', editingId);
+          if (error) throw error;
+          toast('Perfume actualizado ✓');
+        } else {
+          const { error } = await supabaseClient.from('perfumes').insert(payload);
+          if (error) throw error;
+          toast('Perfume agregado ✓');
+        }
+
+        resetForm();
+        await loadItems();
+      } catch (err) {
+        console.error('Error guardando el perfume:', err);
+        formMsg.textContent = 'Error: ' + (err.message || 'no se pudo guardar.');
+        formMsg.className = 'form-msg err';
+      } finally {
+        saveBtn.disabled = false;
+        cancelEditBtn.disabled = false;
+        saveBtn.textContent = editingId ? 'Actualizar Perfume' : 'Guardar Perfume';
+      }
+    });
+
+    // ── INIT ─────────────────────────────────────────────────────
+    checkSession();
   </script>
 </body>
 </html>

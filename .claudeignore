@@ -1,0 +1,11 @@
+# Excluir multimedia (consume la mayor cantidad de tokens)
+Imagenes perfuma2/
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.svg
+
+# Metadatos del editor y Claude
+.claude/
+.vscode/

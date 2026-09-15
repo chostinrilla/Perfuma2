@@ -8,19 +8,20 @@
   <link rel="icon" type="image/png" href="perfuma2 logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --negro: #000;
-      --blanco: #FAFAFA;
-      --gris-50: #F6F6F6;
-      --gris-100: #EFEFEF;
-      --gris-200: #E0E0E0;
+      --negro: #0D0D0D;
+      --blanco: #F8F8F8;
+      --acento: #E10600;
+      --gris-50: #F1F1F1;
+      --gris-100: #E8E8E8;
+      --gris-200: #DCDCDC;
       --gris-400: #9A9A9A;
-      --gris-600: #555;
-      --display: 'Cormorant Garamond', Georgia, serif;
-      --body: 'Inter', system-ui, sans-serif;
+      --gris-600: #4A4A4A;
+      --display: 'Bebas Neue', Impact, sans-serif;
+      --body: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
     }
     html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
     body {
@@ -32,6 +33,7 @@
     }
     a { color: inherit; text-decoration: none; }
     img { max-width: 100%; display: block; }
+    button { font-family: inherit; }
 
     /* ── NAV ── */
     .nav {
@@ -65,22 +67,24 @@
     }
     .page-header-inner { max-width: 1100px; margin: 0 auto; }
     .page-eyebrow {
-      font-size: .72rem; font-weight: 600; letter-spacing: .22em;
+      font-size: .72rem; font-weight: 700; letter-spacing: .22em;
       text-transform: uppercase; color: var(--gris-400);
       display: block; margin-bottom: 14px;
     }
     .page-title {
       font-family: var(--display);
-      font-size: clamp(2.4rem, 4vw, 4rem);
-      font-weight: 300; letter-spacing: -.02em; line-height: 1.05;
+      text-transform: uppercase;
+      font-size: clamp(2.8rem, 7vw, 5.2rem);
+      font-weight: 400; letter-spacing: .01em; line-height: .95;
     }
+    .page-title .accent-word { color: var(--acento); }
     .page-sub {
       margin-top: 16px;
       font-size: .95rem; color: var(--gris-600); max-width: 480px; line-height: 1.7;
     }
     .result-count {
       margin-top: 20px;
-      font-size: .8rem; font-weight: 500; color: var(--gris-400);
+      font-size: .8rem; font-weight: 600; color: var(--gris-400);
       letter-spacing: .06em;
     }
 
@@ -105,38 +109,41 @@
     }
     .search-input {
       width: 100%;
-      padding: 11px 16px 11px 42px;
-      border: 1px solid var(--gris-200);
+      min-height: 44px;
+      padding: 13px 16px 13px 42px;
+      border: 1.5px solid var(--negro);
       border-radius: 999px;
       font-family: var(--body);
       font-size: 16px; /* Evita zoom automático en navegadores móviles */
       color: var(--negro); background: #fff;
-      transition: border-color .2s;
+      transition: border-color .2s, box-shadow .2s;
       outline: none;
     }
-    .search-input:focus { border-color: var(--negro); }
+    .search-input:focus { box-shadow: 0 0 0 2px var(--negro); }
     .search-input::placeholder { color: var(--gris-400); }
     .filter-select {
-      padding: 10px 36px 10px 16px;
-      border: 1px solid var(--gris-200);
+      min-height: 44px;
+      padding: 13px 40px 13px 18px;
+      border: 1.5px solid var(--negro);
       border-radius: 999px;
       font-family: var(--body);
+      font-weight: 600;
       font-size: 16px; /* Evita zoom automático en Safari móvil */
       color: var(--negro); background: #fff;
       appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239A9A9A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230D0D0D' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
-      background-position: right 14px center;
+      background-position: right 16px center;
       cursor: pointer; outline: none;
-      transition: border-color .2s;
+      transition: box-shadow .2s;
     }
-    .filter-select:focus { border-color: var(--negro); }
+    .filter-select:focus { box-shadow: 0 0 0 2px var(--negro); }
     .pills { display: flex; gap: 8px; flex-wrap: wrap; }
     .pill {
       padding: 9px 18px;
       border: 1px solid var(--gris-200);
       border-radius: 999px;
-      font-size: .78rem; font-weight: 600; letter-spacing: .06em;
+      font-size: .78rem; font-weight: 700; letter-spacing: .06em;
       cursor: pointer; transition: all .2s;
       background: #fff; color: var(--gris-600);
       white-space: nowrap;
@@ -145,12 +152,13 @@
     .pill.active { background: var(--negro); border-color: var(--negro); color: #fff; }
 
     /* ── CATALOG GRID ── */
-    .catalog-section { padding: 48px 52px 96px; }
+    .catalog-section { padding: 40px 52px 120px; }
     .catalog-inner { max-width: 1100px; margin: 0 auto; }
     .catalog-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 22px;
+      align-items: stretch;
     }
     .empty-state {
       grid-column: 1 / -1;
@@ -158,33 +166,36 @@
     }
     .empty-state p {
       font-family: var(--display);
-      font-size: 1.6rem; font-style: italic; font-weight: 300;
+      text-transform: uppercase;
+      font-size: 1.8rem; font-weight: 400; letter-spacing: .02em;
       color: var(--gris-400);
     }
+    .empty-state .pill { margin-top: 18px; }
 
     /* ── PRODUCT CARD ── */
     .card {
       background: #fff;
       border: 1px solid var(--gris-200);
-      border-radius: 24px;
-      padding: 28px;
+      border-radius: 10px;
+      padding: 14px;
       display: flex; flex-direction: column;
-      transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+      height: 100%;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
     }
     .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 48px rgba(0,0,0,.08);
-      border-color: transparent;
+      transform: translateY(-3px);
+      box-shadow: 0 16px 36px rgba(0,0,0,.08);
+      border-color: var(--negro);
     }
-    .card.agotado { opacity: .6; }
+    .card.agotado { opacity: .55; }
 
     .card-img-wrap {
-      border-radius: 16px;
+      border-radius: 6px;
       overflow: hidden;
       background: var(--gris-50);
-      height: 220px;
+      height: 240px;
       display: flex; align-items: center; justify-content: center;
-      margin-bottom: 20px;
+      margin-bottom: 14px;
       position: relative;
     }
     .card-img-wrap::before {
@@ -193,7 +204,7 @@
       background: linear-gradient(90deg, var(--gris-50) 25%, var(--gris-100) 50%, var(--gris-50) 75%);
       background-size: 200% 100%;
       animation: shimmer 1.4s infinite;
-      border-radius: 16px;
+      border-radius: 6px;
     }
     .card-img-wrap.loaded::before { display: none; }
     @keyframes shimmer {
@@ -201,9 +212,10 @@
       100% { background-position: -200% 0; }
     }
     .card-img-wrap img {
-      width: 100%; height: 100%;
+      width: auto; height: auto;
+      max-width: 82%; max-height: 82%;
       object-fit: contain;
-      padding: 16px;
+      display: block; margin: auto;
       transition: transform .4s ease, opacity .3s ease;
       opacity: 0;
       position: relative; z-index: 1;
@@ -211,94 +223,240 @@
     .card-img-wrap.loaded img { opacity: 1; }
     .card:hover .card-img-wrap img { transform: scale(1.04); }
 
-    .card-top {
-      display: flex; justify-content: space-between; align-items: flex-start;
-      gap: 10px; margin-bottom: 20px;
+    /* ── ETIQUETA EDITORIAL (estatus) ── */
+    .tag-editorial {
+      position: absolute; top: 10px; left: 10px; z-index: 2;
+      padding: 5px 11px;
+      font-size: .62rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: .08em;
+      transform: rotate(-3deg);
+      box-shadow: 3px 3px 0 rgba(0,0,0,.18);
+      white-space: nowrap;
     }
-    .badge {
-      display: inline-flex; align-items: center;
-      padding: 4px 11px;
-      border-radius: 999px;
-      font-size: .68rem; font-weight: 700; letter-spacing: .08em;
-      text-transform: uppercase; white-space: nowrap;
-    }
-    .badge-disponible { background: var(--negro); color: #fff; }
-    .badge-pocas      { border: 1px solid var(--negro); color: var(--negro); background: transparent; }
-    .badge-agotado    { background: var(--gris-100); color: var(--gris-400); }
-    .badge-familia    {
-      background: var(--gris-50);
-      color: var(--gris-600);
-      border: 1px solid var(--gris-200);
-      text-align: right;
-    }
+    .tag-pocas    { background: var(--acento); color: #fff; }
+    .tag-agotado  { background: var(--negro); color: #fff; }
 
+    .card-brand {
+      font-size: .72rem; font-weight: 700; color: var(--gris-400);
+      text-transform: uppercase; letter-spacing: .12em;
+    }
     .card-name {
       font-family: var(--display);
-      font-size: 1.55rem; font-weight: 400;
-      line-height: 1.15; letter-spacing: -.01em;
+      text-transform: uppercase;
+      font-size: 1.7rem; font-weight: 400;
+      line-height: .98; letter-spacing: .01em;
+      margin-top: 2px;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+      min-height: 3.4rem;
     }
-    .card-brand {
-      margin-top: 4px;
-      font-size: .82rem; color: var(--gris-400); font-weight: 500;
-      letter-spacing: .05em;
+    .card-familia {
+      margin-top: 5px;
+      font-size: .68rem; font-weight: 600; color: var(--gris-400);
+      text-transform: uppercase; letter-spacing: .06em;
     }
-    .card-divider {
-      border: none; border-top: 1px solid var(--gris-200);
-      margin: 20px 0;
+    .card-price {
+      font-family: var(--display);
+      font-size: 1.9rem; letter-spacing: .01em;
+      margin: auto 0 10px; /* margin-top:auto empuja precio + chips + botón al fondo de la card */
     }
-    .card-detail-label {
-      font-size: .65rem; font-weight: 700; letter-spacing: .16em;
-      text-transform: uppercase; color: var(--gris-400);
-      margin-bottom: 5px;
-    }
-    .card-detail-val {
-      font-size: .88rem; color: var(--gris-600); line-height: 1.5;
-    }
-    .card-detail + .card-detail { margin-top: 14px; }
 
-    /* ── SIZE SELECTOR ── */
-    .size-selector {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 8px; margin-bottom: 14px;
-    }
-    .size-btn {
-      display: flex; flex-direction: column; align-items: center; gap: 3px;
-      padding: 10px 6px;
-      border: 1px solid var(--gris-200); border-radius: 12px;
-      cursor: pointer; background: #fff; font-family: var(--body);
-      transition: all .15s ease;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .size-btn:hover:not(:disabled) { border-color: var(--negro); }
-    .size-btn.active { background: var(--negro); border-color: var(--negro); color: #fff; }
-    .size-btn:active:not(:disabled) {
-      transform: scale(0.94);
-    }
-    .size-btn:disabled { opacity: .4; cursor: default; }
-    .s-ml { font-size: .78rem; font-weight: 700; }
-    .s-px { font-size: .73rem; font-weight: 500; }
-    .stars { letter-spacing: 1px; color: var(--negro); }
-    .stars-empty { color: var(--gris-200); }
-
-    .card-cta {
-      display: inline-flex; align-items: center; gap: 6px;
-      margin-top: 16px;
-      padding: 11px 20px;
-      border: 1px solid var(--negro);
+    /* ── SELECTOR DE TAMAÑO (chips) ── */
+    .size-selector { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+    .size-chip {
+      flex: 1 1 60px;
+      padding: 9px 8px;
+      border: 1.5px solid var(--negro);
       border-radius: 999px;
-      font-size: .8rem; font-weight: 600; letter-spacing: .05em;
-      transition: all .2s;
-      cursor: pointer;
-      width: 100%; justify-content: center;
+      background: transparent; color: var(--negro);
+      font-size: .68rem; font-weight: 700; letter-spacing: .03em;
+      text-align: center; cursor: pointer;
+      transition: transform .15s ease, background .15s ease, color .15s ease;
       -webkit-tap-highlight-color: transparent;
     }
-    .card-cta:hover { background: var(--negro); color: #fff; }
-    .card-cta:active:not(.disabled) { transform: scale(0.97); }
-    .card-cta.disabled {
-      border-color: var(--gris-200); color: var(--gris-400); cursor: default;
+    .size-chip.active { background: var(--negro); color: #fff; }
+    .size-chip:active:not(:disabled) { transform: scale(.93); }
+    .size-chip:disabled { opacity: .35; cursor: default; border-color: var(--gris-200); color: var(--gris-400); }
+
+    /* ── BOTÓN AGREGAR ── */
+    .add-btn {
+      width: 100%;
+      padding: 13px;
+      background: var(--negro); color: #fff;
+      border: none; border-radius: 8px;
+      font-weight: 800; font-size: .8rem;
+      letter-spacing: .07em; text-transform: uppercase;
+      cursor: pointer;
+      transition: transform .15s ease, background .2s ease;
+      -webkit-tap-highlight-color: transparent;
     }
-    .card-cta.disabled:hover { background: transparent; color: var(--gris-400); }
+    .add-btn:hover:not(:disabled) { background: var(--acento); }
+    .add-btn:active:not(:disabled) { transform: scale(.97); }
+    .add-btn:disabled { background: var(--gris-200); color: var(--gris-400); cursor: default; }
+    .add-btn.added { background: var(--acento); }
+
+    /* ── FICHA COMPARTIBLE ── */
+    .card-share-btn {
+      position: absolute; top: 10px; right: 10px; z-index: 2;
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      border: 1px solid var(--gris-200);
+      background: rgba(255,255,255,.92);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,.12);
+      transition: transform .15s ease, background .2s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .card-share-btn:hover { background: #fff; }
+    .card-share-btn:active { transform: scale(.9); }
+    .card-share-btn:disabled { opacity: .5; cursor: default; }
+    .card-share-btn svg { width: 16px; height: 16px; }
+
+    /* Cubre la ficha mientras se genera: en iOS Safari, un contenedor
+       posicionado muy lejos del viewport (left:-9999px) a veces no se
+       pinta al capturarlo con html2canvas. Por eso el nodo real vive
+       dentro del viewport (top:0;left:0) y este overlay opaco lo tapa. */
+    .ficha-overlay {
+      position: fixed; inset: 0; z-index: 399;
+      background: var(--negro);
+    }
+    .ficha-loading {
+      position: fixed; top: 16px; left: 50%; z-index: 400;
+      transform: translateX(-50%);
+      background: #fff; color: var(--negro);
+      padding: 10px 20px; border-radius: 999px;
+      font-size: .78rem; font-weight: 700; letter-spacing: .04em;
+      box-shadow: 0 8px 24px rgba(0,0,0,.25);
+    }
+
+    /* ── CARRITO FLOTANTE ── */
+    .cart-bar {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 200;
+      background: var(--negro);
+      padding: 4px 16px calc(4px + env(safe-area-inset-bottom, 0px));
+      box-shadow: 0 -8px 24px rgba(0,0,0,.15);
+    }
+    .cart-bar-btn {
+      width: 100%; max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; gap: 12px;
+      background: none; border: none; color: #fff;
+      padding: 10px 6px; cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .cart-bar-btn:active { transform: scale(.98); }
+    .cart-bar-icon { position: relative; font-size: 1.3rem; line-height: 1; }
+    .cart-count {
+      position: absolute; top: -9px; right: -11px;
+      background: var(--acento); color: #fff;
+      min-width: 18px; height: 18px; padding: 0 3px;
+      border-radius: 999px;
+      font-size: .62rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cart-bar-label {
+      flex: 1; text-align: left;
+      font-weight: 700; font-size: .8rem;
+      letter-spacing: .05em; text-transform: uppercase;
+    }
+    .cart-bar-total { font-family: var(--display); font-size: 1.4rem; letter-spacing: .01em; }
+
+    /* Sube la burbuja de WhatsApp cuando el carrito está visible, para que no se encimen */
+    body.cart-active .wa-float { bottom: calc(78px + env(safe-area-inset-bottom, 0px)); }
+
+    /* ── DRAWER DE CARRITO ── */
+    .cart-backdrop {
+      position: fixed; inset: 0; z-index: 300;
+      background: rgba(0,0,0,.55);
+      opacity: 0; transition: opacity .25s ease;
+    }
+    .cart-backdrop.open { opacity: 1; }
+
+    .cart-drawer {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 301;
+      max-width: 560px; margin: 0 auto;
+      background: var(--blanco);
+      border-radius: 18px 18px 0 0;
+      max-height: 85vh;
+      display: flex; flex-direction: column;
+      transform: translateY(100%);
+      transition: transform .32s cubic-bezier(.32,.72,0,1);
+    }
+    .cart-drawer.open { transform: translateY(0); }
+    .cart-drawer-handle {
+      width: 40px; height: 4px; background: var(--gris-200);
+      border-radius: 999px; margin: 10px auto 2px; flex-shrink: 0;
+    }
+    .cart-drawer-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 6px 20px 14px; border-bottom: 1px solid var(--gris-200);
+      flex-shrink: 0;
+    }
+    .cart-drawer-head h2 {
+      font-family: var(--display); text-transform: uppercase;
+      font-size: 1.6rem; font-weight: 400; letter-spacing: .01em;
+    }
+    .cart-close {
+      background: none; border: none; cursor: pointer;
+      font-size: 1.1rem; color: var(--negro); padding: 6px;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .cart-items { overflow-y: auto; padding: 4px 20px; flex: 1; }
+    .cart-empty { text-align: center; padding: 44px 0; color: var(--gris-400); font-size: .88rem; line-height: 1.6; }
+    .cart-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 14px 0; border-bottom: 1px solid var(--gris-100);
+    }
+    .cart-item-info { flex: 1; min-width: 0; }
+    .cart-item-name {
+      font-weight: 700; font-size: .85rem;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .cart-item-meta { font-size: .72rem; color: var(--gris-400); margin-top: 2px; text-transform: uppercase; letter-spacing: .04em; }
+    .cart-item-controls { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+    .qty-btn {
+      width: 26px; height: 26px; border-radius: 50%;
+      border: 1.5px solid var(--negro); background: #fff;
+      font-weight: 700; font-size: .85rem; line-height: 1; cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .qty-btn:active { transform: scale(.9); }
+    .qty-val { min-width: 16px; text-align: center; font-weight: 700; font-size: .82rem; }
+    .qty-remove {
+      background: none; border: none; cursor: pointer;
+      font-size: .95rem; padding: 4px 0 4px 4px; opacity: .6;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .qty-remove:active { opacity: 1; }
+    .cart-item-subtotal { font-family: var(--display); font-size: 1.1rem; min-width: 54px; text-align: right; flex-shrink: 0; }
+
+    .cart-summary { padding: 12px 20px; border-top: 1px solid var(--gris-200); flex-shrink: 0; }
+    .cart-row { display: flex; justify-content: space-between; font-size: .84rem; padding: 3px 0; color: var(--gris-600); }
+    .cart-row-total { font-weight: 800; color: var(--negro); font-size: 1.02rem; padding-top: 6px; }
+
+    .cart-form { display: flex; flex-direction: column; gap: 8px; padding: 4px 20px 12px; flex-shrink: 0; }
+    .cart-input {
+      padding: 11px 14px; border: 1px solid var(--gris-200); border-radius: 10px;
+      font-family: var(--body); font-size: 16px; color: var(--negro);
+      outline: none; transition: border-color .2s;
+    }
+    .cart-input:focus { border-color: var(--negro); }
+    .cart-input::placeholder { color: var(--gris-400); }
+
+    .cart-checkout {
+      margin: 0 20px calc(16px + env(safe-area-inset-bottom, 0px));
+      padding: 15px; border: none; border-radius: 10px;
+      background: var(--acento); color: #fff;
+      font-weight: 800; font-size: .86rem; letter-spacing: .05em; text-transform: uppercase;
+      cursor: pointer; flex-shrink: 0;
+      transition: transform .15s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .cart-checkout:active:not(:disabled) { transform: scale(.98); }
+    .cart-checkout:disabled { background: var(--gris-200); color: var(--gris-400); cursor: default; }
 
     /* ── BOTÓN FLOTANTE WHATSAPP ── */
     .wa-float {
@@ -314,11 +472,11 @@
       padding: 12px 20px;
       border-radius: 999px;
       font-size: .82rem;
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: .03em;
       box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
       border: 1px solid rgba(255, 255, 255, 0.15);
-      transition: transform .25s ease, box-shadow .25s ease, background .2s ease;
+      transition: transform .25s ease, box-shadow .25s ease, background .2s ease, bottom .25s ease;
       -webkit-tap-highlight-color: transparent;
     }
     .wa-float:hover {
@@ -376,8 +534,8 @@
     /* ── RESPONSIVE MÓVILES (Optimización Táctil y Visual) ── */
     @media (max-width: 600px) {
       .nav-links li:first-child { display: none; }
-      .page-header { padding-top: 40px; padding-bottom: 32px; }
-      .page-title { font-size: 2.3rem; }
+      .page-header { padding-top: 36px; padding-bottom: 28px; }
+      .page-title { font-size: 2.6rem; }
       .filter-bar { padding: 16px 20px; }
       .filter-inner { gap: 12px; }
 
@@ -393,11 +551,14 @@
       .pills::-webkit-scrollbar { display: none; }
       .pill { flex-shrink: 0; }
 
-      .catalog-section { padding: 24px 16px 80px; }
-      .catalog-grid { grid-template-columns: 1fr; gap: 16px; }
-      .card { padding: 20px 18px; border-radius: 20px; }
-      .card-img-wrap { height: 190px; }
-      .card-name { font-size: 1.35rem; }
+      .catalog-section { padding: 20px 12px 100px; }
+      .catalog-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .card { padding: 10px; border-radius: 8px; }
+      .card-img-wrap { height: 180px; }
+      .card-name { font-size: 1.25rem; min-height: 2.5rem; }
+      .card-price { font-size: 1.5rem; margin: auto 0 8px; }
+      .size-chip { font-size: .62rem; padding: 8px 4px; }
+      .add-btn { padding: 11px; font-size: .74rem; }
 
       /* Botón de WhatsApp colapsable a círculo con Safe Area */
       .wa-float {
@@ -408,6 +569,9 @@
       }
       .wa-float span { display: none; }
       .wa-float svg { width: 22px; height: 22px; }
+      body.cart-active .wa-float { bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
+
+      .cart-drawer { border-radius: 16px 16px 0 0; max-height: 88vh; }
     }
   </style>
 </head>
@@ -426,7 +590,7 @@
   <div class="page-header">
     <div class="page-header-inner">
       <span class="page-eyebrow">Catálogo completo</span>
-      <h1 class="page-title">Fragancias<br><em style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300">originales.</em></h1>
+      <h1 class="page-title">Fragancias<br><span class="accent-word">Originales.</span></h1>
       <p class="page-sub">Decants de 3, 5 y 10&nbsp;ml, y perfumes sellados de casas de diseñador y árabe. Todos 100% originales.</p>
       <p class="result-count" id="resultCount"></p>
     </div>
@@ -484,11 +648,11 @@
     </div>
   </footer>
 
-  <!-- BOTÓN FLOTANTE WHATSAPP -->
-  <a href="https://wa.me/529903415523?text=Hola!%20Tengo%20una%20duda%20sobre%20el%20cat%C3%A1logo%20de%20Perfuma2" 
-     class="wa-float" 
-     target="_blank" 
-     rel="noopener" 
+  <!-- BOTÓN FLOTANTE WHATSAPP (contacto general) -->
+  <a href="https://wa.me/529903415523?text=Hola!%20Tengo%20una%20duda%20sobre%20el%20cat%C3%A1logo%20de%20Perfuma2"
+     class="wa-float"
+     target="_blank"
+     rel="noopener"
      aria-label="Contactar por WhatsApp">
     <svg viewBox="0 0 24 24" aria-hidden="true">
       <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
@@ -496,73 +660,102 @@
     <span>¿Dudas? Escríbenos</span>
   </a>
 
+  <!-- INDICADOR DE CARGA AL GENERAR LA FICHA COMPARTIBLE -->
+  <div class="ficha-overlay" id="fichaOverlay" hidden></div>
+  <div class="ficha-loading" id="fichaLoading" hidden>Generando imagen…</div>
+
+  <!-- BARRA FLOTANTE DE CARRITO (visible solo con items agregados) -->
+  <div class="cart-bar" id="cartBar" hidden>
+    <button class="cart-bar-btn" id="cartBarBtn" type="button" aria-label="Ver pedido">
+      <span class="cart-bar-icon">🛒<span class="cart-count" id="cartCount">0</span></span>
+      <span class="cart-bar-label">Ver pedido</span>
+      <span class="cart-bar-total" id="cartBarTotal">$0</span>
+    </button>
+  </div>
+
+  <!-- DRAWER DE CARRITO (bottom sheet) -->
+  <div class="cart-backdrop" id="cartBackdrop" hidden></div>
+  <div class="cart-drawer" id="cartDrawer" hidden role="dialog" aria-modal="true" aria-labelledby="cartDrawerTitle">
+    <div class="cart-drawer-handle"></div>
+    <div class="cart-drawer-head">
+      <h2 id="cartDrawerTitle">Tu Pedido</h2>
+      <button class="cart-close" id="cartClose" type="button" aria-label="Cerrar carrito">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-summary">
+      <div class="cart-row cart-row-total"><span>Total estimado</span><span id="cartGrandTotal">$0</span></div>
+    </div>
+    <div class="cart-form">
+      <input type="text" id="custName" class="cart-input" placeholder="Tu nombre (opcional)" autocomplete="name">
+      <input type="text" id="custLocation" class="cart-input" placeholder="Ciudad / Colonia (opcional)" autocomplete="address-level2">
+    </div>
+    <button class="cart-checkout" id="cartCheckout" type="button" disabled>Enviar Pedido por WhatsApp</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <script>
-    const DEFAULT_PERFUMES = [
-      { id: 'p01', nombre: 'Born In Roma Coral Fantasy', marca: 'Valentino', familia: 'Floral / Frutal', concentracion: 'EDT', notas: 'Bergamota, Manzana, Lavanda, Tabaco', ocasion: 'Citas · Día · Primavera', duracion: '6h+', precio3: 110, precio5: 175, precio10: 350, disponibilidad: 'disponible' },
-      { id: 'p02', nombre: 'Invictus Parfum', marca: 'Paco Rabanne', familia: 'Amaderado / Aromático', concentracion: 'Parfum', notas: 'Notas Marinas, Lavanda, Pimienta Rosa, Sándalo', ocasion: 'Noche · Citas · Clima Frío', duracion: '10h+', precio3: 80, precio5: 140, precio10: 280, disponibilidad: 'disponible' },
-      { id: 'p03', nombre: 'Scandal Le Parfum', marca: 'Jean Paul Gaultier', familia: 'Floral / Oriental', concentracion: 'Parfum', notas: 'Jazmín, Caramelo, Sal Marina, Vainilla', ocasion: 'Noche · Citas · Otoño-Invierno', duracion: '10h+', precio3: 110, precio5: 165, precio10: 330, disponibilidad: 'disponible' },
-      { id: 'p04', nombre: 'Le Male Elixir', marca: 'Jean Paul Gaultier', familia: 'Dulce / Especiado', concentracion: 'Parfum', notas: 'Lavanda, Miel, Haba Tonka, Tabaco', ocasion: 'Citas · Noche · Clima Frío', duracion: '10h+', precio3: 110, precio5: 170, precio10: 340, disponibilidad: 'disponible' },
-      { id: 'p05', nombre: 'Le Male Le Parfum', marca: 'Jean Paul Gaultier', familia: 'Aromático / Amaderado', concentracion: 'EDP Intense', notas: 'Cardamomo, Lavanda, Vainilla, Iris', ocasion: 'Trabajo · Casual · Todo Momento', duracion: '8h+', precio3: 110, precio5: 150, precio10: 300, disponibilidad: 'disponible' },
-      { id: 'p06', nombre: 'Le Beau Le Parfum', marca: 'Jean Paul Gaultier', familia: 'Amaderado / Tropical', concentracion: 'EDP Intense', notas: 'Coco, Piña, Haba Tonka, Sándalo', ocasion: 'Casual · Verano · Playa', duracion: '8h+', precio3: 110, precio5: 170, precio10: 340, disponibilidad: 'agotado' },
-      { id: 'p07', nombre: '212 Vip Black', marca: 'Carolina Herrera', familia: 'Oriental / Amaderado', concentracion: 'EDP', notas: 'Absenta, Anís, Lavanda, Vainilla Negra', ocasion: 'Noche · Fiesta · Invierno', duracion: '6h+', precio3: 70, precio5: 120, precio10: 240, disponibilidad: 'agotado' },
-      { id: 'p08', nombre: 'Pour Homme Dylan Blue', marca: 'Versace', familia: 'Aromático / Acuático', concentracion: 'EDT', notas: 'Bergamota, Hoja de Higo, Pachulí, Ambrox', ocasion: 'Trabajo · Casual · Verano', duracion: '6h+', precio3: 70, precio5: 100, precio10: 200, disponibilidad: 'disponible' },
-      { id: 'p09', nombre: 'Eros Parfum', marca: 'Versace', familia: 'Oriental / Amaderado', concentracion: 'Parfum', notas: 'Menta, Manzana Verde, Haba Tonka, Ámbar', ocasion: 'Noche · Citas · Todo Momento', duracion: '10h+', precio3: 80, precio5: 125, precio10: 250, disponibilidad: 'disponible' },
-      { id: 'p10', nombre: 'Light Blue Pour Homme', marca: 'Dolce&Gabbana', familia: 'Aromático / Acuático', concentracion: 'EDT', notas: 'Pomelo, Enebro, Romero, Musgo de Roble', ocasion: 'Verano · Día · Casual', duracion: '4h+', precio3: 80, precio5: 120, precio10: 200, disponibilidad: 'disponible' },
-      { id: 'p11', nombre: 'The Most Wanted Intense', marca: 'Azzaro', familia: 'Oriental / Especiado', concentracion: 'EDP', notas: 'Bergamota, Lavanda, Licor, Musgo', ocasion: 'Noche · Citas · Invierno', duracion: '8h+', precio3: 70, precio5: 100, precio10: 200, disponibilidad: 'disponible' },
-      { id: 'p12', nombre: 'Homme Marine', marca: 'Kenzo', familia: 'Aromático / Acuático', concentracion: 'EDT', notas: 'Notas Marinas, Ylang-Ylang, Sándalo, Almizcle', ocasion: 'Casual · Día · Verano', duracion: '8h+', precio3: 70, precio5: 120, precio10: 240, disponibilidad: 'disponible' },
-      { id: 'p13', nombre: 'Nautica Voyage', marca: 'Nautica', familia: 'Aromático / Acuático', concentracion: 'EDT', notas: 'Manzana, Loto, Cedro, Musgo de Roble', ocasion: 'Diario · Trabajo · Verano', duracion: '4h+', precio3: 35, precio5: 45, precio10: 60, disponibilidad: 'disponible' },
-      { id: 'p14', nombre: 'Liquid Brun', marca: 'French Avenue Parfum', familia: 'Oriental / Amaderado', concentracion: 'EDP', notas: 'Cardamomo, Vainilla Bourbon, Pralinés, Ambrox', ocasion: 'Noche · Citas · Clima Frío', duracion: '10h+', precio3: 70, precio5: 100, precio10: 200, disponibilidad: 'disponible' },
-      { id: 'p15', nombre: 'Aqua Dubai', marca: 'Al Haramain', familia: 'Amaderado / Acuático', concentracion: 'Extrait De Parfum', notas: 'Bergamota, Sándalo, Cedro, Almizcle', ocasion: 'Todo Momento · Casual · Trabajo', duracion: '6h+', precio3: 70, precio5: 110, precio10: 220, disponibilidad: 'disponible' },
-      { id: 'p16', nombre: '9 PM Rebel', marca: 'Afnan', familia: 'Oriental / Especiado', concentracion: 'EDP', notas: 'Piña, Manzana Verde, Cedro, Caramelo', ocasion: 'Noche · Fiesta · Invierno', duracion: '12h+', precio3: 50, precio5: 75, precio10: 150, disponibilidad: 'disponible' },
-      { id: 'p17', nombre: '9 PM', marca: 'Afnan', familia: 'Oriental / Amaderado', concentracion: 'EDP', notas: 'Manzana, Canela, Vainilla, Haba Tonka', ocasion: 'Noche · Citas · Otoño', duracion: '8h+', precio3: 50, precio5: 70, precio10: 140, disponibilidad: 'disponible' },
-      { id: 'p18', nombre: 'Turathi Blue', marca: 'Afnan', familia: 'Aromático / Amaderado', concentracion: 'EDP', notas: 'Cítricos, Bergamota, Almizcle, Notas Amaderadas', ocasion: 'Diario · Trabajo · Casual', duracion: '6h+', precio3: 50, precio5: 75, precio10: 150, disponibilidad: 'pocas' },
-      { id: 'p19', nombre: 'Odyssey Mandarin Sky', marca: 'Armaf', familia: 'Cítrico / Aromático', concentracion: 'EDP', notas: 'Mandarina, Azafrán, Caramelo, Cedro', ocasion: 'Casual · Diario · Verano', duracion: '8h+', precio3: 40, precio5: 60, precio10: 120, disponibilidad: 'pocas' },
-      { id: 'p20', nombre: 'Odyssey Homme Black', marca: 'Armaf', familia: 'Oriental / Amaderado', concentracion: 'EDP', notas: 'Cardamomo, Naranja, Rosa, Sándalo', ocasion: 'Noche · Formal · Invierno', duracion: '6h+', precio3: 40, precio5: 60, precio10: 120, disponibilidad: 'disponible' },
-      { id: 'p21', nombre: 'Vintage Radio', marca: 'Lattafa', familia: 'Oriental / Especiado', concentracion: 'EDP', notas: 'Lavanda, Ciruela, Palo Santo, Sándalo', ocasion: 'Noche · Citas · Clima Frío', duracion: '8h+', precio3: 50, precio5: 70, precio10: 140, disponibilidad: 'disponible' },
-      { id: 'p22', nombre: 'Khamrah Qahwa', marca: 'Lattafa', familia: 'Oriental / Gourmand', concentracion: 'EDP', notas: 'Café, Pralinés, Cardamomo, Vainilla', ocasion: 'Noche · Invierno · Especial', duracion: '12h+', precio3: 50, precio5: 70, precio10: 140, disponibilidad: 'agotado' },
-      { id: 'p23', nombre: 'Fakhar Black', marca: 'Lattafa', familia: 'Oriental / Amaderado', concentracion: 'EDP', notas: 'Bergamota, Lavanda, Enebro, Haba Tonka', ocasion: 'Noche · Formal · Invierno', duracion: '4h+', precio3: 40, precio5: 60, precio10: 120, disponibilidad: 'pocas' },
-      { id: 'p24', nombre: 'Hawas Ice', marca: 'Rasasi', familia: 'Aromático / Cítrico', concentracion: 'EDP', notas: 'Manzana, Limón Italiano, Bergamota de Sicilia', ocasion: 'Día a Día · Trabajo · Versátil', duracion: '8h+', precio3: 45, precio5: 90, precio10: 170, disponibilidad: 'disponible' },
+    const SUPABASE_URL = 'https://zlgzdmenngfnrtbkrdoa.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_bWkZADDuNmjG2I28SdtwMQ_z7cTDIme';
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // Mismo número usado en el resto del sitio (nav, footer, burbuja de WhatsApp).
+    const WHATSAPP_NUMBER = '529903415523';
+
+    const SIZE_DEFS = [
+      { ml: 3,        label: '3 ML',    field: 'precio_3ml' },
+      { ml: 5,        label: '5 ML',    field: 'precio_5ml' },
+      { ml: 10,       label: '10 ML',   field: 'precio_10ml' },
+      { ml: 'botella', label: 'BOTELLA', field: 'precio_botella' },
     ];
 
-    function loadPerfumes() {
-      try {
-        const stored = localStorage.getItem('p2_catalog');
-        return stored ? JSON.parse(stored) : DEFAULT_PERFUMES;
-      } catch { return DEFAULT_PERFUMES; }
-    }
-
-    let all = loadPerfumes();
+    let all = [];
     let filterText = '', filterFamilia = '', filterDisp = '';
+    let cart = []; // { key, perfumeId, nombre, marca, ml, precioUnit, qty }
+
+    async function loadPerfumes() {
+      const { data, error } = await supabaseClient
+        .from('perfumes')
+        .select('id, nombre, marca, familia_olfativa, imagen_url, precio_3ml, precio_5ml, precio_10ml, precio_botella, estatus')
+        .eq('activo', true)
+        .order('marca', { ascending: true });
+
+      if (error) throw error;
+      return data || [];
+    }
 
     function buildFamiliaOptions() {
       const sel = document.getElementById('familiaFilter');
-      [...new Set(all.map(p => p.familia))].sort().forEach(f => {
+      sel.querySelectorAll('option:not([value=""])').forEach(o => o.remove());
+      [...new Set(all.map(p => p.familia_olfativa).filter(Boolean))].sort().forEach(f => {
         const opt = document.createElement('option');
         opt.value = f; opt.textContent = f;
         sel.appendChild(opt);
       });
     }
 
-    function stars(dur) {
-      const h = parseInt(dur) || 0;
-      const n = h >= 10 ? 5 : h >= 8 ? 4 : 3;
-      return `<span class="stars">${'★'.repeat(n)}</span><span class="stars-empty">${'★'.repeat(5 - n)}</span>`;
+    function fmtMoney(n) { return '$' + Number(n).toLocaleString('es-MX'); }
+
+    // ── RENDER DEL CATÁLOGO ──────────────────────────────────────
+    function showLoadingState() {
+      const grid = document.getElementById('catalogGrid');
+      const count = document.getElementById('resultCount');
+      count.textContent = 'Cargando catálogo…';
+      grid.innerHTML = Array.from({ length: 8 }).map(() => `
+        <article class="card">
+          <div class="card-img-wrap"></div>
+        </article>`).join('');
     }
 
-    function waLink(p, ml) {
-      const msg = encodeURIComponent(`Hola! Me interesa el decant de ${p.nombre} - ${p.marca} de ${ml}ml. ¿Está disponible?`);
-      return `https://wa.me/529903415523?text=${msg}`;
-    }
-
-    function selSize(id, ml) {
-      const wrap = document.querySelector(`.size-selector[data-card="${id}"]`);
-      wrap.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-      wrap.querySelector(`[data-size="${ml}"]`).classList.add('active');
-      const cta = document.querySelector(`.card-cta[data-wa="${id}"]`);
-      if (cta) {
-        const p = all.find(x => x.id === id);
-        if (p) cta.href = waLink(p, ml);
-      }
+    function showErrorState() {
+      const grid = document.getElementById('catalogGrid');
+      const count = document.getElementById('resultCount');
+      count.textContent = '';
+      grid.innerHTML = `
+        <div class="empty-state">
+          <p>No se pudo cargar el catálogo.</p>
+          <button class="pill active" onclick="init()">Reintentar</button>
+        </div>`;
     }
 
     function render() {
@@ -572,13 +765,12 @@
 
       const filtered = all.filter(p => {
         const matchText = !q ||
-          p.nombre.toLowerCase().includes(q) ||
-          p.marca.toLowerCase().includes(q) ||
-          p.notas.toLowerCase().includes(q) ||
-          p.familia.toLowerCase().includes(q);
+          (p.nombre || '').toLowerCase().includes(q) ||
+          (p.marca || '').toLowerCase().includes(q) ||
+          (p.familia_olfativa || '').toLowerCase().includes(q);
         return matchText &&
-          (!filterFamilia || p.familia === filterFamilia) &&
-          (!filterDisp    || p.disponibilidad === filterDisp);
+          (!filterFamilia || p.familia_olfativa === filterFamilia) &&
+          (!filterDisp    || p.estatus === filterDisp);
       });
 
       count.textContent = `${filtered.length} ${filtered.length === 1 ? 'fragancia encontrada' : 'fragancias encontradas'}`;
@@ -589,58 +781,357 @@
       }
 
       grid.innerHTML = filtered.map((p, index) => {
-        const disp = { disponible: 'Disponible', pocas: 'Pocas Piezas', agotado: 'Agotado' }[p.disponibilidad] || p.disponibilidad;
-        const agotado = p.disponibilidad === 'agotado';
+        const dispLabel = { disponible: 'Disponible', pocas: 'Pocas Piezas', agotado: 'Agotado' }[p.estatus] || p.estatus;
+        const agotado = p.estatus === 'agotado';
         const isFirstBatch = index < 4;
         const loadMode = isFirstBatch ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"';
 
-        const sizeBtns = [3, 5, 10].map((ml, i) => {
-          const px = p[`precio${ml}`];
-          return `<button class="size-btn${i === 0 ? ' active' : ''}" data-size="${ml}"
-            onclick="selSize('${p.id}',${ml})" ${agotado ? 'disabled' : ''}>
-            <span class="s-ml">${ml} ml</span>
-            <span class="s-px">${px ? '$' + px : '—'}</span>
-          </button>`;
-        }).join('');
+        const sizes = SIZE_DEFS
+          .map(s => ({ ...s, precio: p[s.field] }))
+          .filter(s => s.precio != null);
+
+        const chips = sizes.map((s, i) => `
+          <button class="size-chip${i === 0 ? ' active' : ''}" data-ml="${s.ml}" data-precio="${s.precio}"
+            onclick="selectSize(this)" ${agotado ? 'disabled' : ''}>${s.label}</button>
+        `).join('');
+
+        const initialPrice = sizes[0] ? fmtMoney(sizes[0].precio) : 'Consultar';
+
+        const tag = p.estatus === 'pocas'
+          ? `<span class="tag-editorial tag-pocas">${dispLabel}</span>`
+          : agotado
+            ? `<span class="tag-editorial tag-agotado">${dispLabel}</span>`
+            : '';
 
         return `
           <article class="card${agotado ? ' agotado' : ''}">
             <div class="card-img-wrap">
-              <img src="Imagenes perfuma2/${encodeURIComponent(p.nombre)}.webp" alt="${p.nombre}"
-                   width="300" height="220"
+              ${tag}
+              <button class="card-share-btn" type="button" onclick="handleShareClick('${p.id}', this)" aria-label="Compartir ficha de precios">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#0D0D0D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 3v12"/>
+                  <path d="M7 8l5-5 5 5"/>
+                  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/>
+                </svg>
+              </button>
+              <img src="${p.imagen_url || ''}" alt="${p.nombre}"
+                   width="300" height="375"
                    ${loadMode} decoding="async"
                    onload="this.closest('.card-img-wrap').classList.add('loaded')"
                    onerror="this.closest('.card-img-wrap').style.display='none'">
             </div>
-            <div class="card-top">
-              <span class="badge badge-${p.disponibilidad}">${disp}</span>
-              <span class="badge badge-familia">${p.familia}</span>
-            </div>
-            <div class="card-name">${p.nombre}</div>
             <div class="card-brand">${p.marca}</div>
-            <hr class="card-divider">
-            <div class="card-detail">
-              <div class="card-detail-label">Notas clave</div>
-              <div class="card-detail-val">${p.notas}</div>
-            </div>
-            <div class="card-detail">
-              <div class="card-detail-label">Ocasión ideal</div>
-              <div class="card-detail-val">${p.ocasion}</div>
-            </div>
-            <div class="card-detail">
-              <div class="card-detail-label">Concentración · Duración</div>
-              <div class="card-detail-val">${p.concentracion} &nbsp;·&nbsp; ${stars(p.duracion)} ${p.duracion}</div>
-            </div>
-            <hr class="card-divider">
-            <div class="size-selector" data-card="${p.id}">${sizeBtns}</div>
-            ${agotado
-              ? `<div class="card-cta disabled">Agotado</div>`
-              : `<a href="${waLink(p, 3)}" target="_blank" rel="noopener" class="card-cta" data-wa="${p.id}">Consultar en WhatsApp →</a>`
-            }
+            <div class="card-name">${p.nombre}</div>
+            ${p.familia_olfativa ? `<div class="card-familia">${p.familia_olfativa}</div>` : ''}
+            <div class="card-price" id="price-${p.id}">${initialPrice}</div>
+            <div class="size-selector" data-card="${p.id}">${chips}</div>
+            <button class="add-btn" ${agotado || sizes.length === 0 ? 'disabled' : ''}
+              onclick="handleAddToCart('${p.id}', this)">${agotado ? 'Agotado' : '+ Agregar'}</button>
           </article>`;
       }).join('');
     }
 
+    function selectSize(btn) {
+      const wrap = btn.closest('.size-selector');
+      wrap.querySelectorAll('.size-chip').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const priceEl = document.getElementById('price-' + wrap.dataset.card);
+      if (priceEl) priceEl.textContent = fmtMoney(btn.dataset.precio);
+    }
+
+    // ── FICHA COMPARTIBLE (ficha de precios exportable como imagen) ──
+    let fichaGenerando = false;
+
+    function handleShareClick(perfumeId, btn) {
+      const p = all.find(x => String(x.id) === String(perfumeId));
+      if (p) generarFichaPerfume(p, btn);
+    }
+
+    function waitForImages(container) {
+      const imgs = [...container.querySelectorAll('img')];
+      return Promise.all(imgs.map(img => {
+        if (img.complete) return Promise.resolve();
+        return new Promise(resolve => {
+          img.addEventListener('load', resolve, { once: true });
+          img.addEventListener('error', resolve, { once: true });
+        });
+      }));
+    }
+
+    function buildFichaElement(p) {
+      const sizes = SIZE_DEFS.map(s => ({ ...s, precio: p[s.field] })).filter(s => s.precio != null);
+      const dispLabel = { disponible: 'Disponible', pocas: 'Pocas Piezas', agotado: 'Agotado' }[p.estatus] || p.estatus;
+
+      const wrap = document.createElement('div');
+      wrap.style.cssText = `
+        position: fixed; top: 0; left: 0; z-index: 398;
+        width: 1080px; height: 1350px;
+        background: #F8F8F8; color: #0D0D0D;
+        font-family: 'Plus Jakarta Sans', sans-serif;
+        display: flex; flex-direction: column;
+        padding: 64px; box-sizing: border-box;
+      `;
+
+      wrap.innerHTML = `
+        <div style="display:flex; justify-content:center; margin-bottom:36px;">
+          <img src="perfuma2 logo.png" style="height:52px;">
+        </div>
+        <div style="flex:1; position:relative; background:#fff; border:1px solid #DCDCDC; border-radius:24px; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+          ${dispLabel !== 'Disponible' ? `
+            <span style="position:absolute; top:24px; left:24px; background:${p.estatus === 'pocas' ? '#E10600' : '#0D0D0D'}; color:#fff; padding:10px 22px; border-radius:999px; font-size:22px; font-weight:800; text-transform:uppercase; letter-spacing:1px;">${dispLabel}</span>
+          ` : ''}
+          <img src="${p.imagen_url || ''}" style="max-width:78%; max-height:78%; object-fit:contain;">
+        </div>
+        <div style="text-align:center; margin:36px 0 32px;">
+          <div style="font-size:24px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:#9A9A9A; margin-bottom:10px;">${p.marca}</div>
+          <div style="font-family:'Bebas Neue',sans-serif; font-size:64px; text-transform:uppercase; line-height:1;">${p.nombre}</div>
+        </div>
+        <div style="display:flex; gap:14px; justify-content:center; margin-bottom:40px;">
+          ${sizes.map(s => `
+            <div style="flex:1; max-width:220px; background:#0D0D0D; border-radius:16px; padding:22px 8px; text-align:center;">
+              <div style="font-size:18px; font-weight:700; letter-spacing:1px; color:rgba(255,255,255,.6); margin-bottom:6px;">${s.label}</div>
+              <div style="font-family:'Bebas Neue',sans-serif; font-size:38px; color:#fff;">$${s.precio}</div>
+            </div>`).join('')}
+        </div>
+        <div style="text-align:center; font-size:20px; font-weight:600; letter-spacing:1px; color:#4A4A4A; border-top:1px solid #DCDCDC; padding-top:24px; text-transform:uppercase;">
+          Pide por WhatsApp&nbsp;&nbsp;|&nbsp;&nbsp;100% Original
+        </div>
+      `;
+      document.body.appendChild(wrap);
+      return wrap;
+    }
+
+    function showFichaLoading() {
+      document.getElementById('fichaOverlay').hidden = false;
+      document.getElementById('fichaLoading').hidden = false;
+    }
+    function hideFichaLoading() {
+      document.getElementById('fichaOverlay').hidden = true;
+      document.getElementById('fichaLoading').hidden = true;
+    }
+
+    function withTimeout(promise, ms) {
+      let timer;
+      const timeout = new Promise((_, reject) => {
+        timer = setTimeout(() => reject(new Error('timeout')), ms);
+      });
+      return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
+    }
+
+    async function generarFichaPerfume(perfumeData, triggerBtn) {
+      if (!perfumeData || fichaGenerando) return;
+
+      // Con la página abierta como archivo local (file://) Chrome bloquea la
+      // lectura de píxeles del canvas ("tainted canvas") y toBlob() falla siempre.
+      if (location.protocol === 'file:') {
+        alert('Para generar la ficha, abre el catálogo desde el servidor web (http://…), no directamente como archivo.');
+        return;
+      }
+
+      fichaGenerando = true;
+      if (triggerBtn) triggerBtn.disabled = true;
+      showFichaLoading();
+
+      const el = buildFichaElement(perfumeData);
+      let blob;
+      try {
+        await withTimeout(waitForImages(el), 10000);
+        const canvas = await withTimeout(html2canvas(el, { scale: 2, backgroundColor: '#F8F8F8', useCORS: true }), 15000);
+        blob = await withTimeout(new Promise(resolve => canvas.toBlob(resolve, 'image/png')), 5000);
+        if (!blob) throw new Error('No se pudo generar el blob de la imagen');
+      } catch (err) {
+        console.error('Error generando la ficha de precios:', err);
+        alert(`No se pudo generar la imagen. Intenta de nuevo.\n\n(Detalle: ${err.name || 'Error'} — ${err.message || err}${err.message === 'timeout' ? ' — se agotó el tiempo de espera' : ''})`);
+        el.remove();
+        hideFichaLoading();
+        if (triggerBtn) triggerBtn.disabled = false;
+        fichaGenerando = false;
+        return;
+      }
+      el.remove();
+
+      // La imagen ya está lista en este punto. Si falla el panel nativo de
+      // compartir (ej. iOS pierde el "gesto de usuario" tras la espera del
+      // canvas), no lo tratamos como error: simplemente se descarga el archivo.
+      const filename = `${perfumeData.nombre}-perfuma2.png`;
+      const file = new File([blob], filename, { type: 'image/png' });
+      let compartido = false;
+      try {
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          await navigator.share({ files: [file], title: perfumeData.nombre, text: `${perfumeData.marca} ${perfumeData.nombre} — Perfuma2` });
+          compartido = true;
+        }
+      } catch (shareErr) {
+        if (shareErr.name === 'AbortError') { compartido = true; } // el usuario canceló el panel, no es un error
+        else console.warn('No se pudo abrir el panel nativo de compartir, se descarga el archivo:', shareErr);
+      }
+
+      if (!compartido) {
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      }
+
+      hideFichaLoading();
+      if (triggerBtn) triggerBtn.disabled = false;
+      fichaGenerando = false;
+    }
+
+    // ── CARRITO ──────────────────────────────────────────────────
+    function cartCount() { return cart.reduce((sum, i) => sum + i.qty, 0); }
+    function cartTotal() { return cart.reduce((sum, i) => sum + i.qty * i.precioUnit, 0); }
+
+    function handleAddToCart(perfumeId, btnEl) {
+      const p = all.find(x => String(x.id) === String(perfumeId));
+      if (!p) return;
+      const wrap = document.querySelector(`.size-selector[data-card="${perfumeId}"]`);
+      const activeChip = wrap && wrap.querySelector('.size-chip.active');
+      if (!activeChip) return;
+
+      const ml = activeChip.dataset.ml;
+      const precioUnit = Number(activeChip.dataset.precio);
+      const key = `${p.id}_${ml}`;
+      const existing = cart.find(i => i.key === key);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ key, perfumeId: p.id, nombre: p.nombre, marca: p.marca, ml, precioUnit, qty: 1 });
+      }
+      renderCart();
+      flashAdded(btnEl);
+    }
+
+    function flashAdded(btn) {
+      if (!btn) return;
+      const original = btn.textContent;
+      btn.textContent = '✓ Agregado';
+      btn.classList.add('added');
+      setTimeout(() => {
+        btn.textContent = original;
+        btn.classList.remove('added');
+      }, 900);
+    }
+
+    function changeQty(key, delta) {
+      const item = cart.find(i => i.key === key);
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty <= 0) cart = cart.filter(i => i.key !== key);
+      renderCart();
+    }
+
+    function removeFromCart(key) {
+      cart = cart.filter(i => i.key !== key);
+      renderCart();
+    }
+
+    function sizeLabel(ml) { return ml === 'botella' ? 'Botella' : `${ml}ml`; }
+
+    function renderCart() {
+      const count = cartCount();
+      const total = cartTotal();
+
+      document.body.classList.toggle('cart-active', count > 0);
+      document.getElementById('cartBar').hidden = count === 0;
+      document.getElementById('cartCount').textContent = count;
+      document.getElementById('cartBarTotal').textContent = fmtMoney(total);
+      document.getElementById('cartGrandTotal').textContent = fmtMoney(total);
+      document.getElementById('cartCheckout').disabled = cart.length === 0;
+
+      const itemsWrap = document.getElementById('cartItems');
+      if (cart.length === 0) {
+        itemsWrap.innerHTML = `<div class="cart-empty">Tu pedido está vacío.<br>Agrega decants desde el catálogo.</div>`;
+        return;
+      }
+      itemsWrap.innerHTML = cart.map(item => `
+        <div class="cart-item" data-key="${item.key}">
+          <div class="cart-item-info">
+            <div class="cart-item-name">${item.marca} · ${item.nombre}</div>
+            <div class="cart-item-meta">${sizeLabel(item.ml)}</div>
+          </div>
+          <div class="cart-item-controls">
+            <button class="qty-btn" data-key="${item.key}" data-action="dec" aria-label="Restar">−</button>
+            <span class="qty-val">${item.qty}</span>
+            <button class="qty-btn" data-key="${item.key}" data-action="inc" aria-label="Sumar">+</button>
+            <button class="qty-remove" data-key="${item.key}" data-action="remove" aria-label="Eliminar">🗑</button>
+          </div>
+          <div class="cart-item-subtotal">${fmtMoney(item.qty * item.precioUnit)}</div>
+        </div>`).join('');
+    }
+
+    document.getElementById('cartItems').addEventListener('click', e => {
+      const btn = e.target.closest('[data-action]');
+      if (!btn) return;
+      const key = btn.dataset.key;
+      if (btn.dataset.action === 'inc') changeQty(key, 1);
+      if (btn.dataset.action === 'dec') changeQty(key, -1);
+      if (btn.dataset.action === 'remove') removeFromCart(key);
+    });
+
+    // ── DRAWER (bottom sheet) ───────────────────────────────────
+    const cartBackdrop = document.getElementById('cartBackdrop');
+    const cartDrawer = document.getElementById('cartDrawer');
+
+    function openDrawer() {
+      cartBackdrop.hidden = false;
+      cartDrawer.hidden = false;
+      requestAnimationFrame(() => {
+        cartBackdrop.classList.add('open');
+        cartDrawer.classList.add('open');
+      });
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer() {
+      cartBackdrop.classList.remove('open');
+      cartDrawer.classList.remove('open');
+      document.body.style.overflow = '';
+      setTimeout(() => {
+        cartBackdrop.hidden = true;
+        cartDrawer.hidden = true;
+      }, 320);
+    }
+
+    document.getElementById('cartBarBtn').addEventListener('click', openDrawer);
+    document.getElementById('cartClose').addEventListener('click', closeDrawer);
+    cartBackdrop.addEventListener('click', closeDrawer);
+
+    // ── CHECKOUT POR WHATSAPP ───────────────────────────────────
+    document.getElementById('cartCheckout').addEventListener('click', () => {
+      if (cart.length === 0) return;
+
+      const name = document.getElementById('custName').value.trim() || 'Por confirmar';
+      const location = document.getElementById('custLocation').value.trim() || 'Por confirmar';
+
+      const lines = cart.map(i =>
+        `• ${i.qty}x *${i.marca} ${i.nombre}* (${sizeLabel(i.ml)}) — ${fmtMoney(i.qty * i.precioUnit)}`
+      ).join('\n');
+
+      const total = cartTotal();
+
+      const mensaje =
+`¡Hola Perfuma2! 👋 Me gustaría hacer el siguiente pedido:
+
+🛒 *DETALLE DEL PEDIDO:*
+${lines}
+
+💰 *Total estimado:* ${fmtMoney(total)} MXN
+
+👤 *Cliente:* ${name}
+📍 *Ubicación:* ${location}
+
+¿Tienen disponibilidad para coordinar la entrega?`;
+
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`;
+      window.open(url, '_blank', 'noopener');
+    });
+
+    // ── FILTROS ──────────────────────────────────────────────────
     document.getElementById('searchInput').addEventListener('input', e => { filterText = e.target.value; render(); });
     document.getElementById('familiaFilter').addEventListener('change', e => { filterFamilia = e.target.value; render(); });
     document.getElementById('dispPills').addEventListener('click', e => {
@@ -652,8 +1143,21 @@
       render();
     });
 
-    buildFamiliaOptions();
-    render();
+    // ── INIT ─────────────────────────────────────────────────────
+    async function init() {
+      showLoadingState();
+      try {
+        all = await loadPerfumes();
+        buildFamiliaOptions();
+        render();
+        renderCart();
+      } catch (err) {
+        console.error('Error cargando catálogo desde Supabase:', err);
+        showErrorState();
+      }
+    }
+
+    init();
   </script>
 </body>
 </html>
