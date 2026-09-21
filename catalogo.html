@@ -39,26 +39,19 @@
     .nav {
       position: sticky; top: 0; z-index: 100;
       background: var(--negro);
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 18px 52px;
+      display: flex; align-items: center; gap: 20px;
+      padding: 14px 52px;
       border-bottom: 1px solid rgba(255,255,255,.07);
     }
-    .nav-logo { height: 40px; filter: invert(1); mix-blend-mode: screen; }
-    .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
+    .nav-logo { height: 40px; filter: invert(1); mix-blend-mode: screen; flex-shrink: 0; }
+    .nav-search-wrap { flex: 1; max-width: 420px; position: relative; }
+    .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; flex-shrink: 0; }
     .nav-links a {
       font-size: .78rem; font-weight: 500; letter-spacing: .14em;
       text-transform: uppercase; color: rgba(255,255,255,.5);
       transition: color .2s;
     }
     .nav-links a:hover { color: #fff; }
-    .nav-links .nav-pill {
-      color: rgba(255,255,255,.8);
-      padding: 8px 20px;
-      border: 1px solid rgba(255,255,255,.25);
-      border-radius: 999px;
-      transition: background .2s, border-color .2s, color .2s;
-    }
-    .nav-links .nav-pill:hover { background: #fff; border-color: #fff; color: var(--negro); }
 
     /* ── PAGE HEADER ── */
     .page-header {
@@ -93,14 +86,11 @@
       padding: 24px 52px;
       background: var(--blanco);
       border-bottom: 1px solid var(--gris-200);
-      position: sticky; top: 69px; z-index: 90;
+      position: sticky; top: 73px; z-index: 90;
     }
     .filter-inner {
       max-width: 1100px; margin: 0 auto;
       display: flex; gap: 16px; flex-wrap: wrap; align-items: center;
-    }
-    .search-wrap {
-      flex: 1; min-width: 220px; position: relative;
     }
     .search-icon {
       position: absolute; left: 16px; top: 50%;
@@ -121,23 +111,6 @@
     }
     .search-input:focus { box-shadow: 0 0 0 2px var(--negro); }
     .search-input::placeholder { color: var(--gris-400); }
-    .filter-select {
-      min-height: 44px;
-      padding: 13px 40px 13px 18px;
-      border: 1.5px solid var(--negro);
-      border-radius: 999px;
-      font-family: var(--body);
-      font-weight: 600;
-      font-size: 16px; /* Evita zoom automático en Safari móvil */
-      color: var(--negro); background: #fff;
-      appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%230D0D0D' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 16px center;
-      cursor: pointer; outline: none;
-      transition: box-shadow .2s;
-    }
-    .filter-select:focus { box-shadow: 0 0 0 2px var(--negro); }
     .pills { display: flex; gap: 8px; flex-wrap: wrap; }
     .pill {
       padding: 9px 18px;
@@ -315,10 +288,7 @@
     .card-share-btn:disabled { opacity: .5; cursor: default; }
     .card-share-btn svg { width: 16px; height: 16px; }
 
-    /* Cubre la ficha mientras se genera: en iOS Safari, un contenedor
-       posicionado muy lejos del viewport (left:-9999px) a veces no se
-       pinta al capturarlo con html2canvas. Por eso el nodo real vive
-       dentro del viewport (top:0;left:0) y este overlay opaco lo tapa. */
+    /* Overlay opaco que bloquea la interacción mientras se genera la ficha. */
     .ficha-overlay {
       position: fixed; inset: 0; z-index: 399;
       background: var(--negro);
@@ -462,7 +432,7 @@
     .wa-float {
       position: fixed;
       bottom: calc(24px + env(safe-area-inset-bottom, 0px));
-      right: 24px;
+      left: 24px;
       z-index: 150;
       display: flex;
       align-items: center;
@@ -526,7 +496,6 @@
     /* ── RESPONSIVE TABLETS ── */
     @media (max-width: 900px) {
       .nav, .filter-bar, .page-header, .catalog-section, .footer { padding-left: 20px; padding-right: 20px; }
-      .filter-bar { top: 61px; }
       .footer-top { grid-template-columns: 1fr; gap: 36px; }
       .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
     }
@@ -563,7 +532,7 @@
       /* Botón de WhatsApp colapsable a círculo con Safe Area */
       .wa-float {
         bottom: calc(18px + env(safe-area-inset-bottom, 0px));
-        right: 18px;
+        left: 18px;
         padding: 14px;
         border-radius: 50%;
       }
@@ -581,9 +550,12 @@
     <a href="index.html">
       <img src="perfuma2 logo.png" alt="Perfuma2" class="nav-logo">
     </a>
+    <div class="nav-search-wrap">
+      <span class="search-icon">⌕</span>
+      <input type="search" class="search-input" id="searchInput" placeholder="Buscar fragancia o marca…" autocomplete="off">
+    </div>
     <ul class="nav-links">
       <li><a href="index.html#nosotros">Nosotros</a></li>
-      <li><a href="https://wa.me/529903415523" target="_blank" rel="noopener" class="nav-pill">WhatsApp</a></li>
     </ul>
   </nav>
 
@@ -591,20 +563,13 @@
     <div class="page-header-inner">
       <span class="page-eyebrow">Catálogo completo</span>
       <h1 class="page-title">Fragancias<br><span class="accent-word">Originales.</span></h1>
-      <p class="page-sub">Decants de 3, 5 y 10&nbsp;ml, y perfumes sellados de casas de diseñador y árabe. Todos 100% originales.</p>
+      <p class="page-sub">Decants de 3, 5 y 10&nbsp;ml, perfumes sellados de casas de diseñador y árabe. Todos 100% originales.</p>
       <p class="result-count" id="resultCount"></p>
     </div>
   </div>
 
   <div class="filter-bar">
     <div class="filter-inner">
-      <div class="search-wrap">
-        <span class="search-icon">⌕</span>
-        <input type="search" class="search-input" id="searchInput" placeholder="Buscar fragancia o marca…" autocomplete="off">
-      </div>
-      <select class="filter-select" id="familiaFilter">
-        <option value="">Todas las familias</option>
-      </select>
       <div class="pills" id="dispPills">
         <button class="pill active" data-disp="">Todos</button>
         <button class="pill" data-disp="disponible">Disponible</button>
@@ -693,7 +658,6 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <script>
     const SUPABASE_URL = 'https://zlgzdmenngfnrtbkrdoa.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_bWkZADDuNmjG2I28SdtwMQ_z7cTDIme';
@@ -710,7 +674,7 @@
     ];
 
     let all = [];
-    let filterText = '', filterFamilia = '', filterDisp = '';
+    let filterText = '', filterDisp = '';
     let cart = []; // { key, perfumeId, nombre, marca, ml, precioUnit, qty }
 
     async function loadPerfumes() {
@@ -722,16 +686,6 @@
 
       if (error) throw error;
       return data || [];
-    }
-
-    function buildFamiliaOptions() {
-      const sel = document.getElementById('familiaFilter');
-      sel.querySelectorAll('option:not([value=""])').forEach(o => o.remove());
-      [...new Set(all.map(p => p.familia_olfativa).filter(Boolean))].sort().forEach(f => {
-        const opt = document.createElement('option');
-        opt.value = f; opt.textContent = f;
-        sel.appendChild(opt);
-      });
     }
 
     function fmtMoney(n) { return '$' + Number(n).toLocaleString('es-MX'); }
@@ -768,9 +722,7 @@
           (p.nombre || '').toLowerCase().includes(q) ||
           (p.marca || '').toLowerCase().includes(q) ||
           (p.familia_olfativa || '').toLowerCase().includes(q);
-        return matchText &&
-          (!filterFamilia || p.familia_olfativa === filterFamilia) &&
-          (!filterDisp    || p.estatus === filterDisp);
+        return matchText && (!filterDisp || p.estatus === filterDisp);
       });
 
       count.textContent = `${filtered.length} ${filtered.length === 1 ? 'fragancia encontrada' : 'fragancias encontradas'}`;
@@ -840,65 +792,17 @@
     }
 
     // ── FICHA COMPARTIBLE (ficha de precios exportable como imagen) ──
+    // Se dibuja directo con Canvas 2D nativo (sin html2canvas): la librería
+    // clona el DOM dentro de un iframe oculto para "fotografiarlo", técnica
+    // que en WebKit/iOS (Safari y cualquier navegador ahí, incluido Brave,
+    // que en iOS corre sobre WebKit por obligación de Apple) puede colgarse
+    // sin avisar. Dibujar a mano con drawImage/fillText es 100% nativo y
+    // funciona igual en todos los navegadores.
     let fichaGenerando = false;
 
     function handleShareClick(perfumeId, btn) {
       const p = all.find(x => String(x.id) === String(perfumeId));
       if (p) generarFichaPerfume(p, btn);
-    }
-
-    function waitForImages(container) {
-      const imgs = [...container.querySelectorAll('img')];
-      return Promise.all(imgs.map(img => {
-        if (img.complete) return Promise.resolve();
-        return new Promise(resolve => {
-          img.addEventListener('load', resolve, { once: true });
-          img.addEventListener('error', resolve, { once: true });
-        });
-      }));
-    }
-
-    function buildFichaElement(p) {
-      const sizes = SIZE_DEFS.map(s => ({ ...s, precio: p[s.field] })).filter(s => s.precio != null);
-      const dispLabel = { disponible: 'Disponible', pocas: 'Pocas Piezas', agotado: 'Agotado' }[p.estatus] || p.estatus;
-
-      const wrap = document.createElement('div');
-      wrap.style.cssText = `
-        position: fixed; top: 0; left: 0; z-index: 398;
-        width: 1080px; height: 1350px;
-        background: #F8F8F8; color: #0D0D0D;
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        display: flex; flex-direction: column;
-        padding: 64px; box-sizing: border-box;
-      `;
-
-      wrap.innerHTML = `
-        <div style="display:flex; justify-content:center; margin-bottom:36px;">
-          <img src="perfuma2 logo.png" style="height:52px;">
-        </div>
-        <div style="flex:1; position:relative; background:#fff; border:1px solid #DCDCDC; border-radius:24px; display:flex; align-items:center; justify-content:center; overflow:hidden;">
-          ${dispLabel !== 'Disponible' ? `
-            <span style="position:absolute; top:24px; left:24px; background:${p.estatus === 'pocas' ? '#E10600' : '#0D0D0D'}; color:#fff; padding:10px 22px; border-radius:999px; font-size:22px; font-weight:800; text-transform:uppercase; letter-spacing:1px;">${dispLabel}</span>
-          ` : ''}
-          <img src="${p.imagen_url || ''}" style="max-width:78%; max-height:78%; object-fit:contain;">
-        </div>
-        <div style="text-align:center; margin:36px 0 32px;">
-          <div style="font-size:24px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:#9A9A9A; margin-bottom:10px;">${p.marca}</div>
-          <div style="font-family:'Bebas Neue',sans-serif; font-size:64px; text-transform:uppercase; line-height:1;">${p.nombre}</div>
-        </div>
-        <div style="display:flex; gap:14px; justify-content:center; margin-bottom:40px;">
-          ${sizes.map(s => `
-            <div style="flex:1; max-width:220px; background:#0D0D0D; border-radius:16px; padding:22px 8px; text-align:center;">
-              <div style="font-size:18px; font-weight:700; letter-spacing:1px; color:rgba(255,255,255,.6); margin-bottom:6px;">${s.label}</div>
-              <div style="font-family:'Bebas Neue',sans-serif; font-size:38px; color:#fff;">$${s.precio}</div>
-            </div>`).join('')}
-        </div>
-        <div style="text-align:center; font-size:20px; font-weight:600; letter-spacing:1px; color:#4A4A4A; border-top:1px solid #DCDCDC; padding-top:24px; text-transform:uppercase;">
-          Pide por WhatsApp&nbsp;&nbsp;|&nbsp;&nbsp;100% Original
-        </div>
-      `;
-      document.body.appendChild(wrap);
-      return wrap;
     }
 
     function showFichaLoading() {
@@ -918,6 +822,166 @@
       return Promise.race([promise, timeout]).finally(() => clearTimeout(timer));
     }
 
+    function loadImage(src) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => resolve(img);
+        img.onerror = () => reject(new Error('No se pudo cargar: ' + src));
+        img.src = src;
+      });
+    }
+
+    async function ensureFonts() {
+      const specs = [
+        '700 20px "Plus Jakarta Sans"',
+        '46px "Bebas Neue"',
+        '28px "Bebas Neue"',
+      ];
+      await Promise.all(specs.map(spec => document.fonts.load(spec).catch(() => {})));
+      if (document.fonts.ready) await document.fonts.ready;
+    }
+
+    function roundRectPath(ctx, x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.arcTo(x + w, y, x + w, y + h, r);
+      ctx.arcTo(x + w, y + h, x, y + h, r);
+      ctx.arcTo(x, y + h, x, y, r);
+      ctx.arcTo(x, y, x + w, y, r);
+      ctx.closePath();
+    }
+
+    // Centra texto dibujando cada letra con separación manual (canvas no
+    // soporta letter-spacing de forma confiable en todos los navegadores).
+    function fillTextSpaced(ctx, text, cx, y, spacing) {
+      const widths = [...text].map(ch => ctx.measureText(ch).width);
+      const total = widths.reduce((a, b) => a + b, 0) + spacing * (text.length - 1);
+      let x = cx - total / 2;
+      [...text].forEach((ch, i) => {
+        ctx.fillText(ch, x + widths[i] / 2, y);
+        x += widths[i] + spacing;
+      });
+    }
+
+    function wrapTextLines(ctx, text, maxWidth, maxLines) {
+      const words = text.split(' ');
+      let lines = [], current = '';
+      for (const word of words) {
+        const test = current ? current + ' ' + word : word;
+        if (current && ctx.measureText(test).width > maxWidth) {
+          lines.push(current);
+          current = word;
+        } else {
+          current = test;
+        }
+      }
+      if (current) lines.push(current);
+      return maxLines ? lines.slice(0, maxLines) : lines;
+    }
+
+    function drawCenteredLines(ctx, lines, cx, startY, lineHeight) {
+      lines.forEach((line, i) => ctx.fillText(line, cx, startY + i * lineHeight));
+    }
+
+    async function renderFichaCanvas(p) {
+      // El alto se calcula según el contenido (nombre de 1 o 2 líneas) en vez
+      // de un tamaño fijo, para no dejar aire de más cuando el nombre es corto.
+      const W = 800, PAD = 44, SCALE = 2;
+      const photoY = 108, photoH = 400;
+      const nombreMaxWidth = W - PAD * 2;
+      const nombreLineHeight = 48;
+      const sizes = SIZE_DEFS.map(s => ({ ...s, precio: p[s.field] })).filter(s => s.precio != null);
+
+      await ensureFonts();
+
+      // Medición previa (contexto descartable, no depende del tamaño del canvas)
+      const measureCtx = document.createElement('canvas').getContext('2d');
+      measureCtx.font = '46px "Bebas Neue", sans-serif';
+      const nombreLines = wrapTextLines(measureCtx, (p.nombre || '').toUpperCase(), nombreMaxWidth, 2);
+
+      const marcaBaselineY = photoY + photoH + 40;
+      const nombreFirstBaselineY = marcaBaselineY + 40;
+      const nombreLastBaselineY = nombreFirstBaselineY + (nombreLines.length - 1) * nombreLineHeight;
+      const priceBoxY = nombreLastBaselineY + 14 + 42;
+      const priceBoxH = 92;
+      const H = sizes.length ? (priceBoxY + priceBoxH + PAD) : (nombreLastBaselineY + 14 + PAD);
+
+      const canvas = document.createElement('canvas');
+      canvas.width = W * SCALE;
+      canvas.height = H * SCALE;
+      const ctx = canvas.getContext('2d');
+      ctx.scale(SCALE, SCALE);
+      ctx.textBaseline = 'alphabetic';
+
+      // Fondo
+      ctx.fillStyle = '#F8F8F8';
+      ctx.fillRect(0, 0, W, H);
+
+      // Logo (si falla cargarlo, seguimos sin bloquear toda la ficha)
+      try {
+        const logo = await withTimeout(loadImage('perfuma2 logo.png'), 8000);
+        const logoH = 36, logoW = logo.width * (logoH / logo.height);
+        ctx.drawImage(logo, (W - logoW) / 2, PAD, logoW, logoH);
+      } catch (e) { console.warn('No se pudo cargar el logo para la ficha:', e); }
+
+      // Marco de la foto
+      roundRectPath(ctx, PAD, photoY, W - PAD * 2, photoH, 18);
+      ctx.fillStyle = '#fff';
+      ctx.fill();
+      ctx.strokeStyle = '#DCDCDC';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Foto del perfume, centrada dentro del marco (contain)
+      if (p.imagen_url) {
+        try {
+          const prod = await withTimeout(loadImage(p.imagen_url), 10000);
+          const maxW = (W - PAD * 2) * 0.78, maxH = photoH * 0.78;
+          const ratio = Math.min(maxW / prod.width, maxH / prod.height);
+          const iw = prod.width * ratio, ih = prod.height * ratio;
+          const ix = PAD + (W - PAD * 2 - iw) / 2, iy = photoY + (photoH - ih) / 2;
+          ctx.drawImage(prod, ix, iy, iw, ih);
+        } catch (e) { console.warn('No se pudo cargar la foto del perfume para la ficha:', e); }
+      }
+
+      // Marca
+      ctx.fillStyle = '#9A9A9A';
+      ctx.font = '700 18px "Plus Jakarta Sans", sans-serif';
+      ctx.textAlign = 'center';
+      fillTextSpaced(ctx, (p.marca || '').toUpperCase(), W / 2, marcaBaselineY, 2);
+
+      // Nombre (ya medido arriba)
+      ctx.fillStyle = '#0D0D0D';
+      ctx.font = '46px "Bebas Neue", sans-serif';
+      drawCenteredLines(ctx, nombreLines, W / 2, nombreFirstBaselineY, nombreLineHeight);
+
+      // Bloques de precio
+      if (sizes.length) {
+        const gap = 10;
+        const boxW = Math.min(160, (W - PAD * 2 - gap * (sizes.length - 1)) / sizes.length);
+        const groupW = boxW * sizes.length + gap * (sizes.length - 1);
+        const startX = (W - groupW) / 2;
+
+        sizes.forEach((s, i) => {
+          const x = startX + i * (boxW + gap);
+          roundRectPath(ctx, x, priceBoxY, boxW, priceBoxH, 12);
+          ctx.fillStyle = '#0D0D0D';
+          ctx.fill();
+
+          ctx.fillStyle = 'rgba(255,255,255,.6)';
+          ctx.font = '700 13px "Plus Jakarta Sans", sans-serif';
+          fillTextSpaced(ctx, s.label, x + boxW / 2, priceBoxY + 32, 1);
+
+          ctx.fillStyle = '#fff';
+          ctx.font = '28px "Bebas Neue", sans-serif';
+          ctx.fillText('$' + s.precio, x + boxW / 2, priceBoxY + 68);
+        });
+      }
+
+      return canvas;
+    }
+
     async function generarFichaPerfume(perfumeData, triggerBtn) {
       if (!perfumeData || fichaGenerando) return;
 
@@ -932,23 +996,19 @@
       if (triggerBtn) triggerBtn.disabled = true;
       showFichaLoading();
 
-      const el = buildFichaElement(perfumeData);
       let blob;
       try {
-        await withTimeout(waitForImages(el), 10000);
-        const canvas = await withTimeout(html2canvas(el, { scale: 2, backgroundColor: '#F8F8F8', useCORS: true }), 15000);
+        const canvas = await withTimeout(renderFichaCanvas(perfumeData), 20000);
         blob = await withTimeout(new Promise(resolve => canvas.toBlob(resolve, 'image/png')), 5000);
         if (!blob) throw new Error('No se pudo generar el blob de la imagen');
       } catch (err) {
         console.error('Error generando la ficha de precios:', err);
         alert(`No se pudo generar la imagen. Intenta de nuevo.\n\n(Detalle: ${err.name || 'Error'} — ${err.message || err}${err.message === 'timeout' ? ' — se agotó el tiempo de espera' : ''})`);
-        el.remove();
         hideFichaLoading();
         if (triggerBtn) triggerBtn.disabled = false;
         fichaGenerando = false;
         return;
       }
-      el.remove();
 
       // La imagen ya está lista en este punto. Si falla el panel nativo de
       // compartir (ej. iOS pierde el "gesto de usuario" tras la espera del
@@ -1133,7 +1193,6 @@ ${lines}
 
     // ── FILTROS ──────────────────────────────────────────────────
     document.getElementById('searchInput').addEventListener('input', e => { filterText = e.target.value; render(); });
-    document.getElementById('familiaFilter').addEventListener('change', e => { filterFamilia = e.target.value; render(); });
     document.getElementById('dispPills').addEventListener('click', e => {
       const pill = e.target.closest('[data-disp]');
       if (!pill) return;
@@ -1148,7 +1207,6 @@ ${lines}
       showLoadingState();
       try {
         all = await loadPerfumes();
-        buildFamiliaOptions();
         render();
         renderCart();
       } catch (err) {
